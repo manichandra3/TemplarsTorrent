@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://kpdyy60x23a4"]
+
+[ext_resource type="Texture2D" uid="uid://c4paebmc1unpu" path="res://assets/Resources/Trees/Tree.png" id="1_rk26q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01yl7"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(0, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0x4im"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdug1"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cx7cp"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nosde"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ogik3"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3roa7"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v1qrl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01yl7")
+}],
+"loop": true,
+"name": &"chopped",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0x4im")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdug1")
+}],
+"loop": true,
+"name": &"chopping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx7cp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nosde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ogik3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3roa7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dyi2f"]
+size = Vector2(31, 29)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_v1qrl")
+animation = &"chopped"
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.5, 64.5)
+shape = SubResource("RectangleShape2D_dyi2f")

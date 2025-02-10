@@ -1,0 +1,6 @@
+extends AnimatedSprite2D
+enum TOWER_STATE{
+	CONSTRUCTED,
+	CONSTRUCTION,
+	DESTROYED
+}

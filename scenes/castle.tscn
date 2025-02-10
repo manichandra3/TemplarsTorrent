@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://ceurlkkn548e"]
+
+[node name="castle" type="Sprite2D"]

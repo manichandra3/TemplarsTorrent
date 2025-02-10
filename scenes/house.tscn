@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://0428m2yda5q0"]
+
+[ext_resource type="Texture2D" uid="uid://ctd3t2662x18n" path="res://assets/Factions/Knights/Buildings/House/House_Blue.png" id="1_yx70n"]
+
+[node name="house" type="Sprite2D"]
+texture = ExtResource("1_yx70n")
