@@ -1,7 +1,7 @@
 extends Area2D
 
-@export var SCALE_FACTOR: float = 1.1  # Scale by
-@export var NORMAL_SCALE: float = 1.0  # Original scale
+@export var SCALE_FACTOR: float = 1.1  
+@export var NORMAL_SCALE: float = 1.0 
 
 func _ready():
 	mouse_entered.connect(_on_mouse_entered)

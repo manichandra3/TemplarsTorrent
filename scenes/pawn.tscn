@@ -301,9 +301,9 @@ script = ExtResource("1_n5567")
 
 [node name="pawn_animated" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2hwkm")
-animation = &"idle"
+animation = &"running"
 autoplay = "idle"
-frame_progress = 0.838074
+frame_progress = 0.978988
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("3_qhjey")

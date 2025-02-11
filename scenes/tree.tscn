@@ -1,40 +1,42 @@
-[gd_scene load_steps=11 format=3 uid="uid://kpdyy60x23a4"]
+[gd_scene load_steps=14 format=3 uid="uid://kpdyy60x23a4"]
 
 [ext_resource type="Texture2D" uid="uid://c4paebmc1unpu" path="res://assets/Resources/Trees/Tree.png" id="1_rk26q"]
+[ext_resource type="Script" path="res://scripts/tree.gd" id="2_pcn25"]
+[ext_resource type="Script" path="res://scripts/area_2d.gd" id="2_vw5by"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_01yl7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqac2"]
 atlas = ExtResource("1_rk26q")
 region = Rect2(0, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0x4im"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_13iic"]
 atlas = ExtResource("1_rk26q")
 region = Rect2(0, 192, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qdug1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2rld"]
 atlas = ExtResource("1_rk26q")
 region = Rect2(192, 192, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cx7cp"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq7nq"]
 atlas = ExtResource("1_rk26q")
 region = Rect2(0, 0, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nosde"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkugs"]
 atlas = ExtResource("1_rk26q")
 region = Rect2(192, 0, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ogik3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pmsj"]
 atlas = ExtResource("1_rk26q")
 region = Rect2(384, 0, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3roa7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmlun"]
 atlas = ExtResource("1_rk26q")
 region = Rect2(576, 0, 192, 192)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_v1qrl"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_3xr4e"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_01yl7")
+"texture": SubResource("AtlasTexture_tqac2")
 }],
 "loop": true,
 "name": &"chopped",
@@ -42,10 +44,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0x4im")
+"texture": SubResource("AtlasTexture_13iic")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qdug1")
+"texture": SubResource("AtlasTexture_v2rld")
 }],
 "loop": true,
 "name": &"chopping",
@@ -53,16 +55,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cx7cp")
+"texture": SubResource("AtlasTexture_tq7nq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nosde")
+"texture": SubResource("AtlasTexture_mkugs")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ogik3")
+"texture": SubResource("AtlasTexture_8pmsj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3roa7")
+"texture": SubResource("AtlasTexture_dmlun")
 }],
 "loop": true,
 "name": &"default",
@@ -70,15 +72,25 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dyi2f"]
-size = Vector2(31, 29)
+size = Vector2(44, 165)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
-sprite_frames = SubResource("SpriteFrames_v1qrl")
-animation = &"chopped"
+[sub_resource type="CircleShape2D" id="CircleShape2D_xwwbt"]
+radius = 19.0
+
+[node name="tree" type="CharacterBody2D"]
+script = ExtResource("2_pcn25")
+
+[node name="tree_animated" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3xr4e")
 autoplay = "default"
 
 [node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_vw5by")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(1.5, 64.5)
+position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_dyi2f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 63)
+shape = SubResource("CircleShape2D_xwwbt")
