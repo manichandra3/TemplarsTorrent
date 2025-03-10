@@ -11,7 +11,7 @@ var PAN_ACCELERATION: float = 25
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse Drag Panning
 	if event is InputEventMouseMotion:
-		if event.button_mask & MOUSE_BUTTON_MASK_LEFT: 
+		if event.button_mask & MOUSE_BUTTON_MASK_RIGHT: 
 			position -= event.relative / zoom 
 
 	# Mouse Wheel Zooming

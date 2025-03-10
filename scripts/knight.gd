@@ -1,30 +1,27 @@
 extends CharacterBody2D
 
-enum PAWN_STATE {
+enum KNIGHT_STATE {
 	IDLE,
 	RUNNING,
-	BUILDING,
-	CHOPPING,
-	FETCHING
+	ATTACKING
 }
 
-@export var health: float = 100
+@export var health: float = 20
 @export var movement_speed: float = 200.0 
 @export var acceleration: float = 500.0
 #@export var arrival_threshold: float = 5.0
-@export var chopping_duration: float = 10.0  # Time taken to chop
-@export var entity_type: String = "pawn"
+@export var entity_type: String = "knight"
 
-var current_state: PAWN_STATE = PAWN_STATE.IDLE
+var current_state: KNIGHT_STATE = KNIGHT_STATE.IDLE
 var is_selected: bool = false
 var is_selection_changed: bool = false
-var target_tree: Node2D = null
+var target_enemy: Node2D = null  # For targeting enemies to attack
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
-@onready var animated_sprite: AnimatedSprite2D = $pawn_animated
+@onready var animated_sprite: AnimatedSprite2D = $knight_animated
 @onready var main = get_node("/root/game")
 
-signal state_changed(new_state: PAWN_STATE)
+signal state_changed(new_state: KNIGHT_STATE)
 
 func _ready():
 	add_to_group("pawns")
@@ -57,31 +54,33 @@ func set_movement_target(movement_target: Vector2):
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = movement_target
 	var result = space_state.intersect_point(query)
-	target_tree = null  # Reset target tree
+	target_enemy = null  # Reset target enemy
+	# Check if clicked on an enemy
 	for hit in result:
 		var collider = hit.get("collider", null)
-		if collider and collider.is_in_group("trees"):
-			target_tree = collider
-			break  # Stop checking other objects
-		if collider and collider.is_in_group("pawns"):
-			change_state(PAWN_STATE.IDLE)
+		if collider and collider.is_in_group("spawners"):
+			print("spawner found")
+			target_enemy = collider
+			break 
 	navigation_agent.target_position = movement_target
 	await get_tree().process_frame  # Wait for the path to be processed
+	
 	if navigation_agent.is_navigation_finished():
 		return  # Stop execution if no path is found
-	if target_tree:
-		change_state(PAWN_STATE.CHOPPING)
+	
+	if target_enemy:
+		change_state(KNIGHT_STATE.ATTACKING)
 	else:
-		change_state(PAWN_STATE.RUNNING)
+		change_state(KNIGHT_STATE.RUNNING)
 
 func _physics_process(delta):
 	match current_state:
-		PAWN_STATE.IDLE:
+		KNIGHT_STATE.IDLE:
 			handle_idle_state(delta)
-		PAWN_STATE.RUNNING:
+		KNIGHT_STATE.RUNNING:
 			handle_running_state(delta)
-		PAWN_STATE.CHOPPING:
-			handle_chopping_state(delta)
+		KNIGHT_STATE.ATTACKING:
+			handle_attacking_state(delta)
 
 func handle_idle_state(_delta):
 	velocity = Vector2.ZERO
@@ -89,33 +88,46 @@ func handle_idle_state(_delta):
 
 func handle_running_state(delta):
 	if navigation_agent.is_navigation_finished():
-		if target_tree:
-			change_state(PAWN_STATE.CHOPPING)
+		if target_enemy:
+			change_state(KNIGHT_STATE.ATTACKING)
 		else:
-			change_state(PAWN_STATE.IDLE)
+			change_state(KNIGHT_STATE.IDLE)
 		return
+	
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
 	var desired_velocity = global_position.direction_to(next_path_position) * movement_speed
 	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
+	
 	if velocity.length() > 0:
 		animated_sprite.play("running")
 		animated_sprite.flip_h = velocity.x < 0
 	navigation_agent.velocity = velocity
 	move_and_slide()
 
-func handle_chopping_state(_delta):
-	if target_tree :
-		if global_position.distance_to(target_tree.global_position) > 30.0 :
-			set_movement_target(target_tree.global_position)
+func handle_attacking_state(_delta):
+	if target_enemy:
+		if not is_instance_valid(target_enemy):
+			# Enemy has been destroyed
+			change_state(KNIGHT_STATE.IDLE)
 			return
-		animated_sprite.play("chopping")
-		target_tree.chop_tree()
-		await get_tree().create_timer(chopping_duration).timeout
-		target_tree = null  # Reset target
+		if global_position.distance_to(target_enemy.global_position) > 30.0:
+			# Enemy too far, move towards it
+			set_movement_target(target_enemy.global_position)
+			return
+		# We're close enough to attack
+		animated_sprite.play("attacking")
+		# Face the enemy
+		animated_sprite.flip_h = target_enemy.global_position.x < global_position.x
+		# Damage logic would go here (if you have an attack method on enemies)
+		if target_enemy.has_method("take_damage"):
+			target_enemy.take_damage(1)  # Or whatever damage amount
+		# Wait for attack animation to finish
+		# You might want to connect to an animation_finished signal instead
+		await get_tree().create_timer(1.0).timeout
 	else:
-		change_state(PAWN_STATE.IDLE)
+		change_state(KNIGHT_STATE.IDLE)
 
-func change_state(new_state: PAWN_STATE):
+func change_state(new_state: KNIGHT_STATE):
 	if current_state != new_state:
 		current_state = new_state
 		state_changed.emit(new_state)
