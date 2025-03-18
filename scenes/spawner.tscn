@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4n15wbl6cd42"]
+[gd_scene load_steps=5 format=3 uid="uid://c4n15wbl6cd42"]
 
 [ext_resource type="Script" path="res://scripts/spawner.gd" id="1_ac2jw"]
 [ext_resource type="Texture2D" uid="uid://bfaa2xiow4oin" path="res://assets/UI/Buttons/Button_Blue.png" id="2_nsqh3"]
@@ -6,7 +6,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lkpwu"]
 size = Vector2(46, 44)
 
-[node name="spawner" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fe5jo"]
+size = Vector2(34, 33)
+
+[node name="spawner" type="CharacterBody2D"]
 script = ExtResource("1_ac2jw")
 
 [node name="UI" type="Sprite2D" parent="."]
@@ -17,3 +20,7 @@ texture = ExtResource("2_nsqh3")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_lkpwu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -8.5)
+shape = SubResource("RectangleShape2D_fe5jo")

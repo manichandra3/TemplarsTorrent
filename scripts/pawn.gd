@@ -12,7 +12,7 @@ enum PAWN_STATE {
 @export var movement_speed: float = 200.0 
 @export var acceleration: float = 500.0
 #@export var arrival_threshold: float = 5.0
-@export var chopping_duration: float = 10.0  # Time taken to chop
+@export var chopping_duration: float = 10.0  # Time taken to chop a tree
 @export var entity_type: String = "pawn"
 
 var current_state: PAWN_STATE = PAWN_STATE.IDLE

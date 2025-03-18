@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://c2fx58yowisjd"]
+[gd_scene load_steps=38 format=4 uid="uid://c2fx58yowisjd"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_1nr38"]
 [ext_resource type="Texture2D" uid="uid://d4hv74kf01de2" path="res://assets/Terrain/Ground/Tilemap_Flat.png" id="1_6uvsd"]
@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://b85dy8g1jici5" path="res://scenes/pawn.tscn" id="12_wlud3"]
 [ext_resource type="PackedScene" uid="uid://kpdyy60x23a4" path="res://scenes/tree.tscn" id="13_5dmc4"]
 [ext_resource type="PackedScene" uid="uid://c4n15wbl6cd42" path="res://scenes/spawner.tscn" id="14_i5mmb"]
+[ext_resource type="PackedScene" uid="uid://ceurlkkn548e" path="res://scenes/castle.tscn" id="14_uxdpu"]
+[ext_resource type="PackedScene" uid="uid://cn2fs5dixgdhj" path="res://scenes/tower.tscn" id="15_bl3tq"]
 [ext_resource type="PackedScene" uid="uid://ddnds58mf3qeh" path="res://scenes/knight.tscn" id="17_knedm"]
 [ext_resource type="Script" path="res://scripts/knight.gd" id="18_wu8ji"]
 
@@ -420,6 +422,15 @@ script = ExtResource("9_22u4b")
 visible = false
 position = Vector2(-2211, -2271)
 navigation_polygon = SubResource("NavigationPolygon_35wup")
+
+[node name="castle" parent="." instance=ExtResource("14_uxdpu")]
+position = Vector2(-2878, -3445)
+
+[node name="tower" parent="." instance=ExtResource("15_bl3tq")]
+position = Vector2(-2096, -1680)
+
+[node name="tower2" parent="." instance=ExtResource("15_bl3tq")]
+position = Vector2(-2351, -2507)
 
 [node name="pawn2" parent="." instance=ExtResource("12_wlud3")]
 position = Vector2(-1817, -2051)

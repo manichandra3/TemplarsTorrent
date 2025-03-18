@@ -1,6 +1,7 @@
-[gd_scene load_steps=53 format=3 uid="uid://ddnds58mf3qeh"]
+[gd_scene load_steps=54 format=3 uid="uid://ddnds58mf3qeh"]
 
 [ext_resource type="Texture2D" uid="uid://c3obe1atakpnu" path="res://assets/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png" id="1_x2n03"]
+[ext_resource type="Script" path="res://scripts/area_2d.gd" id="2_wawa2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_40cib"]
 atlas = ExtResource("1_x2n03")
@@ -382,7 +383,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1kd3v"]
-radius = 21.095
+radius = 32.1403
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ifmi"]
 radius = 15.0333
@@ -394,10 +395,11 @@ sprite_frames = SubResource("SpriteFrames_gjre8")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="Area2D" type="Area2D" parent="knight_animated"]
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_wawa2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="knight_animated/Area2D"]
-position = Vector2(-1, -1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_1kd3v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -105,6 +105,7 @@ func handle_running_state(delta):
 	move_and_slide()
 
 func handle_attacking_state(_delta):
+	print(target_enemy)
 	if target_enemy:
 		if not is_instance_valid(target_enemy):
 			# Enemy has been destroyed
@@ -118,11 +119,9 @@ func handle_attacking_state(_delta):
 		animated_sprite.play("attacking")
 		# Face the enemy
 		animated_sprite.flip_h = target_enemy.global_position.x < global_position.x
-		# Damage logic would go here (if you have an attack method on enemies)
+		# Damage logic 
 		if target_enemy.has_method("take_damage"):
-			target_enemy.take_damage(1)  # Or whatever damage amount
-		# Wait for attack animation to finish
-		# You might want to connect to an animation_finished signal instead
+			target_enemy.take_damage(1) 
 		await get_tree().create_timer(1.0).timeout
 	else:
 		change_state(KNIGHT_STATE.IDLE)
