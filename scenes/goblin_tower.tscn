@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://dcytdxradoou"]
+
+[ext_resource type="Texture2D" uid="uid://bqne2ahpntcts" path="res://assets/Factions/Goblins/Buildings/Wood_Tower/Wood_Tower_Red.png" id="1_goufs"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5rpyk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1sgx"]
+atlas = ExtResource("1_goufs")
+region = Rect2(0, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yhby"]
+atlas = ExtResource("1_goufs")
+region = Rect2(256, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_so8un"]
+atlas = ExtResource("1_goufs")
+region = Rect2(512, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12p3k"]
+atlas = ExtResource("1_goufs")
+region = Rect2(768, 0, 256, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_axajg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1sgx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yhby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_so8un")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_12p3k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btorx"]
+size = Vector2(84, 53)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rs72k"]
+size = Vector2(80, 141)
+
+[node name="GoblinTower" type="StaticBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_5rpyk")
+
+[node name="AnimatedGoblinTower" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_axajg")
+frame_progress = 0.436681
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 43.5)
+shape = SubResource("RectangleShape2D_btorx")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_rs72k")

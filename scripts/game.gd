@@ -14,15 +14,15 @@ func _unhandled_input(event):
 		var space_state = get_world_2d().direct_space_state
 		var query = PhysicsPointQueryParameters2D.new()
 		query.position = target_position
-		query.collide_with_areas = true  # Detects areas (units should have area colliders)
+		query.collide_with_areas = true  
 
 		var result = space_state.intersect_point(query)
 
 		for hit in result:
 			var collider = hit.get("collider", null)
-			if collider and collider is CharacterBody2D:
+			if collider and collider is CharacterBody2D and not collider.is_in_group('trees'):
 				change_selected_unit(collider)
-				return  # Stop further processing, prevent movement trigger
+				return 
 
 		# Move only if clicking on empty ground
 		if selected_unit:
@@ -36,7 +36,7 @@ func request_entity_movement(entity_id, target_position):
 func change_selected_unit(new_unit):
 	print("selection changed")
 	# Deselect the old unit
-	if selected_unit and selected_unit != new_unit:
+	if selected_unit and selected_unit != new_unit :
 		selected_unit.deselect()
 	# Set the new selection
 	selected_unit = new_unit
@@ -47,5 +47,5 @@ func deselect_current_unit():
 	if selected_unit:
 		selected_unit.deselect()
 		selected_unit = null
-		emit_signal("selection_changed", null)
+		emit_signal("selection_changed 1", null)
 	
