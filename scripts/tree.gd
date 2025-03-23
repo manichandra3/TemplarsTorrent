@@ -6,57 +6,71 @@ enum STATE {
 	CHOPPED
 }
 
-@export var secs_to_grow: float = 50.0  # Time taken to regrow
-@export var chopping_duration: float = 10.0  # Duration of the chopping process
+@export var secs_to_grow: float = 50.0
+@export var chopping_duration: float = 10.0
 
 @onready var animated_sprite: AnimatedSprite2D = $tree_animated
 
-var state = STATE.GROWN  # Current state of the tree
-var chopping_pawn: Node2D = null  # The pawn currently chopping this tree
-var chopping_task: SceneTreeTimer = null  # Timer for the chopping action
+var state = STATE.GROWN
+var chopping_pawn: Node2D = null
+var chopping_task: SceneTreeTimer = null
+var is_regrowth_scheduled: bool = false
 
-func _ready() -> void:
+func _ready():
 	add_to_group("trees")
 	update_animation()
 
 func chop_tree(pawn: Node2D):
 	if state != STATE.GROWN or chopping_pawn:
-		return 
-
+		return
+	
 	print("chop_tree() is running")
 	state = STATE.CHOPPING
 	chopping_pawn = pawn
 	update_animation()
-
-	# Start chopping timer
+	
+	# Clear existing timer if any
+	if chopping_task and chopping_task.time_left > 0:
+		chopping_task = null
+	
 	chopping_task = get_tree().create_timer(chopping_duration)
+	var task = chopping_task  # Store reference to compare later
 	await chopping_task.timeout
+	
+	# Only complete chopping if this is still the active task and the same pawn
+	if task == chopping_task and chopping_pawn == pawn:
+		complete_chopping()
 
-	# If the pawn was interrupted, stop chopping
-	if chopping_pawn != pawn:
-		return  
-
+func complete_chopping():
 	state = STATE.CHOPPED
 	update_animation()
 	chopping_pawn = null
-	
-	# Start regrowth timer
+	chopping_task = null
 	start_regrowth()
 
 func stop_chopping(pawn: Node2D):
-	if chopping_pawn == pawn:
-		print("Chopping interrupted!")
-		chopping_pawn = null
-		state = STATE.GROWN  # Reset state to GROWN if interrupted
-		update_animation()
-		if chopping_task and chopping_task.time_left > 0:
-			chopping_task = null
-
-func start_regrowth():
-	await get_tree().create_timer(secs_to_grow).timeout
-	
+	if chopping_pawn != pawn:
+		return
+		
+	chopping_pawn = null
 	state = STATE.GROWN
 	update_animation()
+	
+	# Cancel any pending chop completion
+	chopping_task = null
+
+func start_regrowth():
+	if is_regrowth_scheduled:
+		return
+		
+	is_regrowth_scheduled = true
+	await get_tree().create_timer(secs_to_grow).timeout
+	is_regrowth_scheduled = false
+	
+	# Only regrow if we're still in chopped state
+	if state == STATE.CHOPPED:
+		state = STATE.GROWN
+		update_animation()
 
 func is_grown() -> bool:
 	return state == STATE.GROWN

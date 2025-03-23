@@ -58,8 +58,8 @@ func set_movement_target(movement_target: Vector2):
 	# Check if clicked on an enemy
 	for hit in result:
 		var collider = hit.get("collider", null)
-		if collider and collider.is_in_group("spawners"):
-			print("spawner found")
+		if collider and collider.is_in_group("goblins"):
+			print("enemy found")
 			target_enemy = collider
 			break 
 	navigation_agent.target_position = movement_target

@@ -14,10 +14,10 @@ var target: Node2D = null
 var current_state: AI_STATE = AI_STATE.IDLE
 
 @onready var navigation_agent = $NavigationAgent2D
-@onready var sprite = $AnimatedSprite2D
+@onready var sprite = $AnimatedTorchGoblin
 
 func _ready():
-	add_to_group('goblin')
+	add_to_group('goblins')
 	navigation_agent.path_desired_distance = 5.0
 	navigation_agent.target_desired_distance = 6.0
 	navigation_agent.avoidance_enabled = true
@@ -54,7 +54,7 @@ func chase_target(delta):
 	velocity = (next_position - global_position).normalized() * speed
 	move_and_slide()
 	
-	sprite.play("run")  # Play walking animation
+	sprite.play("run")  
 	sprite.flip_h = velocity.x < 0
 
 func attack_target():

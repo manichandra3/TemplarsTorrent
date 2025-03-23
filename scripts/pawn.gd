@@ -52,15 +52,13 @@ func _on_entity_move_requested(entity_id: int, target_position: Vector2):
 
 func _on_selection_changed(new_selected):
 	is_selected = (new_selected == self)
-	animated_sprite.modulate = Color(1, 1, 0) if is_selected else Color(1, 1, 1)
+	animated_sprite.self_modulate = Color(1, 1, 0) if is_selected else Color(1, 1, 1)
 
 func set_movement_target(movement_target: Vector2):
 	# Cancel chopping if moving elsewhere
 	if current_state == PAWN_STATE.CHOPPING:
 		print("Chopping interrupted: Moving to new target.")
-		is_chopping = false
-		if chopping_task:
-			chopping_task.timeout.disconnect(_on_chopping_complete)
+		stop_chopping()
 		change_state(PAWN_STATE.RUNNING)
 
 	# Reset target tree detection
@@ -83,10 +81,19 @@ func set_movement_target(movement_target: Vector2):
 	if navigation_agent.is_navigation_finished():
 		change_state(PAWN_STATE.IDLE)
 	elif target_tree:
-		change_state(PAWN_STATE.CHOPPING)
+		change_state(PAWN_STATE.RUNNING)  # Start with running, we'll change to chopping when close enough
 	else:
 		change_state(PAWN_STATE.RUNNING)
 
+func stop_chopping():
+	is_chopping = false
+	if chopping_task:
+		if chopping_task.timeout.is_connected(_on_chopping_complete):
+			chopping_task.timeout.disconnect(_on_chopping_complete)
+		chopping_task = null
+	if target_tree:
+		target_tree.stop_chopping(self)
+		
 func _physics_process(delta):
 	match current_state:
 		PAWN_STATE.IDLE:
@@ -102,7 +109,11 @@ func handle_idle_state(_delta):
 
 func handle_running_state(delta):
 	if navigation_agent.is_navigation_finished():
+		if target_tree and target_tree.is_grown():
+			change_state(PAWN_STATE.CHOPPING)
+			return
 		change_state(PAWN_STATE.IDLE)
+		return
 
 	var next_path_position: Vector2 = navigation_agent.get_next_path_position()
 	var desired_velocity = global_position.direction_to(next_path_position) * movement_speed
@@ -120,31 +131,35 @@ func handle_chopping_state(_delta):
 		change_state(PAWN_STATE.IDLE)
 		return
 	
-	# Move closer to tree if too far
-	if global_position.distance_to(target_tree.global_position) > 30.0:
+	if global_position.distance_to(target_tree.global_position) > navigation_agent.target_desired_distance + 10:
+		# We're too far, move closer
 		set_movement_target(target_tree.global_position - Vector2(20, -10))
 		return  
 
 	if is_chopping:
 		return
 
-	# Start chopping process
 	if target_tree.is_grown():
 		is_chopping = true
 		animated_sprite.play("chopping")
 		target_tree.chop_tree(self)
 
-		# Cancel previous chopping task if any
-		if chopping_task:
+		if chopping_task and chopping_task.timeout.is_connected(_on_chopping_complete):
 			chopping_task.timeout.disconnect(_on_chopping_complete)
 		
-		# Start new chopping timer
 		chopping_task = get_tree().create_timer(chopping_duration)
 		chopping_task.timeout.connect(_on_chopping_complete)
+	else:
+		# Tree is not in a choppable state
+		change_state(PAWN_STATE.IDLE)
 
 func _on_chopping_complete():
 	print("Chopping complete")
 	is_chopping = false
+	if chopping_task:
+		if chopping_task.timeout.is_connected(_on_chopping_complete):
+			chopping_task.timeout.disconnect(_on_chopping_complete)
+		chopping_task = null
 	target_tree = null
 	change_state(PAWN_STATE.IDLE)
 
@@ -155,8 +170,8 @@ func change_state(new_state: PAWN_STATE):
 
 func select():
 	is_selected = true
-	animated_sprite.modulate = Color(1, 1, 0)
+	animated_sprite.self_modulate = Color(1, 1, 0)
 
 func deselect():
 	is_selected = false
-	animated_sprite.modulate = Color(1, 1, 1)
+	animated_sprite.self_modulate = Color(1, 1, 1)

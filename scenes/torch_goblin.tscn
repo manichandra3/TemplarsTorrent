@@ -1,7 +1,31 @@
-[gd_scene load_steps=18 format=3 uid="uid://peqrqph0ufbh"]
+[gd_scene load_steps=24 format=3 uid="uid://peqrqph0ufbh"]
 
 [ext_resource type="Script" uid="uid://durxnhhhphk20" path="res://scripts/torch_goblin.gd" id="1_6ulqy"]
 [ext_resource type="Texture2D" uid="uid://c6sofw7v73fhx" path="res://assets/Factions/Goblins/Troops/Torch/Red/Torch_Red.png" id="1_wuhk7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd4kn"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(0, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hdxf"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(192, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pw1n"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(384, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rfki"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(576, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyeee"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(768, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc3qd"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(960, 384, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ulqy"]
 atlas = ExtResource("1_wuhk7")
@@ -57,6 +81,29 @@ region = Rect2(960, 192, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kd4kn"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kd4kn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hdxf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4pw1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rfki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyeee")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc3qd")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6ulqy")
@@ -115,9 +162,8 @@ script = ExtResource("1_6ulqy")
 
 [node name="AnimatedTorchGoblin" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kd4kn")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
-frame_progress = 0.198078
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 21)
