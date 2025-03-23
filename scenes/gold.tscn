@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://ocgj677aalms"]
+
+[ext_resource type="Texture2D" uid="uid://b5kw3otn4le4u" path="res://assets/Resources/Gold Mine/GoldMine_Active.png" id="1_1p357"]
+[ext_resource type="Texture2D" uid="uid://c1s4b0spujb2s" path="res://assets/Resources/Gold Mine/GoldMine_Inactive.png" id="2_v68ff"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tshw"]
+atlas = ExtResource("1_1p357")
+region = Rect2(0, 0, 192, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfj8g"]
+atlas = ExtResource("2_v68ff")
+region = Rect2(0, 0, 192, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a23fd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tshw")
+}],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfj8g")
+}],
+"loop": true,
+"name": &"inactive",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oou0j"]
+radius = 48.0104
+
+[node name="GoldMine" type="CharacterBody2D"]
+
+[node name="GoldMineActive" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a23fd")
+animation = &"inactive"
+autoplay = "inactive"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_oou0j")

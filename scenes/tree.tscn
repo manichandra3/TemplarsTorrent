@@ -1,8 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://kpdyy60x23a4"]
 
 [ext_resource type="Texture2D" uid="uid://c4paebmc1unpu" path="res://assets/Resources/Trees/Tree.png" id="1_rk26q"]
-[ext_resource type="Script" path="res://scripts/tree.gd" id="2_pcn25"]
-[ext_resource type="Script" path="res://scripts/area_2d.gd" id="2_vw5by"]
+[ext_resource type="Script" uid="uid://ci7puf01i4nif" path="res://scripts/tree.gd" id="2_pcn25"]
+[ext_resource type="Script" uid="uid://bxsictfh85k34" path="res://scripts/area_2d.gd" id="2_vw5by"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tqac2"]
 atlas = ExtResource("1_rk26q")
@@ -78,6 +78,8 @@ size = Vector2(44, 165)
 radius = 19.0
 
 [node name="tree" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("2_pcn25")
 
 [node name="tree_animated" type="AnimatedSprite2D" parent="."]
@@ -94,3 +96,10 @@ shape = SubResource("RectangleShape2D_dyi2f")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 63)
 shape = SubResource("CircleShape2D_xwwbt")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+z_index = 1
+radius = 20.0
+vertices = PackedVector2Array(-23, 81, -23, 45, 21, 45, 22, 81)
+affect_navigation_mesh = true
+carve_navigation_mesh = true

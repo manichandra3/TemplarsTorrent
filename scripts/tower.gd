@@ -1,4 +1,4 @@
-extends AnimatedSprite2D
+extends CharacterBody2D
 enum TOWER_STATE{
 	CONSTRUCTED,
 	CONSTRUCTION,

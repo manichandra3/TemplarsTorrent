@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c4n15wbl6cd42"]
 
-[ext_resource type="Script" path="res://scripts/spawner.gd" id="1_ac2jw"]
+[ext_resource type="Script" uid="uid://c5jrlkuh31gkd" path="res://scripts/spawner.gd" id="1_ac2jw"]
 [ext_resource type="Texture2D" uid="uid://bfaa2xiow4oin" path="res://assets/UI/Buttons/Button_Blue.png" id="2_nsqh3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lkpwu"]

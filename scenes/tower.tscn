@@ -1,62 +1,47 @@
-[gd_scene load_steps=11 format=3 uid="uid://cn2fs5dixgdhj"]
+[gd_scene load_steps=8 format=3 uid="uid://cn2fs5dixgdhj"]
 
 [ext_resource type="Texture2D" uid="uid://co1s2y4418h17" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Blue.png" id="1_mdfvi"]
-[ext_resource type="Script" path="res://scripts/tower.gd" id="2_lcvft"]
-[ext_resource type="Texture2D" uid="uid://ch8wwuwgdayu5" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Construction.png" id="2_tpgf7"]
-[ext_resource type="Script" path="res://scripts/area_2d.gd" id="3_2pimi"]
-[ext_resource type="Texture2D" uid="uid://c1oahvh2bwo3n" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Destroyed.png" id="3_s0y1k"]
+[ext_resource type="Script" uid="uid://kbsyrpya2yrg" path="res://scripts/tower.gd" id="2_lcvft"]
+[ext_resource type="Script" uid="uid://bxsictfh85k34" path="res://scripts/area_2d.gd" id="3_2pimi"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_om501"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktxwe"]
 atlas = ExtResource("1_mdfvi")
 region = Rect2(0, 0, 128, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3ugb5"]
-atlas = ExtResource("2_tpgf7")
-region = Rect2(0, 0, 128, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h762d"]
-atlas = ExtResource("3_s0y1k")
-region = Rect2(0, 0, 128, 256)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_adsja"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_qrbg1"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_om501")
+"texture": SubResource("AtlasTexture_ktxwe")
 }],
 "loop": true,
-"name": &"constructed",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3ugb5")
-}],
-"loop": true,
-"name": &"construction",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h762d")
-}],
-"loop": true,
-"name": &"destroyed",
+"name": &"built",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p4niq"]
-size = Vector2(80, 143)
+size = Vector2(76, 143)
 
-[node name="tower" type="AnimatedSprite2D"]
-sprite_frames = SubResource("SpriteFrames_adsja")
-animation = &"constructed"
-autoplay = "constructed"
+[sub_resource type="CircleShape2D" id="CircleShape2D_jfguu"]
+radius = 32.1403
+
+[node name="tower" type="CharacterBody2D"]
+z_index = 2
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("2_lcvft")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qrbg1")
+animation = &"built"
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("3_2pimi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-2, 17.5)
+position = Vector2(0, 17.5)
 shape = SubResource("RectangleShape2D_p4niq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 63)
+shape = SubResource("CircleShape2D_jfguu")
