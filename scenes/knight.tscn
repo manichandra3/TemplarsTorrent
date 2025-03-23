@@ -392,7 +392,7 @@ radius = 15.0333
 
 [node name="knight_animated" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gjre8")
-animation = &"idle"
+animation = &"attacking_north_ltr"
 autoplay = "idle"
 
 [node name="Area2D" type="Area2D" parent="."]

@@ -8,9 +8,26 @@ var selected_unit: CharacterBody2D = null  # The currently selected unit
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var target_position = get_global_mouse_position()
+		
+		# Check if clicking on a selectable unit
+		var space_state = get_world_2d().direct_space_state
+		var query = PhysicsPointQueryParameters2D.new()
+		query.position = target_position
+		query.collide_with_areas = true  # Detects areas (units should have area colliders)
+
+		var result = space_state.intersect_point(query)
+
+		for hit in result:
+			var collider = hit.get("collider", null)
+			if collider and collider is CharacterBody2D:
+				change_selected_unit(collider)
+				return  # Stop further processing, prevent movement trigger
+
+		# Move only if clicking on empty ground
 		if selected_unit:
-			var target_position = get_global_mouse_position()
 			request_entity_movement(selected_unit.get_instance_id(), target_position)
+
 
 func request_entity_movement(entity_id, target_position):
 	print("entity move requested for entity with id ", entity_id, " with target position ", target_position)

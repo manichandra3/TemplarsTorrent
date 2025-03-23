@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://peqrqph0ufbh"]
+[gd_scene load_steps=39 format=3 uid="uid://peqrqph0ufbh"]
 
 [ext_resource type="Script" uid="uid://durxnhhhphk20" path="res://scripts/torch_goblin.gd" id="1_6ulqy"]
 [ext_resource type="Texture2D" uid="uid://c6sofw7v73fhx" path="res://assets/Factions/Goblins/Troops/Torch/Red/Torch_Red.png" id="1_wuhk7"]
+[ext_resource type="Texture2D" uid="uid://df8abhsxjexx" path="res://assets/Factions/Knights/Troops/Dead/Dead.png" id="3_6jeun"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kd4kn"]
 atlas = ExtResource("1_wuhk7")
@@ -26,6 +27,62 @@ region = Rect2(768, 384, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_rc3qd"]
 atlas = ExtResource("1_wuhk7")
 region = Rect2(960, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxkgq"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5nru"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkhac"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unmf1"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p711l"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lc4o2"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32wy1"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjxmp"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiww5"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgxyp"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tian4"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gllrq"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(512, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwftk"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(640, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etixp"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(768, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ulqy"]
 atlas = ExtResource("1_wuhk7")
@@ -102,7 +159,54 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
-"speed": 5.0
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxkgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5nru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkhac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_unmf1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p711l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lc4o2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32wy1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjxmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qiww5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgxyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tian4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gllrq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwftk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_etixp")
+}],
+"loop": true,
+"name": &"die",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -162,8 +266,10 @@ script = ExtResource("1_6ulqy")
 
 [node name="AnimatedTorchGoblin" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kd4kn")
-animation = &"attack"
+animation = &"die"
 autoplay = "idle"
+frame = 4
+frame_progress = 0.619231
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 21)
