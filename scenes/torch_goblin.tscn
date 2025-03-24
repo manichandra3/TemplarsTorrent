@@ -266,13 +266,14 @@ script = ExtResource("1_6ulqy")
 
 [node name="AnimatedTorchGoblin" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kd4kn")
-animation = &"die"
+animation = &"idle"
 autoplay = "idle"
-frame = 4
-frame_progress = 0.619231
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 21)
 shape = SubResource("CircleShape2D_5hdxf")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

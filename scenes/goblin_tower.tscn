@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://dcytdxradoou"]
+[gd_scene load_steps=11 format=3 uid="uid://dcytdxradoou"]
 
+[ext_resource type="Script" uid="uid://cgyuvav1u3c6e" path="res://scripts/goblin_tower.gd" id="1_5rpyk"]
 [ext_resource type="Texture2D" uid="uid://bqne2ahpntcts" path="res://assets/Factions/Goblins/Buildings/Wood_Tower/Wood_Tower_Red.png" id="1_goufs"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5rpyk"]
@@ -47,7 +48,9 @@ size = Vector2(84, 53)
 size = Vector2(80, 141)
 
 [node name="GoblinTower" type="StaticBody2D"]
+z_index = 1
 physics_material_override = SubResource("PhysicsMaterial_5rpyk")
+script = ExtResource("1_5rpyk")
 
 [node name="AnimatedGoblinTower" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_axajg")

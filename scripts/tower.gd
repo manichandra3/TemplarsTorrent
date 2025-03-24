@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends StaticBody2D
 enum TOWER_STATE{
 	CONSTRUCTED,
 	CONSTRUCTION,

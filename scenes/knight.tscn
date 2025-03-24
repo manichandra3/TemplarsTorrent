@@ -386,9 +386,12 @@ animations = [{
 radius = 32.1403
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ifmi"]
-radius = 15.0333
+radius = 18.0278
 
 [node name="knight" type="CharacterBody2D"]
+collision_mask = 7
+motion_mode = 1
+wall_min_slide_angle = 0.0
 
 [node name="knight_animated" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gjre8")
@@ -407,3 +410,4 @@ position = Vector2(-1, 17)
 shape = SubResource("CircleShape2D_7ifmi")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true

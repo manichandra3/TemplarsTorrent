@@ -31,19 +31,27 @@ func chop_tree(pawn: Node2D):
 	
 	# Clear existing timer if any
 	if chopping_task and chopping_task.time_left > 0:
+		chopping_task.timeout.disconnect(_on_chopping_complete)
 		chopping_task = null
 	
 	chopping_task = get_tree().create_timer(chopping_duration)
-	var task = chopping_task  # Store reference to compare later
-	await chopping_task.timeout
-	
-	# Only complete chopping if this is still the active task and the same pawn
-	if task == chopping_task and chopping_pawn == pawn:
+	chopping_task.timeout.connect(_on_chopping_complete.bind(pawn))
+
+func _on_chopping_complete(pawn: Node2D):
+	# Only complete chopping if this pawn is still the active chopper
+	if chopping_pawn == pawn:
 		complete_chopping()
 
 func complete_chopping():
 	state = STATE.CHOPPED
 	update_animation()
+	
+	# Notify the game to add wood (5 per tree)
+	if chopping_pawn:
+		var game = get_node_or_null("/root/game")
+		if game and game.has_method("add_wood"):
+			game.add_wood(5)
+	
 	chopping_pawn = null
 	chopping_task = null
 	start_regrowth()
@@ -52,12 +60,14 @@ func stop_chopping(pawn: Node2D):
 	if chopping_pawn != pawn:
 		return
 		
+	# Disconnect and clear the chopping task
+	if chopping_task:
+		chopping_task.timeout.disconnect(_on_chopping_complete)
+		chopping_task = null
+	
 	chopping_pawn = null
 	state = STATE.GROWN
 	update_animation()
-	
-	# Cancel any pending chop completion
-	chopping_task = null
 
 func start_regrowth():
 	if is_regrowth_scheduled:
@@ -67,13 +77,12 @@ func start_regrowth():
 	await get_tree().create_timer(secs_to_grow).timeout
 	is_regrowth_scheduled = false
 	
-	# Only regrow if we're still in chopped state
 	if state == STATE.CHOPPED:
 		state = STATE.GROWN
 		update_animation()
 
 func is_grown() -> bool:
-	return state == STATE.GROWN
+	return state == STATE.GROWN or state == STATE.CHOPPING
 
 func update_animation():
 	match state:

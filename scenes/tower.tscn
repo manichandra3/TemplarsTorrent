@@ -25,7 +25,7 @@ size = Vector2(76, 143)
 [sub_resource type="CircleShape2D" id="CircleShape2D_jfguu"]
 radius = 32.1403
 
-[node name="tower" type="CharacterBody2D"]
+[node name="tower" type="StaticBody2D"]
 z_index = 2
 collision_layer = 4
 collision_mask = 3
