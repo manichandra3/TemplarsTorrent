@@ -11,13 +11,25 @@ config_version=5
 [application]
 
 config/name="surge of power"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="uid://c2fx58yowisjd"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Game="*res://scripts/game.gd"
+AppConfig="*res://addons/maaacks_menus_template/base/scenes/autoloads/app_config.tscn"
+SceneLoader="*res://addons/maaacks_menus_template/base/scenes/autoloads/scene_loader.tscn"
+ProjectMusicController="*res://addons/maaacks_menus_template/base/scenes/autoloads/project_music_controller.tscn"
+ProjectUISoundController="*res://addons/maaacks_menus_template/base/scenes/autoloads/project_ui_sound_controller.tscn"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/maaacks_menus_template/plugin.cfg")
+
+[gui]
+
+theme/custom="res://resources/themes/lab.tres"
 
 [input]
 
@@ -52,11 +64,20 @@ mouse_down={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://addons/maaacks_menus_template/base/translations/menus_translations.en.translation", "res://addons/maaacks_menus_template/base/translations/menus_translations.fr.translation")
+
 [layer_names]
 
 2d_physics/layer_1="players"
 2d_physics/layer_2="enemies"
 2d_physics/layer_3="terrain"
+
+[maaacks_menus_template]
+
+disable_plugin_dialogues=true
+copy_path="res://"
 
 [rendering]
 

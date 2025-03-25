@@ -8,7 +8,6 @@ enum STATE {
 
 @export var secs_to_grow: float = 50.0
 @export var chopping_duration: float = 10.0
-
 @onready var animated_sprite: AnimatedSprite2D = $tree_animated
 
 var state = STATE.GROWN
@@ -45,13 +44,9 @@ func _on_chopping_complete(pawn: Node2D):
 func complete_chopping():
 	state = STATE.CHOPPED
 	update_animation()
-	
 	# Notify the game to add wood (5 per tree)
 	if chopping_pawn:
-		var game = get_node_or_null("/root/game")
-		if game and game.has_method("add_wood"):
-			game.add_wood(5)
-	
+		Game.add_wood(5)
 	chopping_pawn = null
 	chopping_task = null
 	start_regrowth()
@@ -59,12 +54,10 @@ func complete_chopping():
 func stop_chopping(pawn: Node2D):
 	if chopping_pawn != pawn:
 		return
-		
 	# Disconnect and clear the chopping task
 	if chopping_task:
 		chopping_task.timeout.disconnect(_on_chopping_complete)
 		chopping_task = null
-	
 	chopping_pawn = null
 	state = STATE.GROWN
 	update_animation()
@@ -92,3 +85,8 @@ func update_animation():
 			animated_sprite.play("chopping")
 		STATE.CHOPPED:
 			animated_sprite.play("chopped")
+			
+func collect_wood(amount: int):
+	var main = get_tree().get_first_node_in_group("main")
+	if main:
+		main.add_wood(amount)

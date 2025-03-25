@@ -258,8 +258,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5hdxf"]
-radius = 14.0357
+[sub_resource type="CircleShape2D" id="CircleShape2D_6jeun"]
+radius = 13.1529
 
 [node name="TorchGoblin" type="CharacterBody2D"]
 script = ExtResource("1_6ulqy")
@@ -270,10 +270,12 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 21)
-shape = SubResource("CircleShape2D_5hdxf")
+position = Vector2(0, 18)
+shape = SubResource("CircleShape2D_6jeun")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
+radius = 30.0
+avoidance_mask = 7
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

@@ -6,13 +6,15 @@ enum KNIGHT_STATE {
 	ATTACKING
 }
 
-@export var health: float = 20.0
+@export var health: float = 150.0
 @export var movement_speed: float = 200.0 
 @export var acceleration: float = 500.0
-@export var attack_damage: float = 5.0
+@export var attack_damage: float = 20.0
 @export var attack_cooldown: float = 1.0
 @export var entity_type: String = "knight"
 @export var detection_radius: float = 150.0  # Auto-detect range
+# NEW: The distance at which the knight prefers to attack from.
+@export var preferred_attack_distance: float = 50.0
 
 var current_state: KNIGHT_STATE = KNIGHT_STATE.IDLE
 var is_selected: bool = false
@@ -161,27 +163,30 @@ func handle_attacking_state(_delta):
 
 	var direction = (target_enemy.global_position - global_position).normalized()
 	var distance_to_enemy = global_position.distance_to(target_enemy.global_position)
+	# Define a tolerance (in pixels) around the preferred attack distance.
+	var tolerance = 10.0
 
-	if distance_to_enemy > 30.0:
-		# Chase the enemy if it's too far
-		navigation_agent.target_position = target_enemy.global_position
+	# Instead of approaching until too close, we maintain the preferred attack distance.
+	if abs(distance_to_enemy - preferred_attack_distance) > tolerance:
+		# Calculate a target position that is exactly 'preferred_attack_distance' away from the enemy.
+		var target_position = target_enemy.global_position - direction * preferred_attack_distance
+		navigation_agent.target_position = target_position
 		var next_path_position = navigation_agent.get_next_path_position()
 		var desired_velocity = global_position.direction_to(next_path_position) * movement_speed
 		velocity = velocity.move_toward(desired_velocity, acceleration * _delta)
-
 		animated_sprite.play("running")
 		animated_sprite.flip_h = velocity.x < 0
 		move_and_slide()
 		return
 
-	# Stop moving and start attacking
+	# At the proper distance: stop moving and attack.
 	velocity = Vector2.ZERO
 	_play_attack_animation(direction)
-
 	if not is_attacking:
 		perform_attack()
 
 func _play_attack_animation(direction: Vector2):
+	# For now, use the same animation for both directions; flip based on attack direction.
 	if direction.x < 0:
 		animated_sprite.play("attacking_west_rtl")
 		animated_sprite.flip_h = true
@@ -192,13 +197,11 @@ func _play_attack_animation(direction: Vector2):
 func perform_attack():
 	is_attacking = true
 	attack_timer.start()
-
 	if target_enemy and is_instance_valid(target_enemy) and target_enemy.has_method("take_damage"):
 		target_enemy.take_damage(attack_damage)
 
 func _on_attack_cooldown_finished():
 	is_attacking = false
-	
 	if current_state == KNIGHT_STATE.ATTACKING and target_enemy and is_instance_valid(target_enemy):
 		perform_attack()  # Continue attacking if still in range
 
@@ -217,14 +220,12 @@ func deselect():
 
 func take_damage(damage: float):
 	health -= damage
-	
 	if current_state != KNIGHT_STATE.ATTACKING and current_state != KNIGHT_STATE.RUNNING:
 		for goblin in get_tree().get_nodes_in_group("goblins"):
 			if goblin.target == self:
 				target_enemy = goblin
 				change_state(KNIGHT_STATE.ATTACKING)
 				break
-	
 	if health <= 0:
 		die()
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://c2fx58yowisjd"]
+[gd_scene load_steps=44 format=4 uid="uid://c2fx58yowisjd"]
 
 [ext_resource type="Script" uid="uid://n0cgo87bcrvm" path="res://scripts/game.gd" id="1_1nr38"]
 [ext_resource type="Texture2D" uid="uid://d4hv74kf01de2" path="res://assets/Terrain/Ground/Tilemap_Flat.png" id="1_6uvsd"]
@@ -15,12 +15,14 @@
 [ext_resource type="Script" uid="uid://dcfmbvkf3gaq8" path="res://scripts/camera_2d.gd" id="9_22u4b"]
 [ext_resource type="PackedScene" uid="uid://b85dy8g1jici5" path="res://scenes/pawn.tscn" id="12_wlud3"]
 [ext_resource type="PackedScene" uid="uid://kpdyy60x23a4" path="res://scenes/tree.tscn" id="13_5dmc4"]
-[ext_resource type="PackedScene" uid="uid://c4n15wbl6cd42" path="res://scenes/spawner.tscn" id="14_i5mmb"]
 [ext_resource type="PackedScene" uid="uid://ceurlkkn548e" path="res://scenes/castle.tscn" id="14_uxdpu"]
-[ext_resource type="Texture2D" uid="uid://0fetbfub0qar" path="res://assets/UI/Buttons/Button_Red.png" id="15_5newe"]
 [ext_resource type="PackedScene" uid="uid://cn2fs5dixgdhj" path="res://scenes/tower.tscn" id="15_bl3tq"]
+[ext_resource type="PackedScene" uid="uid://irxr4fmj03af" path="res://scenes/ui.tscn" id="15_bt5mj"]
+[ext_resource type="Texture2D" uid="uid://bht3rxvip1fqa" path="res://assets/UI/Ribbons/Ribbon_Red_Connection_Down.png" id="16_bhx41"]
 [ext_resource type="PackedScene" uid="uid://ddnds58mf3qeh" path="res://scenes/knight.tscn" id="17_knedm"]
-[ext_resource type="Script" uid="uid://cq4wdhu0mpq7y" path="res://scripts/knight.gd" id="18_wu8ji"]
+[ext_resource type="Texture2D" uid="uid://3finlf06eeer" path="res://assets/UI/Ribbons/Ribbon_Blue_Connection_Down.png" id="17_qnb83"]
+[ext_resource type="Texture2D" uid="uid://cp42od6y37emu" path="res://assets/UI/Ribbons/Ribbon_Yellow_Connection_Down.png" id="18_sww3w"]
+[ext_resource type="Script" uid="uid://bcpyk5nxadwf8" path="res://scripts/wood_label.gd" id="19_bhx41"]
 [ext_resource type="PackedScene" uid="uid://ocgj677aalms" path="res://scenes/gold.tscn" id="22_37s47"]
 [ext_resource type="PackedScene" uid="uid://peqrqph0ufbh" path="res://scenes/torch_goblin.tscn" id="23_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://dcytdxradoou" path="res://scenes/goblin_tower.tscn" id="24_e1j6l"]
@@ -409,37 +411,65 @@ use_parent_material = true
 tile_map_data = PackedByteArray("AADv/wIABAAAAAAAAADy/wIABAACAAAAAADw/wIABAABAAAAAADx/wIABAABAAAAAADv/wMABAAAAAAAAADw/wMABAABAAAAAADy/wMABAACAAAAAADx/wMABAABAAAAAAALAPz/BAAAAAAAAAALAP3/BAAAAAAAAAAOAPz/BAACAAAAAAAOAP3/BAACAAAAAAAMAPz/BAABAAAAAAANAPz/BAABAAAAAAAMAP3/BAABAAAAAAANAP3/BAABAAAAAAA=")
 tile_set = SubResource("TileSet_gm368")
 
+[node name="Decoration" type="TileMapLayer" parent="TileMap"]
+use_parent_material = true
+tile_set = SubResource("TileSet_gm368")
+
 [node name="castle" parent="." instance=ExtResource("14_uxdpu")]
-position = Vector2(-232, 799)
+position = Vector2(-1679, 2)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("9_22u4b")
 
-[node name="spawner" parent="Camera2D" instance=ExtResource("14_i5mmb")]
-z_index = 6
-position = Vector2(-470, -288)
+[node name="UI" parent="Camera2D" instance=ExtResource("15_bt5mj")]
+script = null
 
-[node name="Button" type="Button" parent="Camera2D"]
-z_index = 6
-offset_left = -576.0
-offset_top = -325.0
-offset_right = -504.0
-offset_bottom = -253.0
-icon = ExtResource("15_5newe")
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/UI"]
+z_index = 4
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="cancel_selection" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "X"
+icon = ExtResource("16_bhx41")
+
+[node name="spawn_pawn" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Pw"
+icon = ExtResource("17_qnb83")
+
+[node name="spawn_knight" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Kn"
+icon = ExtResource("18_sww3w")
+
+[node name="WoodLabel" type="Label" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Wood: 0"
+script = ExtResource("19_bhx41")
+
+[node name="GoldLabel" type="Label" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Gold: 0"
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_37s47")
 
 [node name="tower" parent="." instance=ExtResource("15_bl3tq")]
-position = Vector2(-1384, -279)
+position = Vector2(-1203, 350)
 
 [node name="tower2" parent="." instance=ExtResource("15_bl3tq")]
-position = Vector2(-1736, -250)
+position = Vector2(-1376, -117)
 
 [node name="knight" parent="." instance=ExtResource("17_knedm")]
 position = Vector2(-1553, -180)
-script = ExtResource("18_wu8ji")
 
 [node name="GoldMine" parent="." instance=ExtResource("22_37s47")]
 
@@ -462,16 +492,16 @@ position = Vector2(-1250, -187)
 position = Vector2(-1090, -130)
 
 [node name="tree4" parent="." instance=ExtResource("13_5dmc4")]
-position = Vector2(-1177, -43)
+position = Vector2(-1263, -594)
 
 [node name="TorchGoblin" parent="." instance=ExtResource("23_bt5mj")]
 position = Vector2(-1109, -740)
 
 [node name="GoblinTower" parent="." instance=ExtResource("24_e1j6l")]
-position = Vector2(-1004, -854)
+position = Vector2(-987, -923)
 
 [node name="GoblinTower2" parent="." instance=ExtResource("24_e1j6l")]
-position = Vector2(-305, -835)
+position = Vector2(-349, -907)
 
 [node name="TorchGoblin2" parent="." instance=ExtResource("23_bt5mj")]
 position = Vector2(-951, -719)
@@ -481,3 +511,7 @@ position = Vector2(-1180, -880)
 
 [node name="TorchGoblin4" parent="." instance=ExtResource("23_bt5mj")]
 position = Vector2(-451, -839)
+
+[connection signal="pressed" from="Camera2D/UI/HBoxContainer/cancel_selection" to="." method="_on_cancel_selection_pressed"]
+[connection signal="pressed" from="Camera2D/UI/HBoxContainer/spawn_pawn" to="." method="_on_spawn_pawn_pressed"]
+[connection signal="pressed" from="Camera2D/UI/HBoxContainer/spawn_knight" to="." method="_on_spawn_knight_pressed"]

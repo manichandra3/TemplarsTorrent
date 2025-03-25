@@ -1,4 +1,4 @@
-extends Node2D
+extends Button
 
 @export var health: float = 10
 @export var pawn_scene: PackedScene = load("res://scenes/pawn.tscn")
@@ -11,11 +11,27 @@ signal unit_spawned(unit)
 
 func _ready():
 	add_to_group("spawners")
-	# Find the castle node
 	castle = get_tree().get_first_node_in_group("castle")
 	if not castle:
 		push_error("Castle not found! Make sure it's in the 'castle' group")
 		return
+	
+	var button = Button.new()
+	button.text = "Spawn Pawn"
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	button.pressed.connect(spawn_unit)
+	
+	var canvas_layer = CanvasLayer.new()
+	var control = Control.new()
+	control.anchor_bottom = 1.0
+	control.anchor_right = 1.0
+	control.margin_bottom = -20
+	control.margin_right = -150
+	control.add_child(button)
+	
+	canvas_layer.add_child(control)
+	add_child(canvas_layer)
 
 func spawn_unit():
 	if not pawn_scene:
@@ -30,19 +46,16 @@ func spawn_unit():
 		print("Max units reached (", max_units, ")")
 		return
 	
-	# Calculate spawn position with random variation
 	var random_variation = Vector2(
 		randf_range(-spawn_variation, spawn_variation),
 		randf_range(-spawn_variation, spawn_variation)
 	)
 	var spawn_pos = castle.global_position + spawn_offset + random_variation
 	
-	# Create and position the new pawn
 	var new_pawn = pawn_scene.instantiate()
 	new_pawn.global_position = spawn_pos
 	get_parent().add_child(new_pawn) 
 	
-	# Track and clean up the unit
 	spawned_units.append(new_pawn)
 	unit_spawned.emit(new_pawn)
 	new_pawn.tree_exited.connect(_on_pawn_exited.bind(new_pawn))
@@ -50,18 +63,3 @@ func spawn_unit():
 func _on_pawn_exited(pawn: Node):
 	if pawn in spawned_units:
 		spawned_units.erase(pawn)
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var space_state = get_world_2d().direct_space_state
-		var query = PhysicsPointQueryParameters2D.new()
-		query.position = get_global_mouse_position()
-		var result = space_state.intersect_point(query)
-		
-		for hit in result:
-			var collider = hit.get("collider", null)
-			if collider and collider.is_in_group("spawners"):
-				print("Spawning new unit at castle location")
-				spawn_unit()
-				get_viewport().set_input_as_handled()
-				return

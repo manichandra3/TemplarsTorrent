@@ -113,7 +113,7 @@ func handle_running_state(delta):
 	move_and_slide()
 
 func handle_chopping_state(_delta):
-	if not target_tree and not target_tree.is_grown():
+	if not target_tree or not target_tree.is_grown():
 		print("change instance 1")
 		change_state(PAWN_STATE.IDLE)
 		return

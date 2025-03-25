@@ -11,9 +11,9 @@ enum AI_STATE {
 @export var attack_range: float = 50.0  
 @export var detection_radius: float = 200.0  
 @export var max_distance_from_tower: float = 350.0  
-@export var health: float = 15.0  
+@export var health: float = 100.0  
 @export var attack_damage: float = 10.0  
-@export var attack_cooldown: float = 1.0  
+@export var attack_cooldown: float = 2.0  
 
 var target: Node2D = null
 var home_tower: Node2D = null
@@ -41,14 +41,6 @@ func _ready():
 	attack_timer.timeout.connect(_on_attack_cooldown_finished)
 	add_child(attack_timer)
 	
-	# Set up wander timer for random movement
-	wander_timer = Timer.new()
-	wander_timer.wait_time = randf_range(3.0, 7.0)  # Randomize wandering intervals
-	wander_timer.timeout.connect(_on_wander_timeout)
-	wander_timer.start()
-	add_child(wander_timer)
-	
-	# Find parent tower on initialization
 	find_home_tower()
 
 func find_home_tower():
@@ -172,25 +164,37 @@ func look_for_target():
 		find_home_tower()
 		return
 		
-	var nearby_units = get_tree().get_nodes_in_group("pawns")
 	var closest_distance = INF
 	var closest_unit = null
-	
-	for unit in nearby_units:
-		if not is_instance_valid(unit):
+
+	# Check knights first (higher priority)
+	for knight in get_tree().get_nodes_in_group("knights"):
+		if not is_instance_valid(knight):
 			continue
 			
-		var distance = global_position.distance_to(unit.global_position)
+		var distance = global_position.distance_to(knight.global_position)
+		var distance_from_tower = knight.global_position.distance_to(home_tower.global_position)
 		
-		# Only consider targets within detection radius
-		var distance_from_tower = unit.global_position.distance_to(home_tower.global_position)
 		if distance < detection_radius and distance < closest_distance and distance_from_tower <= max_distance_from_tower:
 			closest_distance = distance
-			closest_unit = unit
-	
+			closest_unit = knight
+
+	# If no knights found, check pawns
+	if closest_unit == null:
+		for pawn in get_tree().get_nodes_in_group("pawns"):
+			if not is_instance_valid(pawn):
+				continue
+				
+			var distance = global_position.distance_to(pawn.global_position)
+			var distance_from_tower = pawn.global_position.distance_to(home_tower.global_position)
+			
+			if distance < detection_radius and distance < closest_distance and distance_from_tower <= max_distance_from_tower:
+				closest_distance = distance
+				closest_unit = pawn
+
 	# 20% chance to "miss" spotting a nearby enemy
-	if closest_unit and randf() > 0.2:
-		target = closest_unit
+		if closest_unit and randf() > 0.2:
+			target = closest_unit
 		change_state(AI_STATE.CHASING)
 
 func _on_attack_cooldown_finished():
@@ -216,18 +220,3 @@ func take_damage(damage: float):
 func die():
 	print("Goblin died!")
 	queue_free()
-
-# Random wandering behavior
-func _on_wander_timeout():
-	if current_state == AI_STATE.IDLE:
-		# 50% chance to move in a random direction
-		if randf() > 0.5:
-			var random_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
-			var wander_target = global_position + (random_direction * randf_range(20, 50))
-			navigation_agent.target_position = wander_target
-			sprite.play("run")
-			move_and_slide()
-	
-	# Reset timer with a new random interval
-	wander_timer.wait_time = randf_range(3.0, 7.0)
-	wander_timer.start()
