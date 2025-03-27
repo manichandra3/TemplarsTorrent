@@ -7,6 +7,7 @@ enum AI_STATE {
 	RETURNING
 }
 
+@export_enum("Neutral","Enemy") var type : int = 0
 @export var speed: float = 100.0
 @export var attack_range: float = 50.0  
 @export var detection_radius: float = 200.0  
@@ -20,7 +21,6 @@ var home_tower: Node2D = null
 var current_state: AI_STATE = AI_STATE.IDLE
 var is_attacking: bool = false
 var attack_timer: Timer = null
-var wander_timer: Timer = null
 var random_offset: Vector2 = Vector2.ZERO
 
 @onready var navigation_agent = $NavigationAgent2D

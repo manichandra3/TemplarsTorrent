@@ -262,6 +262,8 @@ animations = [{
 radius = 13.1529
 
 [node name="TorchGoblin" type="CharacterBody2D"]
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_6ulqy")
 
 [node name="AnimatedTorchGoblin" type="AnimatedSprite2D" parent="."]
