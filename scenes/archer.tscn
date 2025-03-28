@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dw4tsed1ke1ih"]
+[gd_scene load_steps=28 format=3 uid="uid://dw4tsed1ke1ih"]
 
 [ext_resource type="Texture2D" uid="uid://bcgdayabvpnnn" path="res://assets/Factions/Knights/Troops/Archer/Blue/Archer_Blue.png" id="1_b0l3x"]
 [ext_resource type="Script" uid="uid://djdbbuisfmbit" path="res://scripts/archer.gd" id="1_orquw"]
@@ -168,6 +168,9 @@ radius = 18.1108
 [sub_resource type="CircleShape2D" id="CircleShape2D_6mylm"]
 radius = 24.5153
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_orquw"]
+radius = 170.95
+
 [node name="Archer" type="CharacterBody2D"]
 script = ExtResource("1_orquw")
 
@@ -188,3 +191,8 @@ position = Vector2(-1, 9)
 shape = SubResource("CircleShape2D_6mylm")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="EnemyDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector"]
+shape = SubResource("CircleShape2D_orquw")

@@ -514,7 +514,7 @@ position = Vector2(-1180, -880)
 position = Vector2(-451, -839)
 
 [node name="Archer" parent="." instance=ExtResource("27_qnb83")]
-position = Vector2(-1404, -684)
+position = Vector2(-1377, -754)
 
 [connection signal="pressed" from="Camera2D/UI/HBoxContainer/cancel_selection" to="." method="_on_cancel_selection_pressed"]
 [connection signal="pressed" from="Camera2D/UI/HBoxContainer/spawn_pawn" to="." method="_on_spawn_pawn_pressed"]

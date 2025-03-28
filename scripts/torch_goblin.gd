@@ -212,8 +212,8 @@ func change_state(new_state: AI_STATE):
 			is_attacking = false
 
 func take_damage(damage: float):
+	print("take damage method called in gob")
 	health -= damage
-	
 	if health <= 0:
 		die()
 

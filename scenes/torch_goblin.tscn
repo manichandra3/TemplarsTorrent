@@ -259,7 +259,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6jeun"]
-radius = 13.1529
+radius = 25.1794
 
 [node name="TorchGoblin" type="CharacterBody2D"]
 motion_mode = 1
@@ -272,7 +272,7 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 18)
+position = Vector2(0, 14)
 shape = SubResource("CircleShape2D_6jeun")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

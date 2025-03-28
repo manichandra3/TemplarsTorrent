@@ -25,6 +25,7 @@ size = Vector2(59, 10)
 script = ExtResource("1_23jat")
 atk = 15
 speed = 200
+remove_when_static_body = false
 metadata/_custom_type_script = "uid://cfa6nu6lgd8bt"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -25,7 +25,7 @@ ProjectUISoundController="*res://addons/maaacks_menus_template/base/scenes/autol
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/NZ_projectiles/plugin.cfg", "res://addons/maaacks_menus_template/plugin.cfg")
+enabled=PackedStringArray("res://addons/NZ_projectiles/plugin.cfg", "res://addons/maaacks_menus_template/plugin.cfg", "res://addons/simple_health_bar/plugin.cfg")
 
 [gui]
 
