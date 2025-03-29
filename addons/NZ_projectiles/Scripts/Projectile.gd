@@ -38,6 +38,8 @@ func _physics_process(delta: float):
 
 func move(delta: float) -> void:
 	velocity = direction.normalized() * speed
+	var angle = -get_angle_to(direction)
+	rotate(angle)
 	position += velocity * delta  
 
 func set_everything() -> void:

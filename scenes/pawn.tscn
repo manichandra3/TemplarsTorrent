@@ -1,8 +1,9 @@
-[gd_scene load_steps=43 format=3 uid="uid://b85dy8g1jici5"]
+[gd_scene load_steps=44 format=3 uid="uid://b85dy8g1jici5"]
 
 [ext_resource type="Texture2D" uid="uid://bwockk18me018" path="res://assets/Factions/Knights/Troops/Pawn/Blue/Pawn_Blue.png" id="1_ipj4x"]
 [ext_resource type="Script" uid="uid://ck22i3g20vf5c" path="res://scripts/pawn.gd" id="1_n5567"]
 [ext_resource type="Script" uid="uid://bxsictfh85k34" path="res://scripts/area_2d.gd" id="3_qhjey"]
+[ext_resource type="PackedScene" uid="uid://drvgkns1v81b2" path="res://addons/simple_health_bar/health_bar.tscn" id="4_w61pg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kd4iw"]
 atlas = ExtResource("1_ipj4x")
@@ -320,3 +321,9 @@ shape = SubResource("CircleShape2D_0eqg2")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
+
+[node name="HealthBar" parent="." instance=ExtResource("4_w61pg")]
+offset_left = -23.0
+offset_top = 28.0
+offset_right = 23.0
+offset_bottom = 38.0

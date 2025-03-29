@@ -1,8 +1,9 @@
-[gd_scene load_steps=39 format=3 uid="uid://peqrqph0ufbh"]
+[gd_scene load_steps=40 format=3 uid="uid://peqrqph0ufbh"]
 
 [ext_resource type="Script" uid="uid://durxnhhhphk20" path="res://scripts/torch_goblin.gd" id="1_6ulqy"]
 [ext_resource type="Texture2D" uid="uid://c6sofw7v73fhx" path="res://assets/Factions/Goblins/Troops/Torch/Red/Torch_Red.png" id="1_wuhk7"]
 [ext_resource type="Texture2D" uid="uid://df8abhsxjexx" path="res://assets/Factions/Knights/Troops/Dead/Dead.png" id="3_6jeun"]
+[ext_resource type="PackedScene" uid="uid://drvgkns1v81b2" path="res://addons/simple_health_bar/health_bar.tscn" id="4_ppf6h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kd4kn"]
 atlas = ExtResource("1_wuhk7")
@@ -279,5 +280,11 @@ shape = SubResource("CircleShape2D_6jeun")
 avoidance_enabled = true
 radius = 30.0
 avoidance_mask = 7
+
+[node name="HealthBar" parent="." instance=ExtResource("4_ppf6h")]
+offset_left = -28.0
+offset_top = 35.0
+offset_right = 28.0
+offset_bottom = 45.0
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

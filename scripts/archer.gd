@@ -3,7 +3,8 @@ extends CharacterBody2D
 enum ARCHER_STATE {
 	IDLE,
 	RUNNING,
-	ATTACKING
+	ATTACKING,
+	COOLDOWN  # New state to handle post-attack cooldown
 }
 
 @export var health: float = 100.0
@@ -20,15 +21,18 @@ enum ARCHER_STATE {
 var current_state: ARCHER_STATE = ARCHER_STATE.IDLE
 var is_selected: bool = false
 var target_enemy: Node2D = null
-var is_attacking: bool = false
 var attack_timer: Timer = null
 var target_check_timer: Timer = null  
 var state_handlers = {}
+var last_attack_time: float = 0.0
+var can_attack: bool = true
+var forced_movement: bool = false  # Flag to track if player is forcing movement
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $ArcherAnimated
 @onready var main = get_node("/root/game")
 @onready var enemy_detector: Area2D = $EnemyDetector
+@onready var health_bar = $HealthBar
 @onready var projectile_scene = preload("res://scenes/arrow.tscn")
 
 signal state_changed(new_state: ARCHER_STATE)
@@ -39,6 +43,7 @@ func _ready():
 	navigation_agent.target_desired_distance = 4.0
 	navigation_agent.avoidance_enabled = true
 	navigation_agent.radius = 15.0
+	health_bar.init_bar(health)
 
 	attack_timer = Timer.new()
 	attack_timer.wait_time = attack_cooldown
@@ -61,7 +66,8 @@ func _ready():
 	state_handlers = {
 		ARCHER_STATE.IDLE: handle_idle_state,
 		ARCHER_STATE.RUNNING: handle_running_state,
-		ARCHER_STATE.ATTACKING: handle_attacking_state
+		ARCHER_STATE.ATTACKING: handle_attacking_state,
+		ARCHER_STATE.COOLDOWN: handle_cooldown_state
 	}
 
 func _physics_process(delta):
@@ -70,10 +76,26 @@ func _physics_process(delta):
 func handle_idle_state(_delta):
 	velocity = Vector2.ZERO
 	animated_sprite.play("idle")
-	find_closest_enemy()
+	
+	# Only auto-detect enemies when not being directly controlled
+	if not forced_movement:
+		find_closest_enemy()
+
+func handle_cooldown_state(_delta):
+	velocity = Vector2.ZERO
+	animated_sprite.play("idle")  # You might want a cooldown animation
+	
+	if can_attack and target_enemy and is_instance_valid(target_enemy):
+		var distance = global_position.distance_to(target_enemy.global_position)
+		if distance <= attack_range:
+			change_state(ARCHER_STATE.ATTACKING)
+		else:
+			navigation_agent.target_position = target_enemy.global_position
+			change_state(ARCHER_STATE.RUNNING)
 
 func find_closest_enemy():
 	var bodies = enemy_detector.get_overlapping_bodies()
+	var previous_target = target_enemy
 	target_enemy = null
 	var closest_distance = detection_radius
 	
@@ -84,11 +106,15 @@ func find_closest_enemy():
 				closest_distance = distance
 				target_enemy = body
 
-	if target_enemy:
+	# Only change to attacking if we're not being directly controlled
+	if target_enemy and current_state == ARCHER_STATE.IDLE and not forced_movement:
 		change_state(ARCHER_STATE.ATTACKING)
+	elif not target_enemy and previous_target and current_state == ARCHER_STATE.ATTACKING:
+		change_state(ARCHER_STATE.IDLE)
 
 func handle_running_state(delta):
 	if navigation_agent.is_navigation_finished():
+		forced_movement = false  # Reset forced movement flag when destination is reached
 		change_state(ARCHER_STATE.IDLE)
 		return
 
@@ -100,9 +126,6 @@ func handle_running_state(delta):
 		animated_sprite.play("running")
 		animated_sprite.flip_h = velocity.x < 0
 
-	if navigation_agent.is_navigation_finished():
-		change_state(ARCHER_STATE.IDLE)
-
 	move_and_slide()
 
 func handle_attacking_state(_delta):
@@ -113,16 +136,26 @@ func handle_attacking_state(_delta):
 
 	var distance = global_position.distance_to(target_enemy.global_position)
 	if distance > attack_range:
-		navigation_agent.target_position = target_enemy.global_position
-		change_state(ARCHER_STATE.RUNNING)
+		if not forced_movement:
+			navigation_agent.target_position = target_enemy.global_position
+			change_state(ARCHER_STATE.RUNNING)
+		else:
+			change_state(ARCHER_STATE.IDLE)
 		return
 
 	velocity = Vector2.ZERO
-	if not is_attacking:
+	
+	# Face the target
+	animated_sprite.flip_h = target_enemy.global_position.x < global_position.x
+	
+	if can_attack:
 		perform_attack()
+		can_attack = false
+		change_state(ARCHER_STATE.COOLDOWN)
 
 func perform_attack():
-	is_attacking = true
+	animated_sprite.play("attack")  # Ensure you have an attack animation
+	last_attack_time = Time.get_ticks_msec() / 1000.0
 	attack_timer.start()
 	shoot_projectile()
 
@@ -132,15 +165,25 @@ func shoot_projectile():
 		projectile_offset.x * (-1 if animated_sprite.flip_h else 1),
 		projectile_offset.y
 	)
-	projectile.direction = (target_enemy.global_position - global_position).normalized()
-	projectile.atk = attack_damage
-	projectile.speed = projectile_speed
-	get_tree().current_scene.add_child(projectile)
+	
+	# Ensure the projectile is targeting the current enemy position
+	if target_enemy and is_instance_valid(target_enemy):
+		projectile.direction = (target_enemy.global_position - global_position).normalized()
+		projectile.atk = attack_damage
+		projectile.speed = projectile_speed
+		get_tree().current_scene.add_child(projectile)
 
 func _on_attack_cooldown_finished():
-	is_attacking = false
-	if current_state == ARCHER_STATE.ATTACKING and target_enemy and is_instance_valid(target_enemy):
-		perform_attack()
+	can_attack = true
+	if current_state == ARCHER_STATE.COOLDOWN:
+		if target_enemy and is_instance_valid(target_enemy):
+			var distance = global_position.distance_to(target_enemy.global_position)
+			if distance <= attack_range:
+				change_state(ARCHER_STATE.ATTACKING)
+			else:
+				change_state(ARCHER_STATE.IDLE)
+		else:
+			change_state(ARCHER_STATE.IDLE)
 
 func change_state(new_state: ARCHER_STATE):
 	if current_state != new_state:
@@ -149,17 +192,21 @@ func change_state(new_state: ARCHER_STATE):
 
 func take_damage(damage: float):
 	health -= damage
+	health_bar.update_bar(health)
 	if health <= 0:
 		die()
 
 func die():
-	animated_sprite.play("death")
-	await animated_sprite.animation_finished
+	print("Archer died!")
+	if attack_timer:
+		attack_timer.queue_free()
+	if target_check_timer:
+		target_check_timer.queue_free()
 	queue_free()
 
 func _on_selection_changed(selected_entities: Array):
 	is_selected = selected_entities.has(get_instance_id())
-	modulate = Color(1.2, 1.2, 1.2, 1.0) if is_selected else Color(1.0, 1.0, 1.0, 1.0)
+	modulate = Color(1, 1, 0) if is_selected else Color(1.0, 1.0, 1.0)
 
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -167,40 +214,32 @@ func _input_event(_viewport, event, _shape_idx):
 
 func _on_entity_move_requested(entity_id: int, target_position: Vector2):
 	if entity_id == get_instance_id():
-		# Forcefully stop all attack-related states and timers
+		# Set the forced movement flag to indicate player control
+		forced_movement = true
+		
+		# Cancel any ongoing attack
 		target_enemy = null
-		is_attacking = false
+		can_attack = true  # Reset attack state
 		if attack_timer and attack_timer.time_left > 0:
 			attack_timer.stop()
-		
-		# Reset to a clean state before moving
-		change_state(ARCHER_STATE.IDLE)
 		
 		# Set new movement target
 		set_movement_target(target_position)
 		
 func set_movement_target(movement_target: Vector2):
-	target_enemy = find_best_enemy_in_radius(detection_radius)
 	navigation_agent.target_position = movement_target
-	await get_tree().process_frame  
+	await get_tree().process_frame
+	change_state(ARCHER_STATE.RUNNING)
 
-	if target_enemy:
-		change_state(ARCHER_STATE.ATTACKING)
-	else:
-		change_state(ARCHER_STATE.RUNNING)
-
-func find_best_enemy_in_radius(radius: float) -> Node2D:
-	var nearby_enemies = get_tree().get_nodes_in_group("goblins")
-	var best_enemy = null
-	var closest_distance = radius
-	
-	for enemy in nearby_enemies:
-		if not is_instance_valid(enemy):
-			continue
-			
+# Let the player manually order attacks on specific targets
+func set_attack_target(enemy: Node2D):
+	if enemy and is_instance_valid(enemy) and enemy.is_in_group("goblins"):
+		target_enemy = enemy
+		forced_movement = true  # This is player-directed behavior
+		
 		var distance = global_position.distance_to(enemy.global_position)
-		if distance < closest_distance:
-			closest_distance = distance
-			best_enemy = enemy
-	
-	return best_enemy
+		if distance <= attack_range:
+			change_state(ARCHER_STATE.ATTACKING)
+		else:
+			navigation_agent.target_position = enemy.global_position
+			change_state(ARCHER_STATE.RUNNING)

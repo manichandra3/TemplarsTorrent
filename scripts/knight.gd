@@ -25,6 +25,7 @@ var target_check_timer: Timer = null
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $knight_animated
+@onready var health_bar = $HealthBar
 @onready var main = get_node("/root/game")
 
 signal state_changed(new_state: KNIGHT_STATE)
@@ -35,7 +36,8 @@ func _ready():
 	navigation_agent.target_desired_distance = 4.0
 	navigation_agent.avoidance_enabled = true
 	navigation_agent.radius = 15.0
-
+	health_bar.init_bar(health)
+	
 	# Attack timer
 	attack_timer = Timer.new()
 	attack_timer.wait_time = attack_cooldown
@@ -220,6 +222,7 @@ func deselect():
 
 func take_damage(damage: float):
 	health -= damage
+	health_bar.update_bar(health)
 	if current_state != KNIGHT_STATE.ATTACKING and current_state != KNIGHT_STATE.RUNNING:
 		for goblin in get_tree().get_nodes_in_group("goblins"):
 			if goblin.target == self:

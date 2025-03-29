@@ -416,7 +416,7 @@ shape = SubResource("CircleShape2D_7ifmi")
 avoidance_enabled = true
 
 [node name="HealthBar" parent="." instance=ExtResource("4_0dyjn")]
-offset_left = -50.0
-offset_top = 35.0
-offset_right = 50.0
-offset_bottom = 45.0
+offset_left = -34.0
+offset_top = 37.0
+offset_right = 33.0
+offset_bottom = 47.0
