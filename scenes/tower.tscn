@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cn2fs5dixgdhj"]
+[gd_scene load_steps=10 format=3 uid="uid://cn2fs5dixgdhj"]
 
 [ext_resource type="Texture2D" uid="uid://co1s2y4418h17" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Blue.png" id="1_mdfvi"]
 [ext_resource type="Script" uid="uid://kbsyrpya2yrg" path="res://scripts/tower.gd" id="2_lcvft"]
 [ext_resource type="Script" uid="uid://bxsictfh85k34" path="res://scripts/area_2d.gd" id="3_2pimi"]
+[ext_resource type="Texture2D" uid="uid://ch8wwuwgdayu5" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Construction.png" id="3_jfguu"]
+[ext_resource type="Texture2D" uid="uid://c1oahvh2bwo3n" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Destroyed.png" id="4_85u2j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ktxwe"]
 atlas = ExtResource("1_mdfvi")
@@ -17,31 +19,48 @@ animations = [{
 "loop": true,
 "name": &"built",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jfguu")
+}],
+"loop": true,
+"name": &"construction",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_85u2j")
+}],
+"loop": true,
+"name": &"destroyed",
+"speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p4niq"]
-size = Vector2(76, 143)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_jfguu"]
-radius = 32.1403
+radius = 34.01
 
-[node name="tower" type="StaticBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrbg1"]
+size = Vector2(89, 164.438)
+
+[node name="StaticBody2D" type="StaticBody2D"]
 z_index = 2
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("2_lcvft")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="tower_animated" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(1, -68)
 sprite_frames = SubResource("SpriteFrames_qrbg1")
 animation = &"built"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jfguu")
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("3_2pimi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 17.5)
-shape = SubResource("RectangleShape2D_p4niq")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 63)
-shape = SubResource("CircleShape2D_jfguu")
+position = Vector2(1, -62)
+shape = SubResource("RectangleShape2D_qrbg1")
