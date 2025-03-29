@@ -3,7 +3,8 @@ extends CharacterBody2D
 enum KNIGHT_STATE {
 	IDLE,
 	RUNNING,
-	ATTACKING
+	ATTACKING,
+	DESTRUCTING
 }
 
 @export var health: float = 150.0
@@ -15,6 +16,10 @@ enum KNIGHT_STATE {
 @export var detection_radius: float = 150.0  # Auto-detect range
 # NEW: The distance at which the knight prefers to attack from.
 @export var preferred_attack_distance: float = 50.0
+@export var destructing_duration: float = 10.0 
+var target_tower: Node2D = null
+var is_destructing: bool = false
+var destructing_task: SceneTreeTimer = null
 
 var current_state: KNIGHT_STATE = KNIGHT_STATE.IDLE
 var is_selected: bool = false
@@ -22,6 +27,8 @@ var target_enemy: Node2D = null
 var is_attacking: bool = false
 var attack_timer: Timer = null
 var target_check_timer: Timer = null  
+var previous_position: Vector2
+
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $knight_animated
@@ -74,6 +81,11 @@ func _on_selection_changed(new_selected):
 	animated_sprite.modulate = Color(1, 1, 0) if is_selected else Color(1, 1, 1)
 
 func set_movement_target(movement_target: Vector2):
+	if is_destructing and target_tower:
+		target_tower.stop_destructing(self)
+		is_destructing = false
+		print("lksjdflsdjoi")
+		change_state(KNIGHT_STATE.RUNNING)
 	if current_state == KNIGHT_STATE.ATTACKING:
 		is_attacking = false
 		if attack_timer.time_left > 0:
@@ -83,19 +95,30 @@ func set_movement_target(movement_target: Vector2):
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = movement_target
 	var result = space_state.intersect_point(query)
-	target_enemy = null  
-
+	target_enemy = null 
+	target_tower = null
+	
+	print(result)
 	for hit in result:
 		var collider = hit.get("collider", null)
 		if collider and collider.is_in_group("goblins"):
 			target_enemy = collider
 			break 
+		elif collider and collider.is_in_group("towers"):
+			target_tower = collider 
+			print("gg")
+			break
 
 	navigation_agent.target_position = movement_target
 	await get_tree().process_frame  
-
+	
+	print(target_tower)
 	if target_enemy:
 		change_state(KNIGHT_STATE.ATTACKING)
+	elif target_tower:
+		print("ff")
+		if target_tower.is_built():
+			change_state(KNIGHT_STATE.DESTRUCTING)
 	else:
 		change_state(KNIGHT_STATE.RUNNING)
 
@@ -132,6 +155,8 @@ func _physics_process(delta):
 			handle_running_state(delta)
 		KNIGHT_STATE.ATTACKING:
 			handle_attacking_state(delta)
+		KNIGHT_STATE.DESTRUCTING:
+			handle_destructing_state(delta)
 
 func handle_idle_state():
 	velocity = Vector2.ZERO
@@ -152,10 +177,14 @@ func handle_running_state(delta):
 	if velocity.length() > 0:
 		animated_sprite.play("running")
 		animated_sprite.flip_h = velocity.x < 0
+		if global_position.distance_to(previous_position) < 0.11:
+			print("hi")
+			change_state(KNIGHT_STATE.IDLE)
+		previous_position = global_position
 
 	navigation_agent.velocity = velocity
 	move_and_slide()
-
+	
 func handle_attacking_state(_delta):
 	if not target_enemy or not is_instance_valid(target_enemy):
 		# Enemy is gone or dead
@@ -239,3 +268,39 @@ func die():
 	if target_check_timer:
 		target_check_timer.queue_free()
 	queue_free()
+#========================================================================================================================
+#========================================================================================================================
+#========================================================================================================================
+
+
+func handle_destructing_state(delta):
+	print("hello")
+	if not target_tower and target_tower.is_built():
+		change_state(KNIGHT_STATE.DESTRUCTING)
+		return
+	print("kello")
+	print(global_position.distance_to(target_tower.global_position))
+	if global_position.distance_to(target_tower.global_position) >90.0:
+		set_movement_target(target_tower.global_position - Vector2(50, -40))
+		print("gello")
+		return
+	print("ghk")
+	if is_destructing:
+		return
+	if target_tower.is_built():
+		is_destructing = true
+		animated_sprite.play("attacking_north_ltr")
+		target_tower.destroy_tower(self)
+		print("dec")
+		if not target_tower.is_connected("destruction_complete", Callable(self, "_on_destructing_complete")):
+			print("jec")
+			target_tower.connect("destruction_complete", Callable(self, "_on_destructing_complete"))
+
+func _on_destructing_complete(destructing_unit):
+	print("braha")
+	if destructing_unit == self:
+		print("Building Complete")
+		is_destructing = false
+		change_state(KNIGHT_STATE.IDLE)
+		target_tower.disconnect("destruction_complete", Callable(self, "_on_destructing_completed"))
+		target_tower = null
