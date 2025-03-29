@@ -418,7 +418,7 @@ avoidance_enabled = true
 debug_enabled = true
 
 [node name="HealthBar" parent="." instance=ExtResource("4_0dyjn")]
-offset_left = -49.0
-offset_top = 69.0
-offset_right = 51.0
-offset_bottom = 79.0
+offset_left = -34.0
+offset_top = 37.0
+offset_right = 33.0
+offset_bottom = 47.0

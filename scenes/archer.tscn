@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://dw4tsed1ke1ih"]
+[gd_scene load_steps=29 format=3 uid="uid://dw4tsed1ke1ih"]
 
 [ext_resource type="Texture2D" uid="uid://bcgdayabvpnnn" path="res://assets/Factions/Knights/Troops/Archer/Blue/Archer_Blue.png" id="1_b0l3x"]
 [ext_resource type="Script" uid="uid://djdbbuisfmbit" path="res://scripts/archer.gd" id="1_orquw"]
 [ext_resource type="Script" uid="uid://bxsictfh85k34" path="res://scripts/area_2d.gd" id="2_orquw"]
+[ext_resource type="PackedScene" uid="uid://drvgkns1v81b2" path="res://addons/simple_health_bar/health_bar.tscn" id="4_cctdm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_orquw"]
 atlas = ExtResource("1_b0l3x")
@@ -112,7 +113,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_gnfv7")
 }],
 "loop": true,
-"name": &"attacking",
+"name": &"attack",
 "speed": 10.0
 }, {
 "frames": [{
@@ -176,7 +177,7 @@ script = ExtResource("1_orquw")
 
 [node name="ArcherAnimated" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1s68y")
-animation = &"attacking"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -196,3 +197,9 @@ shape = SubResource("CircleShape2D_6mylm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector"]
 shape = SubResource("CircleShape2D_orquw")
+
+[node name="HealthBar" parent="." instance=ExtResource("4_cctdm")]
+offset_left = -26.0
+offset_top = 34.0
+offset_right = 27.0
+offset_bottom = 44.0

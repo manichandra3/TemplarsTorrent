@@ -26,6 +26,7 @@ var previous_position: Vector2
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $pawn_animated
+@onready var health_bar = $HealthBar
 @onready var main = get_node("/root/game")
 
 signal state_changed(new_state: PAWN_STATE)
@@ -39,6 +40,7 @@ func _ready():
 	navigation_agent.avoidance_enabled = true
 	navigation_agent.radius = 150.0
 	navigation_agent.avoidance_priority = 1.0
+	health_bar.init_bar(health)
 
 	# Connect signals
 	main.entity_move_requested.connect(_on_entity_move_requested)
@@ -226,6 +228,7 @@ func deselect():
 
 func take_damage(damage: float):
 	health -= damage
+	health_bar.update_bar(health)
 	print("Pawn took ", damage, "damage! Health left:", health)
 
 	if health <= 0:
