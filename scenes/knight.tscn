@@ -219,7 +219,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_wsvvy")
 }],
 "loop": true,
-"name": &"attacking_north_ltr",
+"name": &"attacking_north",
 "speed": 10.0
 }, {
 "frames": [{
@@ -265,7 +265,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_hv2n5")
 }],
 "loop": true,
-"name": &"attacking_south_ltr",
+"name": &"attacking_south",
 "speed": 10.0
 }, {
 "frames": [{
@@ -311,7 +311,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_vkpvg")
 }],
 "loop": true,
-"name": &"attacking_west_rtl",
+"name": &"attacking_west",
 "speed": 10.0
 }, {
 "frames": [{
@@ -399,8 +399,9 @@ script = ExtResource("1_qxgmm")
 [node name="knight_animated" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, 27)
 sprite_frames = SubResource("SpriteFrames_gjre8")
-animation = &"attacking_north_ltr"
+animation = &"attacking_west"
 autoplay = "idle"
+frame_progress = 0.984625
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("2_wawa2")

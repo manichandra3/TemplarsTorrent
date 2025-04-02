@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dw4tsed1ke1ih"]
+[gd_scene load_steps=45 format=3 uid="uid://dw4tsed1ke1ih"]
 
 [ext_resource type="Texture2D" uid="uid://bcgdayabvpnnn" path="res://assets/Factions/Knights/Troops/Archer/Blue/Archer_Blue.png" id="1_b0l3x"]
 [ext_resource type="Script" uid="uid://djdbbuisfmbit" path="res://scripts/archer.gd" id="1_orquw"]
@@ -36,6 +36,70 @@ region = Rect2(1152, 768, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_gnfv7"]
 atlas = ExtResource("1_b0l3x")
 region = Rect2(1344, 768, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t7ncp"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(0, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qh5tp"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(192, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swy27"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(384, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wqjl"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(576, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_107b7"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(768, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdctj"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(960, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_geffl"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(1152, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wu5ei"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(1344, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a88he"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(0, 1152, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygyo2"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(192, 1152, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kktlt"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(384, 1152, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qps7j"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(576, 1152, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klrx5"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(768, 1152, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdw7m"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(960, 1152, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uasvs"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(1152, 1152, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kf6y2"]
+atlas = ExtResource("1_b0l3x")
+region = Rect2(1344, 1152, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cctdm"]
 atlas = ExtResource("1_b0l3x")
@@ -114,6 +178,64 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t7ncp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qh5tp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swy27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wqjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_107b7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdctj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_geffl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wu5ei")
+}],
+"loop": true,
+"name": &"attack_north",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a88he")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ygyo2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kktlt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qps7j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klrx5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdw7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uasvs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kf6y2")
+}],
+"loop": true,
+"name": &"attack_south",
 "speed": 10.0
 }, {
 "frames": [{
