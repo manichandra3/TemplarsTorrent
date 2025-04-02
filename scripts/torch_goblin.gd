@@ -85,7 +85,7 @@ func handle_idle_state():
 	
 	look_for_target()
 
-func handle_chase_state(delta):
+func handle_chase_state(_delta):
 	if not is_instance_valid(target):
 		change_state(AI_STATE.IDLE)
 		return
@@ -114,7 +114,7 @@ func handle_attack_state():
 	if not is_attacking:
 		perform_attack()
 
-func handle_return_state(delta):
+func handle_return_state(_delta):
 	if not is_instance_valid(home_tower):
 		change_state(AI_STATE.IDLE)
 		find_home_tower()
@@ -185,7 +185,6 @@ func change_state(new_state: AI_STATE):
 			is_attacking = false
 
 func take_damage(damage: float):
-	print("take damage method called in gob")
 	health -= damage
 	health_bar.update_bar(health)
 	if health <= 0:

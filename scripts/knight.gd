@@ -6,7 +6,7 @@ enum KNIGHT_STATE {
 	ATTACKING
 }
 
-@export var health: float = 150.0
+@export var health: float = 300.0
 @export var movement_speed: float = 200.0 
 @export var acceleration: float = 500.0
 @export var attack_damage: float = 20.0
@@ -188,19 +188,23 @@ func handle_attacking_state(_delta):
 		perform_attack()
 
 func _play_attack_animation(direction: Vector2):
-	# For now, use the same animation for both directions; flip based on attack direction.
-	if direction.x < 0:
-		animated_sprite.play("attacking_west_rtl")
-		animated_sprite.flip_h = true
+	# Determine the attack animation based on the enemy's location
+	if direction.y < 0:
+		animated_sprite.play("attacking_north")
+	elif direction.y > 0:
+		animated_sprite.play("attacking_south")
 	else:
-		animated_sprite.play("attacking_west_rtl")
-		animated_sprite.flip_h = false
+		animated_sprite.play("attacking_west")
+		animated_sprite.flip_h = (direction.x < 0)
 
 func perform_attack():
 	is_attacking = true
 	attack_timer.start()
-	if target_enemy and is_instance_valid(target_enemy) and target_enemy.has_method("take_damage"):
-		target_enemy.take_damage(attack_damage)
+	if target_enemy and is_instance_valid(target_enemy):
+		var direction = (target_enemy.global_position - global_position).normalized()
+		_play_attack_animation(direction)
+		if target_enemy.has_method("take_damage"):
+			target_enemy.take_damage(attack_damage)
 
 func _on_attack_cooldown_finished():
 	is_attacking = false
@@ -233,7 +237,7 @@ func take_damage(damage: float):
 		die()
 
 func die():
-	print("Knight died!")
+	print("Pawn died!")
 	if attack_timer:
 		attack_timer.queue_free()
 	if target_check_timer:
