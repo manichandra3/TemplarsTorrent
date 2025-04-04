@@ -1,32 +1,33 @@
-[gd_scene load_steps=44 format=3 uid="uid://b85dy8g1jici5"]
+[gd_scene load_steps=45 format=3 uid="uid://b85dy8g1jici5"]
 
 [ext_resource type="Texture2D" uid="uid://bwockk18me018" path="res://assets/Factions/Knights/Troops/Pawn/Blue/Pawn_Blue.png" id="1_ipj4x"]
 [ext_resource type="Script" uid="uid://ck22i3g20vf5c" path="res://scripts/pawn.gd" id="1_n5567"]
+[ext_resource type="Texture2D" uid="uid://0wb4uyl6opqq" path="res://assets/Factions/Knights/Troops/Pawn/Red/Pawn_Red.png" id="2_0gq48"]
 [ext_resource type="Script" uid="uid://bxsictfh85k34" path="res://scripts/area_2d.gd" id="3_qhjey"]
 [ext_resource type="PackedScene" uid="uid://drvgkns1v81b2" path="res://addons/simple_health_bar/health_bar.tscn" id="4_w61pg"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kd4iw"]
-atlas = ExtResource("1_ipj4x")
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1472"]
+atlas = ExtResource("2_0gq48")
 region = Rect2(0, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vp0ar"]
-atlas = ExtResource("1_ipj4x")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojbo2"]
+atlas = ExtResource("2_0gq48")
 region = Rect2(192, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vgdae"]
-atlas = ExtResource("1_ipj4x")
+[sub_resource type="AtlasTexture" id="AtlasTexture_otoq7"]
+atlas = ExtResource("2_0gq48")
 region = Rect2(384, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_41rx7"]
-atlas = ExtResource("1_ipj4x")
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvra3"]
+atlas = ExtResource("2_0gq48")
 region = Rect2(576, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_82n7c"]
-atlas = ExtResource("1_ipj4x")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycofb"]
+atlas = ExtResource("2_0gq48")
 region = Rect2(768, 384, 192, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v5ykw"]
-atlas = ExtResource("1_ipj4x")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgtdx"]
+atlas = ExtResource("2_0gq48")
 region = Rect2(960, 384, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bhytp"]
@@ -153,22 +154,22 @@ region = Rect2(960, 192, 192, 192)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kd4iw")
+"texture": SubResource("AtlasTexture_y1472")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vp0ar")
+"texture": SubResource("AtlasTexture_ojbo2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vgdae")
+"texture": SubResource("AtlasTexture_otoq7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_41rx7")
+"texture": SubResource("AtlasTexture_vvra3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_82n7c")
+"texture": SubResource("AtlasTexture_ycofb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_v5ykw")
+"texture": SubResource("AtlasTexture_lgtdx")
 }],
 "loop": true,
 "name": &"building",
@@ -307,7 +308,7 @@ script = ExtResource("1_n5567")
 y_sort_enabled = true
 position = Vector2(2, 18)
 sprite_frames = SubResource("SpriteFrames_2hwkm")
-animation = &"building"
+animation = &"chopping"
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("3_qhjey")
@@ -326,7 +327,7 @@ shape = SubResource("CircleShape2D_0eqg2")
 avoidance_enabled = true
 
 [node name="HealthBar" parent="." instance=ExtResource("4_w61pg")]
-offset_left = -23.0
-offset_top = 28.0
-offset_right = 23.0
-offset_bottom = 38.0
+offset_left = -21.0
+offset_top = 46.0
+offset_right = 25.0
+offset_bottom = 56.0

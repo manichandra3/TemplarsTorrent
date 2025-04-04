@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://dl8p5rfy72q52"]
+
+[ext_resource type="PackedScene" uid="uid://dy8b2y20rv44t" path="res://scenes/player_1/resource_manager_1.tscn" id="1_v7tvf"]
+[ext_resource type="PackedScene" uid="uid://c85ykr0trap6m" path="res://scenes/player_2/tower_2.tscn" id="2_au6dh"]
+[ext_resource type="PackedScene" uid="uid://uohg6bpi5608" path="res://scenes/player_2/castle_2.tscn" id="3_pglrt"]
+[ext_resource type="PackedScene" uid="uid://cseadcma3n6un" path="res://scenes/player_2/archer_2.tscn" id="4_rsi16"]
+[ext_resource type="PackedScene" uid="uid://b2hmmqe8ckdlg" path="res://scenes/player_2/knight_2.tscn" id="5_ersyu"]
+[ext_resource type="PackedScene" uid="uid://b0w3u03fvp6rl" path="res://scenes/player_2/pawn_2.tscn" id="6_pglrt"]
+
+[node name="player2" type="Node"]
+
+[node name="ResourceManager" parent="." instance=ExtResource("1_v7tvf")]
+
+[node name="tower" parent="." instance=ExtResource("2_au6dh")]
+position = Vector2(1199, 246)
+
+[node name="castle" parent="." instance=ExtResource("3_pglrt")]
+position = Vector2(1629, 129)
+
+[node name="Archer" parent="." instance=ExtResource("4_rsi16")]
+position = Vector2(1324, -401)
+
+[node name="knight" parent="." instance=ExtResource("5_ersyu")]
+position = Vector2(1312, 443)
+
+[node name="pawn" parent="." instance=ExtResource("6_pglrt")]
+position = Vector2(1413, 40)

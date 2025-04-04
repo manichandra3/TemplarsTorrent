@@ -420,6 +420,6 @@ debug_enabled = true
 
 [node name="HealthBar" parent="." instance=ExtResource("4_0dyjn")]
 offset_left = -34.0
-offset_top = 37.0
+offset_top = 63.0
 offset_right = 33.0
-offset_bottom = 47.0
+offset_bottom = 73.0
