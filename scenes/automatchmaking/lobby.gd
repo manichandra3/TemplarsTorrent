@@ -21,7 +21,7 @@ signal start_client(ip, port)
 func _ready():
 	print("Attempting to connect to server...")
 	_connect_to_matchmaking_server()
-	$LobbyContainer.hide()
+	$LobbyContainer.hide() 
 	
 func _connect_to_matchmaking_server():
 	var error = _client.connect_to_url(websocket_url)
@@ -87,7 +87,7 @@ func _join_match(match_obj: Dictionary):
 		"username": mock_user.username
 	}
 	
-	#_send_message(join_match_message)
+	_send_message(join_match_message)
 	
 func _enter_match_lobby(match_with_players):
 	print("Enter match lobby")
@@ -102,12 +102,12 @@ func _enter_match_lobby(match_with_players):
 	# we have to make the api server to call the team_full_request for every 5sec/anytime
 	# of the every match 
 	
-	var match_id = match_with_players.matchInfo.matchId
-	var check_match_ready = {
-		"op": CHECK_MATCH_READY,
-		"matchId": match_id
-	}
-	_send_message(check_match_ready)
+	#var match_id = match_with_players.matchInfo.matchId
+	#var check_match_ready = {
+		#"op": CHECK_MATCH_READY,
+		#"matchId": match_id
+	#}
+	#_send_message(check_match_ready)
 	
 func _build_player_lobby_lists(match_players):
 	for team_child in $LobbyContainer/Players/player1_info.get_children():
@@ -117,7 +117,7 @@ func _build_player_lobby_lists(match_players):
 	
 	for player in match_players:
 		print(player)
-		var button_text = " %s | %s "% [player.username]
+		var button_text = " %s "% [player.username]
 		
 		# button label
 		var button_label := RichTextLabel.new()
