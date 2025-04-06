@@ -32,7 +32,7 @@ var forced_movement: bool = false  # Flag to track if player is forcing movement
 @onready var animated_sprite: AnimatedSprite2D = $ArcherAnimated
 @onready var main = get_node("/root/game")
 @onready var health_bar = $HealthBar
-@onready var projectile_scene = preload("res://scenes/player_1/arrow_1.tscn")
+@onready var projectile_scene = preload("res://scenes/arrow.tscn")
 
 signal state_changed(new_state: ARCHER_STATE)
 

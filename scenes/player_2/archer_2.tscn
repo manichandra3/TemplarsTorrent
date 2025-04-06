@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cseadcma3n6un"]
+[gd_scene load_steps=45 format=3 uid="uid://5spb174yq86j"]
 
 [ext_resource type="Script" uid="uid://djdbbuisfmbit" path="res://scripts/archer.gd" id="1_orquw"]
 [ext_resource type="Texture2D" uid="uid://c7ad67fwyeujq" path="res://assets/Factions/Knights/Troops/Archer/Purple/Archer_Purlple.png" id="2_ip67m"]

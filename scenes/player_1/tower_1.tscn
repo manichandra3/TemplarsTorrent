@@ -56,11 +56,13 @@ sprite_frames = SubResource("SpriteFrames_qrbg1")
 animation = &"built"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
 shape = SubResource("CircleShape2D_jfguu")
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("3_2pimi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+z_index = 1
 position = Vector2(1, -62)
 shape = SubResource("RectangleShape2D_qrbg1")

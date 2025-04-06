@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dy8b2y20rv44t" path="res://scenes/player_1/resource_manager_1.tscn" id="1_v7tvf"]
 [ext_resource type="PackedScene" uid="uid://c85ykr0trap6m" path="res://scenes/player_2/tower_2.tscn" id="2_au6dh"]
 [ext_resource type="PackedScene" uid="uid://uohg6bpi5608" path="res://scenes/player_2/castle_2.tscn" id="3_pglrt"]
-[ext_resource type="PackedScene" uid="uid://cseadcma3n6un" path="res://scenes/player_2/archer_2.tscn" id="4_rsi16"]
+[ext_resource type="PackedScene" uid="uid://5spb174yq86j" path="res://scenes/player_2/archer_2.tscn" id="4_rsi16"]
 [ext_resource type="PackedScene" uid="uid://b2hmmqe8ckdlg" path="res://scenes/player_2/knight_2.tscn" id="5_ersyu"]
 [ext_resource type="PackedScene" uid="uid://b0w3u03fvp6rl" path="res://scenes/player_2/pawn_2.tscn" id="6_pglrt"]
 

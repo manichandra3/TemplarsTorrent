@@ -293,7 +293,8 @@ func handle_destructing_state(delta):
 		return
 	if target_tower.is_built():
 		is_destructing = true
-		animated_sprite.play("attacking_north_ltr")
+		print("yyyyyyyyyyyyyyyyyyy")
+		animated_sprite.play("attacking_north_rtl")
 		target_tower.destroy_tower(self)
 		print("dec")
 		if not target_tower.is_connected("destruction_complete", Callable(self, "_on_destructing_complete")):

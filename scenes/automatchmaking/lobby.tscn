@@ -1,0 +1,92 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjemdu8xfd4sa"]
+
+[ext_resource type="Script" uid="uid://d0hhfqnaxlrkw" path="res://scenes/automatchmaking/lobby.gd" id="1_c8vme"]
+[ext_resource type="Script" uid="uid://clsti23616q4q" path="res://scenes/automatchmaking/WebSocketClient.gd" id="2_ocvp4"]
+
+[sub_resource type="SystemFont" id="SystemFont_c8vme"]
+
+[sub_resource type="SystemFont" id="SystemFont_ocvp4"]
+
+[sub_resource type="SystemFont" id="SystemFont_4hyvv"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_c8vme")
+
+[node name="WebSocketClient" type="Node" parent="."]
+script = ExtResource("2_ocvp4")
+
+[node name="TestButtons" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_top = 100.0
+offset_right = 136.0
+offset_bottom = 147.0
+
+[node name="send_message" type="Button" parent="TestButtons"]
+layout_mode = 2
+text = "send_message"
+
+[node name="MatchMakingStatus" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 14.0
+offset_right = 1099.0
+offset_bottom = 97.0
+theme_override_fonts/normal_font = SubResource("SystemFont_c8vme")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]WELCOM TO THE GAME[center]"
+
+[node name="LobbyContainer" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 106.0
+offset_right = 1151.0
+offset_bottom = 650.0
+
+[node name="Players" type="Panel" parent="LobbyContainer"]
+layout_mode = 0
+offset_top = -11.0
+offset_right = 1151.0
+offset_bottom = 545.0
+
+[node name="player1" type="RichTextLabel" parent="LobbyContainer/Players"]
+layout_mode = 0
+offset_left = 159.0
+offset_top = 87.0
+offset_right = 379.0
+offset_bottom = 159.0
+theme_override_fonts/normal_font = SubResource("SystemFont_ocvp4")
+theme_override_font_sizes/normal_font_size = 40
+text = "Player1"
+
+[node name="player1_info" type="VBoxContainer" parent="LobbyContainer/Players"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 179.0
+offset_right = 412.0
+offset_bottom = 274.0
+
+[node name="player2" type="RichTextLabel" parent="LobbyContainer/Players"]
+layout_mode = 0
+offset_left = 808.0
+offset_top = 105.0
+offset_right = 1035.0
+offset_bottom = 179.0
+theme_override_fonts/normal_font = SubResource("SystemFont_4hyvv")
+theme_override_font_sizes/normal_font_size = 40
+text = "Player2"
+
+[node name="player2_info" type="VBoxContainer" parent="LobbyContainer/Players"]
+layout_mode = 0
+offset_left = 781.0
+offset_top = 173.0
+offset_right = 1065.0
+offset_bottom = 260.0
+
+[connection signal="connected_to_server" from="WebSocketClient" to="." method="_on_websocket_client_connected_to_server"]
+[connection signal="connection_closed" from="WebSocketClient" to="." method="_on_websocket_client_connection_close"]
+[connection signal="message_received" from="WebSocketClient" to="." method="_on_websocket_message_received"]
+[connection signal="pressed" from="TestButtons/send_message" to="." method="_on_send_test_message_pressed"]
