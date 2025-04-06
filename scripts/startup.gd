@@ -3,11 +3,16 @@ extends Node
 const SERVER_PORT = 8080
 const SERVER_IP = "127.0.0.1" 
 const lobby_scene = "res://scenes/automatchmaking/lobby.tscn"
-func _ready(): 
+
+func _ready():
 	pass 
+	
+func start_game():
+	$UI.hide();
 	
 func _on_client_pressed(ip = SERVER_IP, port = SERVER_PORT):
 	print("Client Pressed")
+	start_game()
 	
 func start_client(ip, port):
 	print("start_client %s %s"% [ip, port])

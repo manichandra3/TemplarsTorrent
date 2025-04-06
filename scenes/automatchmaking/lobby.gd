@@ -52,7 +52,7 @@ func _process_received_message(message):
 				print("MATCH_READY")
 				print("Connection info: %s, %s"%[response_msg.response.ip, response_msg.response.port])
 				
-				$MatchMakingStatus.text - "[center]Game Full, Entering Match![center]"
+				$MatchMakingStatus.text = "[center]Game Full, Entering Match![center]"
 				
 				start_client.emit(response_msg.response.ip, response_msg.response.port)
 				
@@ -102,12 +102,12 @@ func _enter_match_lobby(match_with_players):
 	# we have to make the api server to call the team_full_request for every 5sec/anytime
 	# of the every match 
 	
-	#var match_id = match_with_players.matchInfo.matchId
-	#var check_match_ready = {
-		#"op": CHECK_MATCH_READY,
-		#"matchId": match_id
-	#}
-	#_send_message(check_match_ready)
+	var match_id = match_with_players.matchInfo.matchId
+	var check_match_ready = {
+		"op": CHECK_MATCH_READY,
+		"matchId": match_id
+	}
+	_send_message(check_match_ready)
 	
 func _build_player_lobby_lists(match_players):
 	for team_child in $LobbyContainer/Players/player1_info.get_children():
@@ -119,7 +119,7 @@ func _build_player_lobby_lists(match_players):
 		print(player)
 		var button_text = " %s "% [player.username]
 		
-		# button label
+		# button labelk
 		var button_label := RichTextLabel.new()
 		button_label.set_text(button_text)
 		button_label.set_size(Vector2(300, 95))
