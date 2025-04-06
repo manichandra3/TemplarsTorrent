@@ -4,10 +4,13 @@
 [ext_resource type="Script" uid="uid://clsti23616q4q" path="res://scenes/automatchmaking/WebSocketClient.gd" id="2_ocvp4"]
 
 [sub_resource type="SystemFont" id="SystemFont_c8vme"]
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_ocvp4"]
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_4hyvv"]
+subpixel_positioning = 0
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -18,7 +21,6 @@ script = ExtResource("1_c8vme")
 script = ExtResource("2_ocvp4")
 
 [node name="TestButtons" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 0
 offset_top = 100.0
 offset_right = 136.0
@@ -26,7 +28,7 @@ offset_bottom = 147.0
 
 [node name="send_message" type="Button" parent="TestButtons"]
 layout_mode = 2
-text = "send_message"
+text = "create_matches"
 
 [node name="MatchMakingStatus" type="RichTextLabel" parent="."]
 layout_mode = 0
@@ -89,4 +91,4 @@ offset_bottom = 260.0
 [connection signal="connected_to_server" from="WebSocketClient" to="." method="_on_websocket_client_connected_to_server"]
 [connection signal="connection_closed" from="WebSocketClient" to="." method="_on_websocket_client_connection_close"]
 [connection signal="message_received" from="WebSocketClient" to="." method="_on_websocket_message_received"]
-[connection signal="pressed" from="TestButtons/send_message" to="." method="_on_send_test_message_pressed"]
+[connection signal="pressed" from="TestButtons/send_message" to="." method="_create_mock_matches"]

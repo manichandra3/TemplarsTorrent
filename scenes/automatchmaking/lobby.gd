@@ -1,6 +1,6 @@
 extends Control
 #wss://jgah4v9cga.execute-api.ap-south-1.amazonaws.com/production/
-var websocket_url = "WEBSOCKET_URL"
+var websocket_url = "wss://jgah4v9cga.execute-api.ap-south-1.amazonaws.com/production/"
 var messageToSend = ""
 
 @onready var _client : WebScoketClient = $WebSocketClient
@@ -12,6 +12,7 @@ const PLAYER_JOINED = "PLAYER_JOINED"
 const PLAYER_DROPPED = "PLAYER_DROPPED"
 const CHECK_MATCH_READY = "CHECK_MATCH_READY"
 const MATCH_READY = "MATCH_READY"
+const CREATE_MATCHES = "CREATE_MATCHES"
 
 var mock_user = {}
 
@@ -131,6 +132,7 @@ func _build_player_lobby_lists(match_players):
 			print("Player not assigned a team!")
 #life cycles
 func _send_message(message_to_send):
+	print("send_message")
 	var json_message = JSON.stringify(message_to_send)
 	_client.send(json_message)
 	
@@ -148,7 +150,7 @@ func _on_websocket_client_connected_to_server():
 	var request_matches = {
 		"op": REQUEST_MATCHES
 	}
-	
+	_send_message(request_matches)
 func _on_send_test_message_pressed():
 	print("Sending test message")
 	var dict = {
@@ -157,6 +159,13 @@ func _on_send_test_message_pressed():
 	}
 	var jsonMessage = JSON.stringify(dict)
 	_client.send(jsonMessage)
+	
+func _create_mock_matches():
+	print("create_mock_matches")
+	var messageToSend={
+		"op": CREATE_MATCHES
+	}
+	_send_message(messageToSend)
 	
 
 	

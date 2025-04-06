@@ -16,6 +16,7 @@ offset_right = 1153.0
 offset_bottom = 653.0
 
 [node name="find_match2" type="Button" parent="UI"]
+layout_mode = 0
 offset_left = 64.0
 offset_top = 63.0
 offset_right = 187.0
