@@ -70,8 +70,12 @@ func _process_received_message(message):
 				_build_player_lobby_lists(match_with_players.users)
 					
 func _automatic_match_selection(matches):
-	var match_id = str(randi()%matches.size())
-	_join_match(matches[match_id])
+	if matches.size() == 0:
+		print("No matches available")
+		return
+	var match_index = randi() % matches.size()
+	print("Selected match index: ", match_index)
+	_join_match(matches[match_index])
 	
 func _join_match(match_obj: Dictionary):
 	$MatchMakingStatus.text = "Entering match lobby...";
@@ -83,7 +87,7 @@ func _join_match(match_obj: Dictionary):
 		"username": mock_user.username
 	}
 	
-	_send_message(join_match_message)
+	#_send_message(join_match_message)
 	
 func _enter_match_lobby(match_with_players):
 	print("Enter match lobby")
@@ -151,6 +155,7 @@ func _on_websocket_client_connected_to_server():
 		"op": REQUEST_MATCHES
 	}
 	_send_message(request_matches)
+	
 func _on_send_test_message_pressed():
 	print("Sending test message")
 	var dict = {
