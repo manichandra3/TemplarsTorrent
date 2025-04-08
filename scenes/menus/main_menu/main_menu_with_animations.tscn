@@ -365,9 +365,6 @@ tree_root = SubResource("AnimationNodeStateMachine_vikuh")
 anim_player = NodePath("../MenuAnimationPlayer")
 parameters/conditions/intro_done = false
 
-[node name="BackgroundMusicPlayer" parent="." index="3"]
-bus = &"Master"
-
 [node name="BackgroundTextureRect" parent="." index="4"]
 texture = ExtResource("5_sr523")
 
@@ -376,9 +373,6 @@ modulate = Color(1, 1, 1, 0)
 
 [node name="TitleContainer" parent="MenuContainer/TitleMargin" index="0"]
 modulate = Color(1, 1, 1, 0)
-
-[node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" index="0"]
-text = "surge of power"
 
 [node name="SubTitleContainer" parent="MenuContainer/SubTitleMargin" index="0"]
 modulate = Color(1, 1, 1, 0)
@@ -399,5 +393,12 @@ action_mode = 0
 unique_name_in_owner = true
 layout_mode = 2
 text = "Continue"
+
+[node name="LobbyPlaceholder" type="Node" parent="." index="10"]
+
+[node name="UI" type="Control" parent="." index="11"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/ContinueGameButton" to="." method="_on_continue_game_button_pressed"]
