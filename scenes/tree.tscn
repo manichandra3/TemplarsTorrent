@@ -72,17 +72,19 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dyi2f"]
-size = Vector2(44, 165)
+size = Vector2(87, 166)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xwwbt"]
 radius = 19.0
 
 [node name="tree" type="CharacterBody2D"]
+z_index = 1
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("2_pcn25")
 
 [node name="tree_animated" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, -60)
 sprite_frames = SubResource("SpriteFrames_3xr4e")
 autoplay = "default"
 
@@ -90,16 +92,8 @@ autoplay = "default"
 script = ExtResource("2_vw5by")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -3.5)
+position = Vector2(-2, -62)
 shape = SubResource("RectangleShape2D_dyi2f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 63)
 shape = SubResource("CircleShape2D_xwwbt")
-
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-z_index = 1
-radius = 20.0
-vertices = PackedVector2Array(-23, 81, -23, 45, 21, 45, 22, 81)
-affect_navigation_mesh = true
-carve_navigation_mesh = true

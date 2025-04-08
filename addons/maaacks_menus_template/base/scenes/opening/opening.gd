@@ -1,5 +1,9 @@
 extends Control
 
+const SERVER_PORT = 8080
+const SERVER_IP = "127.0.0.1" 
+const lobby_scene = "res://scenes/automatchmaking/lobby.tscn"
+
 @export_file("*.tscn") var next_scene : String
 @export var images : Array[Texture2D]
 @export_group("Animation")
@@ -98,3 +102,4 @@ func _ready():
 	SceneLoader.load_scene(next_scene, true)
 	_add_textures_to_container(images)
 	_transition_in()
+	

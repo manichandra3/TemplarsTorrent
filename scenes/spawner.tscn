@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c5jrlkuh31gkd" path="res://scripts/spawner.gd" id="1_ac2jw"]
 [ext_resource type="Texture2D" uid="uid://bfaa2xiow4oin" path="res://assets/UI/Buttons/Button_Blue.png" id="2_nsqh3"]
-[ext_resource type="PackedScene" uid="uid://b85dy8g1jici5" path="res://scenes/pawn.tscn" id="2_tx2ig"]
+[ext_resource type="PackedScene" uid="uid://b85dy8g1jici5" path="res://scenes/player_1/pawn_1.tscn" id="2_tx2ig"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lkpwu"]
 size = Vector2(46, 44)

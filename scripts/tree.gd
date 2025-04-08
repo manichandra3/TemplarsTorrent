@@ -8,6 +8,7 @@ enum STATE {
 
 @export var secs_to_grow: float = 50.0
 @export var chopping_duration: float = 10.0
+
 @onready var animated_sprite: AnimatedSprite2D = $tree_animated
 
 var state = STATE.GROWN
@@ -34,8 +35,13 @@ func chop_tree(pawn: Node2D):
 		chopping_task = null
 	
 	chopping_task = get_tree().create_timer(chopping_duration)
-	chopping_task.timeout.connect(_on_chopping_complete.bind(pawn))
-
+	var task = chopping_task  # Store reference to compare later
+	await chopping_task.timeout
+	
+	# Only complete chopping if this is still the active task and the same pawn
+	if task == chopping_task and chopping_pawn == pawn:
+		complete_chopping()
+		
 func _on_chopping_complete(pawn: Node2D):
 	# Only complete chopping if this pawn is still the active chopper
 	if chopping_pawn == pawn:
@@ -44,9 +50,6 @@ func _on_chopping_complete(pawn: Node2D):
 func complete_chopping():
 	state = STATE.CHOPPED
 	update_animation()
-	# Notify the game to add wood (5 per tree)
-	if chopping_pawn:
-		Game.add_wood(5)
 	chopping_pawn = null
 	chopping_task = null
 	start_regrowth()
@@ -54,13 +57,13 @@ func complete_chopping():
 func stop_chopping(pawn: Node2D):
 	if chopping_pawn != pawn:
 		return
-	# Disconnect and clear the chopping task
-	if chopping_task:
-		chopping_task.timeout.disconnect(_on_chopping_complete)
-		chopping_task = null
+		
 	chopping_pawn = null
 	state = STATE.GROWN
 	update_animation()
+	
+	# Cancel any pending chop completion
+	chopping_task = null
 
 func start_regrowth():
 	if is_regrowth_scheduled:
@@ -70,12 +73,13 @@ func start_regrowth():
 	await get_tree().create_timer(secs_to_grow).timeout
 	is_regrowth_scheduled = false
 	
+	# Only regrow if we're still in chopped state
 	if state == STATE.CHOPPED:
 		state = STATE.GROWN
 		update_animation()
 
 func is_grown() -> bool:
-	return state == STATE.GROWN or state == STATE.CHOPPING
+	return state == STATE.GROWN
 
 func update_animation():
 	match state:
@@ -85,8 +89,3 @@ func update_animation():
 			animated_sprite.play("chopping")
 		STATE.CHOPPED:
 			animated_sprite.play("chopped")
-			
-func collect_wood(amount: int):
-	var main = get_tree().get_first_node_in_group("main")
-	if main:
-		main.add_wood(amount)

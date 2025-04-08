@@ -394,4 +394,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Continue"
 
+[node name="LobbyPlaceholder" type="Node" parent="." index="10"]
+
+[node name="UI" type="Control" parent="." index="11"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="pressed" from="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/ContinueGameButton" to="." method="_on_continue_game_button_pressed"]

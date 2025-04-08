@@ -1,13 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://bifyqskki7nw2"]
 
-[ext_resource type="PackedScene" path="res://addons/maaacks_menus_template/base/scenes/credits/credits.tscn" id="1_8n0nl"]
-[ext_resource type="Script" path="res://scenes/credits/credits.gd" id="2_c8xcy"]
+[ext_resource type="PackedScene" uid="uid://t2dui8ppm3a4" path="res://addons/maaacks_menus_template/base/scenes/credits/credits.tscn" id="1_8n0nl"]
+[ext_resource type="Script" uid="uid://d232et3l5w62m" path="res://scenes/credits/credits.gd" id="2_c8xcy"]
 
 [node name="Credits" instance=ExtResource("1_8n0nl")]
 script = ExtResource("2_c8xcy")
 attribution_file_path = "res://ATTRIBUTION.md"
 
+[node name="HeaderSpace" parent="ScrollContainer/VBoxContainer" index="0"]
+custom_minimum_size = Vector2(0, 648)
+
 [node name="CreditsLabel" parent="ScrollContainer/VBoxContainer" index="1"]
+custom_minimum_size = Vector2(1152, 0)
 text = "[center][font_size=48]Collaborators[/font_size]
 
 [font_size=32]Role[/font_size]
@@ -44,3 +48,6 @@ Author: [url=https://github.com/Maaack/Godot-Menus-Template/graphs/contributors]
 Source: [url=https://github.com/Maaack/Godot-Menus-Template]github: Godot-Menus-Template[/url]  
 License: [url=LICENSE.txt]MIT License[/url]  
 [/center]"
+
+[node name="FooterSpace" parent="ScrollContainer/VBoxContainer" index="2"]
+custom_minimum_size = Vector2(0, 648)

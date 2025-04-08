@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ceurlkkn548e"]
+[gd_scene load_steps=5 format=3 uid="uid://uohg6bpi5608"]
 
 [ext_resource type="Script" uid="uid://bq06lcd1aculm" path="res://scripts/castle.gd" id="1_0ysgy"]
-[ext_resource type="Texture2D" uid="uid://cskdbra8sq4ro" path="res://assets/Factions/Knights/Buildings/Castle/Castle_Blue.png" id="1_6xakq"]
+[ext_resource type="Texture2D" uid="uid://5fxwcwy5b8d" path="res://assets/Factions/Knights/Buildings/Castle/Castle_Purple.png" id="2_l0j0m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qbe4p"]
 size = Vector2(253, 49)
@@ -12,8 +12,8 @@ size = Vector2(250, 160)
 [node name="castle" type="StaticBody2D"]
 script = ExtResource("1_0ysgy")
 
-[node name="castle_blue" type="Sprite2D" parent="."]
-texture = ExtResource("1_6xakq")
+[node name="castle" type="Sprite2D" parent="."]
+texture = ExtResource("2_l0j0m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 78)
