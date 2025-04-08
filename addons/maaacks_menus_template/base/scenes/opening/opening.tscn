@@ -15,7 +15,6 @@ next_scene = "res://addons/maaacks_menus_template/base/scenes/menus/main_menu/ma
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 autoplay = true
-bus = &"Music"
 
 [node name="ImagesContainer" type="MarginContainer" parent="."]
 unique_name_in_owner = true

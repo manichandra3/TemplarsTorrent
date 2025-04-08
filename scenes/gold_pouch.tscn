@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp5ot5nki3hv6"]
+
+[ext_resource type="Texture2D" uid="uid://grdinsasd5lk" path="res://assets/Resources/Resources/G_Idle_(NoShadow).png" id="1_sg08v"]
+[ext_resource type="Script" uid="uid://heiq62vhfsab" path="res://scripts/gold_area.gd" id="2_eopta"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7d3pk"]
+size = Vector2(33, 29)
+
+[node name="GoldPouch" type="Area2D"]
+script = ExtResource("2_eopta")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_sg08v")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, 15.5)
+shape = SubResource("RectangleShape2D_7d3pk")

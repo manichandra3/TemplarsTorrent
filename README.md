@@ -1,15 +1,57 @@
-# Simple Health Bar
+# 🏰 Surge of Power - Templar's Torrent
 
-## Description
-This Godot plugin provides a **health bar with a damage indicator**. When health decreases, the red progress bar updates immediately, while the white damage bar updates with a **0.2-second delay** (modifiable in the Timer node within the plugin scene). This delay helps visually indicate recent damage taken, making health loss more noticeable.
+**Surge of Power - Templar's Torrent** is a fast-paced, point-and-click strategy game where players battle for dominance in a chaotic free-for-all battlefield. Manage resources, produce units, and outwit opponents — all while fending off a wild third-party goblin faction that shows no mercy!
 
-## Features
-- A responsive progress bar that instantly reflects health changes.
-- A secondary damage bar that updates after a short delay to highlight recent damage.
+## 🎮 Features
 
-## Usage
-1. Call `init_bar(health_value)` in the `ready()` function of the script where you want to attach the health bar to.
-2. Call `update_bar(new_health_value)` whenever the health value changes.
+- ⚔️ **Real-Time Free-for-All Combat**: Face off in skirmishes with multiple players (human or AI-controlled).
+- 🏗️ **Direct Unit Production**: No card decks or complicated tech trees — just build, deploy, and fight!
+- 💰 **Simplified Resource Management**: Gather and spend quickly. Keep the pace fast and the strategy sharp.
+- 🗺️ **Small Tactical Maps**: Designed for short and intense matches.
+- 🟦 **Control Points**: Secure them for tactical advantages, but remember — they’re optional for victory!
+- 👹 **Chaotic Neutral Faction**: A goblin horde attacks everyone, adding an unpredictable twist to every battle.
+- 🏆 **Victory Conditions**:
+  - Capture and hold enemy bases
+  - Or destroy all enemy strongholds to win
 
-## License
-This plugin is open-source and licensed under the MIT License. See `LICENSE.md` for details.
+## 🕹️ Gameplay
+
+Each player starts with a base and a small pool of resources. During the match, players must:
+
+- Gather resources from nearby nodes
+- Produce units directly from their base
+- Attack enemy players or defend against them
+- Be wary of the goblin faction, which will attack indiscriminately!
+
+Use control points to gain vision, speed boosts, or reinforcements — but don’t rely on them to win.
+
+## 🧱 Art & Assets
+
+- **Tilemap**: [Tiny Swords Tilemap](https://tinyswords.itch.io/tiny-swords-tactics)
+- **Game Engine**: [Godot Engine](https://godotengine.org/)
+
+## 👥 Team
+
+Built by a team of three developers over the course of a semester.
+
+## 🚧 Development Roadmap
+
+- [x] Core gameplay mechanics
+- [x] Goblin AI behavior
+- [x] Resource collection & unit production
+- [ ] Online multiplayer support
+- [ ] Polished UI/UX
+- [ ] Map editor and custom match setup
+
+## 📦 Installation
+
+1. Download [Godot](https://godotengine.org/download/)
+2. Clone this repository:
+   ```bash
+   git clone https://github.com/yourusername/goblin-skirmish.git
+   ```
+3. Open the project in Godot and press **Play**!
+
+## 🤝 Contributing
+
+Got ideas or improvements? Feel free to fork the repo and open a pull request!

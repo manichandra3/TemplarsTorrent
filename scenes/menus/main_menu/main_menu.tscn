@@ -11,11 +11,5 @@ script = ExtResource("2_ub2bi")
 options_packed_scene = ExtResource("3_x31ro")
 credits_packed_scene = ExtResource("4_0jpat")
 
-[node name="BackgroundMusicPlayer" parent="." index="1"]
-bus = &"Master"
-
 [node name="BackgroundTextureRect" parent="." index="2"]
 texture = ExtResource("5_ub2bi")
-
-[node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" index="0"]
-text = "surge of power"

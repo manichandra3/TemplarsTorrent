@@ -1,67 +1,74 @@
 extends Area2D
+@export var coin_scene: PackedScene
+@export var spawn_area: Vector2 = Vector2(200, 200)
+@export var spawn_interval: float = 10.0
+# Reference to the mine scene with an AnimatedSprite2D node as a child
+@onready var mine = $GoldMine 
+@onready var animated_sprite = $GoldMine/GoldMineActive
+var spawn_timer: Timer
 
-@export var gold_production_rate := 10  # Gold per second
-@export var goldmine_active := false
-
-var controlling_faction: int = -1  # -1 means neutral
-var occupying_units: Dictionary = {}  # Tracks units per faction
-var faction_gold: Dictionary = {}  # Tracks gold per faction
-var pawn_timer: float = 0.0  # Timer for pawn gold addition
-
-signal goldmine_activated(state)
-
-func _ready():
-	connect("body_entered", Callable(self, "_on_body_entered"))
-	connect("body_exited", Callable(self, "_on_body_exited"))
-
-func _process(delta):
-	if goldmine_active and controlling_faction != -1:
-		if controlling_faction in faction_gold:
-			faction_gold[controlling_faction] += gold_production_rate * delta
-		else:
-			faction_gold[controlling_faction] = gold_production_rate * delta
-		
-		# Pawn gold reward system
-		pawn_timer += delta
-		if pawn_timer >= 10.0:
-			Game.add_gold(5)
-			pawn_timer = 0.0
-
-func _on_body_entered(body):
-	if body.has_method("get_faction"):
-		var faction = body.get_faction()
-		if faction in occupying_units:
-			occupying_units[faction] += 1
-		else:
-			occupying_units[faction] = 1
-		
-		controlling_faction = get_dominant_faction()
-		goldmine_active = true
-		emit_signal("goldmine_activated", true)
+func _ready() -> void:
+	if not coin_scene:
+		push_error("Coin scene not assigned!")
+		return
 	
-	if body.is_in_group("pawns"):
-		Game.add_gold(5)
+	if not animated_sprite:
+		push_error("AnimatedSprite2D not found in mine!")
+		return
+	
+	# Set initial animation
+	animated_sprite.play("inactive") 
+	
+	spawn_timer = Timer.new()
+	spawn_timer.wait_time = spawn_interval
+	spawn_timer.autostart = true
+	spawn_timer.one_shot = false
+	spawn_timer.timeout.connect(spawn_coin)
+	add_child(spawn_timer)
 
-func _on_body_exited(body):
-	if body.has_method("get_faction"):
-		var faction = body.get_faction()
-		if faction in occupying_units:
-			occupying_units[faction] -= 1
-			if occupying_units[faction] <= 0:
-				occupying_units.erase(faction)
+func spawn_coin() -> void:
+	var spawn_position = get_valid_spawn_position()
+	
+	var coin = coin_scene.instantiate()
+	coin.global_position = spawn_position
+	get_parent().add_child(coin)
+	
+	# Change animation when spawning a coin
+	animated_sprite.play("active")
+
+func get_valid_spawn_position() -> Vector2:
+	var mine_collision = mine.get_node("CollisionShape2D") if mine.has_node("CollisionShape2D") else null
+	
+	if not mine_collision:
+		push_error("No CollisionShape2D found in GoldMine node!")
+		return global_position + Vector2(spawn_area.x/2, spawn_area.y/2)
+	
+	var mine_shape = mine_collision.shape
+	var mine_extents = mine_shape.extents if mine_shape is RectangleShape2D else Vector2(50, 50)
+	var mine_position = mine.global_position
+	
+	var max_attempts = 10
+	var attempts = 0
+	
+	while attempts < max_attempts:
+		var random_offset = Vector2(
+			randf_range(-spawn_area.x, spawn_area.x),
+			randf_range(-spawn_area.y, spawn_area.y)
+		)
+		var potential_position = global_position + random_offset
 		
-		if occupying_units.is_empty():
-			goldmine_active = false
-			emit_signal("goldmine_activated", false)
-			controlling_faction = -1
+		# Check if the position is outside the mine's area
+		var dist_to_mine = (potential_position - mine_position).abs()
+		
+		if dist_to_mine.x > mine_extents.x or dist_to_mine.y > mine_extents.y:
+			return potential_position
+			
+		attempts += 1
+	
+	# If no valid position found, return a position just outside the mine
+	var direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
+	var fallback_position = mine_position + direction * (mine_extents + Vector2(20, 20))
+	return fallback_position
 
-func get_dominant_faction():
-	var max_count = 0
-	var dominant_faction = -1
-	
-	for faction in occupying_units.keys():
-		if occupying_units[faction] > max_count:
-			max_count = occupying_units[faction]
-			dominant_faction = faction
-	
-	return dominant_faction
+func on_area_entered(area: Area2D) -> void:
+	pass
