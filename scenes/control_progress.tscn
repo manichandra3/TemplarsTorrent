@@ -1,4 +1,4 @@
-[gd_scene load_steps=0 format=3 uid="uid://cvfvaltdhi46e"]
+[gd_scene format=3 uid="uid://cvfvaltdhi46e"]
 
 [node name="ProgressBar" type="ProgressBar"]
 offset_right = 4.0

@@ -56,7 +56,6 @@ func start_client(ip, port):
 	
 func _on_continue_game_button_pressed():
 	$MenuContainer.hide()
-	
 	print("find match pressed!") 
 	var mock_id = str(randi()%100)
 	var mock_user = {
