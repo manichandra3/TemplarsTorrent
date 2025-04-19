@@ -22,7 +22,10 @@ AppConfig="*res://addons/maaacks_menus_template/base/scenes/autoloads/app_config
 SceneLoader="*res://addons/maaacks_menus_template/base/scenes/autoloads/scene_loader.tscn"
 ProjectMusicController="*res://addons/maaacks_menus_template/base/scenes/autoloads/project_music_controller.tscn"
 ProjectUISoundController="*res://addons/maaacks_menus_template/base/scenes/autoloads/project_ui_sound_controller.tscn"
-ResourceManager="*res://scenes/player_1/resource_manager_1.tscn"
+MockUsers="*res://scripts/mock_users.gd"
+GameManager="*res://scripts/GameManager.gd"
+ResourceManager="*res://scripts/resource_manager.gd"
+ResourceManager2="*res://scripts/resource_manager2.gd"
 
 [editor_plugins]
 

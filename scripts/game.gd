@@ -8,15 +8,29 @@ signal selection_changed(new_selected)
 @onready var ui_layer = preload("res://scenes/ui.tscn").instantiate()
 @export var pawn_scene: PackedScene = load("res://scenes/pawn.tscn")
 @export var knight_scene: PackedScene = load("res://scenes/knight.tscn")
+@export var player1_scene: PackedScene = load("res://scenes/player_1/player_1.tscn")
+@export var player2_scene: PackedScene = load("res://scenes/player_2/player_2.tscn")
+
 var selected_unit: CharacterBody2D = null
 var castle: StaticBody2D
 
 func _ready():
 	add_child(ui_layer) 
-	castle = get_tree().get_first_node_in_group("castle")
-	if not castle:
-		push_error("Castle not found! Make sure it's in the 'castle' group")
-
+	var index = 1
+	for i in GameManager.Players:
+		var currentPlayer
+		if index == 1:
+			currentPlayer = player1_scene.instantiate()
+		else:
+			currentPlayer = player2_scene.instantiate()
+		# set the custom field, not the node’s name:
+		currentPlayer.player_id = GameManager.Players[i].id
+		add_child(currentPlayer)
+		index += 1
+		#castle = get_tree().get_first_node_in_group("castle")
+		#if not castle:
+			#push_error("Castle not found! Make sure it's in the 'castle' group")
+			
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var target_position = get_global_mouse_position()
@@ -119,3 +133,4 @@ func display_insufficient_resources(resource_name: String):
 
 func _on_cancel_selection_pressed() -> void:
 	deselect_current_unit()
+	

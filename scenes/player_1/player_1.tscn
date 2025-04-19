@@ -1,13 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://co2bldy5gb4ry"]
+[gd_scene load_steps=15 format=3 uid="uid://7ad3b888ga5u"]
 
 [ext_resource type="PackedScene" uid="uid://dy8b2y20rv44t" path="res://scenes/player_1/resource_manager_1.tscn" id="1_f2c3w"]
+[ext_resource type="Script" uid="uid://b4cypfthhmgv2" path="res://scenes/player_1/player_1.gd" id="1_kaoto"]
 [ext_resource type="PackedScene" uid="uid://ceurlkkn548e" path="res://scenes/player_1/castle_1.tscn" id="2_jkihx"]
 [ext_resource type="PackedScene" uid="uid://cn2fs5dixgdhj" path="res://scenes/player_1/tower_1.tscn" id="3_qgfdq"]
 [ext_resource type="PackedScene" uid="uid://ddnds58mf3qeh" path="res://scenes/player_1/knight_1.tscn" id="4_cyakk"]
 [ext_resource type="PackedScene" uid="uid://b85dy8g1jici5" path="res://scenes/player_1/pawn_1.tscn" id="5_7m5b5"]
 [ext_resource type="PackedScene" uid="uid://dw4tsed1ke1ih" path="res://scenes/player_1/archer_1.tscn" id="6_xfu11"]
+[ext_resource type="Script" uid="uid://dcfmbvkf3gaq8" path="res://scripts/camera_2d.gd" id="7_1ncba"]
+[ext_resource type="PackedScene" uid="uid://caw28mskpm4ty" path="res://scenes/ui.tscn" id="8_kaoto"]
+[ext_resource type="Texture2D" uid="uid://bht3rxvip1fqa" path="res://assets/UI/Ribbons/Ribbon_Red_Connection_Down.png" id="9_kp4na"]
+[ext_resource type="Texture2D" uid="uid://3finlf06eeer" path="res://assets/UI/Ribbons/Ribbon_Blue_Connection_Down.png" id="10_lxam0"]
+[ext_resource type="Texture2D" uid="uid://cp42od6y37emu" path="res://assets/UI/Ribbons/Ribbon_Yellow_Connection_Down.png" id="11_3jb52"]
+[ext_resource type="Script" uid="uid://bcpyk5nxadwf8" path="res://scripts/wood_label.gd" id="12_uas8a"]
+[ext_resource type="Script" uid="uid://cn62k17kqx6di" path="res://scripts/gold_label.gd" id="13_d0wdt"]
 
-[node name="player1" type="Node"]
+[node name="player1" type="Node2D"]
+script = ExtResource("1_kaoto")
 
 [node name="ResourceManager" parent="." instance=ExtResource("1_f2c3w")]
 
@@ -34,3 +43,44 @@ position = Vector2(-1305, -368)
 
 [node name="Archer" parent="." instance=ExtResource("6_xfu11")]
 position = Vector2(-1377, -754)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("7_1ncba")
+
+[node name="UI" parent="Camera2D" instance=ExtResource("8_kaoto")]
+script = null
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/UI"]
+z_index = 4
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="cancel_selection" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "X"
+icon = ExtResource("9_kp4na")
+
+[node name="spawn_pawn" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Pw"
+icon = ExtResource("10_lxam0")
+
+[node name="spawn_knight" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Kn"
+icon = ExtResource("11_3jb52")
+
+[node name="WoodLabel" type="Label" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Wood: 0"
+script = ExtResource("12_uas8a")
+
+[node name="GoldLabel" type="Label" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Gold: 0"
+script = ExtResource("13_d0wdt")

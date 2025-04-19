@@ -14,7 +14,7 @@ const CHECK_MATCH_READY = "CHECK_MATCH_READY"
 const MATCH_READY = "MATCH_READY"
 const CREATE_MATCHES = "CREATE_MATCHES"
 
-var mock_user = {}
+var mock_user = UserData.mock_user
 
 signal start_client(ip, port)
 

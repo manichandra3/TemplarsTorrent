@@ -1,15 +1,38 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl8p5rfy72q52"]
+[gd_scene load_steps=16 format=3 uid="uid://cxnv6akvqxekk"]
 
-[ext_resource type="PackedScene" uid="uid://dy8b2y20rv44t" path="res://scenes/player_1/resource_manager_1.tscn" id="1_v7tvf"]
+[ext_resource type="PackedScene" uid="uid://c5xkimeckeckq" path="res://scenes/player_2/resource_manager_2.tscn" id="1_gslue"]
+[ext_resource type="Script" uid="uid://dah58fo5bpp03" path="res://scenes/player_2/player_2.gd" id="1_m07df"]
 [ext_resource type="PackedScene" uid="uid://c85ykr0trap6m" path="res://scenes/player_2/tower_2.tscn" id="2_au6dh"]
 [ext_resource type="PackedScene" uid="uid://uohg6bpi5608" path="res://scenes/player_2/castle_2.tscn" id="3_pglrt"]
 [ext_resource type="PackedScene" uid="uid://5spb174yq86j" path="res://scenes/player_2/archer_2.tscn" id="4_rsi16"]
 [ext_resource type="PackedScene" uid="uid://b2hmmqe8ckdlg" path="res://scenes/player_2/knight_2.tscn" id="5_ersyu"]
 [ext_resource type="PackedScene" uid="uid://b0w3u03fvp6rl" path="res://scenes/player_2/pawn_2.tscn" id="6_pglrt"]
+[ext_resource type="Script" uid="uid://dcfmbvkf3gaq8" path="res://scripts/camera_2d.gd" id="7_gslue"]
+[ext_resource type="PackedScene" uid="uid://caw28mskpm4ty" path="res://scenes/ui.tscn" id="8_m07df"]
+[ext_resource type="Texture2D" uid="uid://bht3rxvip1fqa" path="res://assets/UI/Ribbons/Ribbon_Red_Connection_Down.png" id="9_x1g0d"]
+[ext_resource type="Texture2D" uid="uid://3finlf06eeer" path="res://assets/UI/Ribbons/Ribbon_Blue_Connection_Down.png" id="10_30hi5"]
+[ext_resource type="Texture2D" uid="uid://cp42od6y37emu" path="res://assets/UI/Ribbons/Ribbon_Yellow_Connection_Down.png" id="11_8jj6a"]
+[ext_resource type="Script" uid="uid://cr5s5v531cl3d" path="res://scripts/wood_label2.gd" id="12_gslue"]
+[ext_resource type="Script" uid="uid://y3u41bom1pg7" path="res://scripts/gold_label2.gd" id="13_m07df"]
 
-[node name="player2" type="Node"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gslue"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:skew")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
-[node name="ResourceManager" parent="." instance=ExtResource("1_v7tvf")]
+[node name="player2" type="Node2D"]
+script = ExtResource("1_m07df")
+
+[node name="ResourceManager2" parent="." instance=ExtResource("1_gslue")]
 
 [node name="tower" parent="." instance=ExtResource("2_au6dh")]
 position = Vector2(1199, 246)
@@ -25,3 +48,47 @@ position = Vector2(1312, 443)
 
 [node name="pawn" parent="." instance=ExtResource("6_pglrt")]
 position = Vector2(1413, 40)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("7_gslue")
+
+[node name="UI" parent="Camera2D" instance=ExtResource("8_m07df")]
+script = null
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/UI"]
+z_index = 4
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="cancel_selection" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "X"
+icon = ExtResource("9_x1g0d")
+
+[node name="spawn_pawn" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Pw"
+icon = ExtResource("10_30hi5")
+
+[node name="spawn_knight" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Kn"
+icon = ExtResource("11_8jj6a")
+
+[node name="WoodLabel" type="Label" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Wood: 0"
+script = ExtResource("12_gslue")
+
+[node name="GoldLabel" type="Label" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+text = "Gold: 0"
+script = ExtResource("13_m07df")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gslue")

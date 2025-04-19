@@ -33,7 +33,10 @@ signal state_changed(new_state: PAWN_STATE)
 
 func _ready():
 	add_to_group("pawns")
-
+	var player_node = get_parent()
+	var id = player_node.player_id
+	print(str(id) + " name")
+	$MultiplayerSynchronizer.set_multiplayer_authority(id)
 	# Navigation agent fine-tuning
 	navigation_agent.path_desired_distance = 5.0
 	navigation_agent.target_desired_distance = 6.0
@@ -43,12 +46,26 @@ func _ready():
 	health_bar.init_bar(health)
 
 	# Connect signals
+
 	main.entity_move_requested.connect(_on_entity_move_requested)
 	main.selection_changed.connect(_on_selection_changed)
 	
 	# Enable input processing for this collider
 	input_pickable = true
 
+func _physics_process(delta):
+	#print(str($MultiplayerSynchronizer.get_multiplayer_authority()) + " che"+str(multiplayer.get_unique_id()))
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		match current_state:
+			PAWN_STATE.IDLE:
+				handle_idle_state(delta)
+			PAWN_STATE.RUNNING:
+				handle_running_state(delta)
+			PAWN_STATE.CHOPPING:
+				handle_chopping_state(delta)
+			PAWN_STATE.CONSTRUCTING:
+					handle_constructing_state(delta)
+				
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		main.change_selected_unit(self)
@@ -116,17 +133,7 @@ func set_movement_target(movement_target: Vector2):
 	else:
 		print("oo")
 		change_state(PAWN_STATE.RUNNING)
-		
-func _physics_process(delta):
-	match current_state:
-		PAWN_STATE.IDLE:
-			handle_idle_state(delta)
-		PAWN_STATE.RUNNING:
-			handle_running_state(delta)
-		PAWN_STATE.CHOPPING:
-			handle_chopping_state(delta)
-		PAWN_STATE.CONSTRUCTING:
-				handle_constructing_state(delta)
+	
 
 func handle_constructing_state(delta):
 	if not target_tower and target_tower.is_destroyed():
