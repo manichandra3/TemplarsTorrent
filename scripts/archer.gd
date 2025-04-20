@@ -30,6 +30,7 @@ var forced_movement: bool = false  # Flag to track if player is forcing movement
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $ArcherAnimated
+@onready var multiplayer_sync: MultiplayerSynchronizer
 @onready var main = get_node("/root/game")
 @onready var health_bar = $HealthBar
 @onready var projectile_scene = preload("res://scenes/arrow.tscn")
@@ -38,6 +39,11 @@ signal state_changed(new_state: ARCHER_STATE)
 
 func _ready():
 	add_to_group("pawns")
+	var player_node = get_parent()
+	var id = player_node.player_id
+	print(str(id) + " name")
+	$MultiplayerSynchronizer.set_multiplayer_authority(id)
+	
 	navigation_agent.path_desired_distance = 4.0
 	navigation_agent.target_desired_distance = 4.0
 	navigation_agent.avoidance_enabled = true
@@ -65,6 +71,18 @@ func _ready():
 
 	# Enable input
 	input_pickable = true
+
+func _physics_process(delta):
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		match current_state:
+			ARCHER_STATE.IDLE:
+				handle_idle_state(delta)
+			ARCHER_STATE.RUNNING:
+				handle_running_state(delta)
+			ARCHER_STATE.ATTACKING:
+				handle_attacking_state(delta)
+			ARCHER_STATE.COOLDOWN:
+				handle_cooldown_state(delta)
 
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -131,17 +149,6 @@ func find_closest_enemy():
 	if closest_enemy:
 		target_enemy = closest_enemy
 		change_state(ARCHER_STATE.ATTACKING)
-
-func _physics_process(delta):
-	match current_state:
-		ARCHER_STATE.IDLE:
-			handle_idle_state(delta)
-		ARCHER_STATE.RUNNING:
-			handle_running_state(delta)
-		ARCHER_STATE.ATTACKING:
-			handle_attacking_state(delta)
-		ARCHER_STATE.COOLDOWN:
-			handle_cooldown_state(delta)
 
 func handle_idle_state(_delta):
 	velocity = Vector2.ZERO

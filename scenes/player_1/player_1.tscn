@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://bcpyk5nxadwf8" path="res://scripts/wood_label.gd" id="12_uas8a"]
 [ext_resource type="Script" uid="uid://cn62k17kqx6di" path="res://scripts/gold_label.gd" id="13_d0wdt"]
 
-[node name="player1" type="Node2D"]
+[node name="player1" type="Node2D" groups=["player1", "player2"]]
 script = ExtResource("1_kaoto")
 
 [node name="ResourceManager" parent="." instance=ExtResource("1_f2c3w")]

@@ -39,6 +39,12 @@ signal state_changed(new_state: KNIGHT_STATE)
 
 func _ready():
 	add_to_group("pawns")
+	
+	var player_node = get_parent()
+	var id = player_node.player_id
+	print(str(id) + " name")
+	$MultiplayerSynchronizer.set_multiplayer_authority(id)
+	
 	navigation_agent.path_desired_distance = 4.0
 	navigation_agent.target_desired_distance = 4.0
 	navigation_agent.avoidance_enabled = true
@@ -148,15 +154,16 @@ func find_closest_enemy():
 		change_state(KNIGHT_STATE.ATTACKING)
 
 func _physics_process(delta):
-	match current_state:
-		KNIGHT_STATE.IDLE:
-			handle_idle_state()
-		KNIGHT_STATE.RUNNING:
-			handle_running_state(delta)
-		KNIGHT_STATE.ATTACKING:
-			handle_attacking_state(delta)
-		KNIGHT_STATE.DESTRUCTING:
-			handle_destructing_state(delta)
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		match current_state:
+			KNIGHT_STATE.IDLE:
+				handle_idle_state()
+			KNIGHT_STATE.RUNNING:
+				handle_running_state(delta)
+			KNIGHT_STATE.ATTACKING:
+				handle_attacking_state(delta)
+			KNIGHT_STATE.DESTRUCTING:
+				handle_destructing_state(delta)
 
 func handle_idle_state():
 	velocity = Vector2.ZERO

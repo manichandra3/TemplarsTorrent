@@ -31,6 +31,11 @@ ResourceManager2="*res://scripts/resource_manager2.gd"
 
 enabled=PackedStringArray("res://addons/NZ_projectiles/plugin.cfg", "res://addons/maaacks_menus_template/plugin.cfg", "res://addons/simple_health_bar/plugin.cfg")
 
+[global_group]
+
+player1=""
+player2=""
+
 [gui]
 
 theme/custom="res://resources/themes/lab.tres"

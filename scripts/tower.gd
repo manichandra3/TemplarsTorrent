@@ -28,6 +28,10 @@ var constructing_pawn: Node2D = null
 
 func _ready():
 	add_to_group("towers")
+	var player_node = get_parent()
+	var id = player_node.player_id
+	print(str(id) + " name")
+	$MultiplayerSynchronizer.set_multiplayer_authority(id)
 	update_animation()
 
 func _process(delta):
@@ -45,15 +49,16 @@ func _process(delta):
 			_on_construction_complete()
 
 func update_animation():
-	match tower_state:
-		TOWER_STATE.CONSTRUCTED:
-			animated_sprite.play("built")
-		TOWER_STATE.CONSTRUCTION:
-			animated_sprite.play("construction")
-		TOWER_STATE.DESTROYING:
-			play_shake()
-		TOWER_STATE.DESTROYED:
-			animated_sprite.play("destroyed")
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		match tower_state:
+			TOWER_STATE.CONSTRUCTED:
+				animated_sprite.play("built")
+			TOWER_STATE.CONSTRUCTION:
+				animated_sprite.play("construction")
+			TOWER_STATE.DESTROYING:
+				play_shake()
+			TOWER_STATE.DESTROYED:
+				animated_sprite.play("destroyed")
 
 # --- Destruction Methods ---
 

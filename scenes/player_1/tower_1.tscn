@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cn2fs5dixgdhj"]
+[gd_scene load_steps=11 format=3 uid="uid://cn2fs5dixgdhj"]
 
 [ext_resource type="Texture2D" uid="uid://co1s2y4418h17" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Blue.png" id="1_mdfvi"]
 [ext_resource type="Script" uid="uid://kbsyrpya2yrg" path="res://scripts/tower.gd" id="2_lcvft"]
@@ -43,6 +43,41 @@ radius = 34.01
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qrbg1"]
 size = Vector2(89, 164.438)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qy3jd"]
+properties/0/path = NodePath("tower_animated:animation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("tower_animated:frame")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("tower_animated:speed_scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("tower_animated:centered")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("tower_animated:offset")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("tower_animated:flip_h")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("tower_animated:flip_v")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("tower_animated:position")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("tower_animated:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("tower_animated:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("tower_animated:skew")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+
 [node name="StaticBody2D" type="StaticBody2D"]
 z_index = 2
 collision_layer = 4
@@ -66,3 +101,6 @@ script = ExtResource("3_2pimi")
 z_index = 1
 position = Vector2(1, -62)
 shape = SubResource("RectangleShape2D_qrbg1")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qy3jd")

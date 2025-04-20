@@ -401,4 +401,10 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="Start" type="Button" parent="." index="12"]
+visible = false
+layout_mode = 0
+text = "Start Game"
+
 [connection signal="pressed" from="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/ContinueGameButton" to="." method="_on_continue_game_button_pressed"]
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]

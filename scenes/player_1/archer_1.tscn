@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dw4tsed1ke1ih"]
+[gd_scene load_steps=46 format=3 uid="uid://dw4tsed1ke1ih"]
 
 [ext_resource type="Texture2D" uid="uid://bcgdayabvpnnn" path="res://assets/Factions/Knights/Troops/Archer/Blue/Archer_Blue.png" id="1_b0l3x"]
 [ext_resource type="Script" uid="uid://djdbbuisfmbit" path="res://scripts/archer.gd" id="1_orquw"]
@@ -294,6 +294,65 @@ radius = 24.5153
 [sub_resource type="CircleShape2D" id="CircleShape2D_orquw"]
 radius = 170.95
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7dwte"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:skew")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("ArcherAnimated:animation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("ArcherAnimated:frame")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("ArcherAnimated:speed_scale")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("ArcherAnimated:centered")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("ArcherAnimated:offset")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("ArcherAnimated:flip_h")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("ArcherAnimated:flip_v")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("EnemyDetector:monitoring")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("EnemyDetector:monitorable")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath("EnemyDetector:priority")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath("EnemyDetector:gravity_space_override")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath("EnemyDetector:linear_damp_space_override")
+properties/15/spawn = true
+properties/15/replication_mode = 1
+properties/16/path = NodePath("EnemyDetector:angular_damp_space_override")
+properties/16/spawn = true
+properties/16/replication_mode = 1
+properties/17/path = NodePath("EnemyDetector:audio_bus_override")
+properties/17/spawn = true
+properties/17/replication_mode = 1
+properties/18/path = NodePath("EnemyDetector:audio_bus_name")
+properties/18/spawn = true
+properties/18/replication_mode = 1
+
 [node name="Archer" type="CharacterBody2D"]
 script = ExtResource("1_orquw")
 
@@ -301,6 +360,8 @@ script = ExtResource("1_orquw")
 sprite_frames = SubResource("SpriteFrames_1s68y")
 animation = &"attack"
 autoplay = "idle"
+frame = 3
+frame_progress = 0.40174
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 20)
@@ -325,3 +386,6 @@ offset_left = -26.0
 offset_top = 34.0
 offset_right = 27.0
 offset_bottom = 44.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_7dwte")

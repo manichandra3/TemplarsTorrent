@@ -58,9 +58,9 @@ func _physics_process(delta):
 	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		match current_state:
 			PAWN_STATE.IDLE:
-				handle_idle_state(delta)
+				handle_idle_state.rpc(delta)
 			PAWN_STATE.RUNNING:
-				handle_running_state(delta)
+				handle_running_state.rpc(delta)
 			PAWN_STATE.CHOPPING:
 				handle_chopping_state(delta)
 			PAWN_STATE.CONSTRUCTING:
@@ -154,11 +154,12 @@ func handle_constructing_state(delta):
 			print("jec")
 			target_tower.connect("construction_complete", Callable(self, "_on_constructing_complete"))
 
-
+@rpc("any_peer","call_local")
 func handle_idle_state(_delta):
 	velocity = Vector2.ZERO
 	animated_sprite.play("idle")
-
+	
+@rpc("any_peer","call_local")
 func handle_running_state(delta):
 	if navigation_agent.is_navigation_finished():
 		change_state(PAWN_STATE.IDLE)
