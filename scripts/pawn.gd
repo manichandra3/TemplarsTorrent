@@ -182,7 +182,7 @@ func handle_chopping_state(_delta):
 	if not target_tree and not target_tree.is_grown():
 		change_state(PAWN_STATE.IDLE)
 		return
-	print(global_position.distance_to(target_tree.global_position))
+	#print(global_position.distance_to(target_tree.global_position))
 	# Move closer to tree if too far
 	if global_position.distance_to(target_tree.global_position) > 50.0:
 		print("jjj")

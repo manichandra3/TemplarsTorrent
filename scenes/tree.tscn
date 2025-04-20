@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://kpdyy60x23a4"]
+[gd_scene load_steps=15 format=3 uid="uid://kpdyy60x23a4"]
 
 [ext_resource type="Texture2D" uid="uid://c4paebmc1unpu" path="res://assets/Resources/Trees/Tree.png" id="1_rk26q"]
 [ext_resource type="Script" uid="uid://ci7puf01i4nif" path="res://scripts/tree.gd" id="2_pcn25"]
@@ -77,6 +77,41 @@ size = Vector2(87, 166)
 [sub_resource type="CircleShape2D" id="CircleShape2D_xwwbt"]
 radius = 19.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_viusy"]
+properties/0/path = NodePath("tree_animated:animation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("tree_animated:frame")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("tree_animated:speed_scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("tree_animated:centered")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("tree_animated:offset")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("tree_animated:flip_h")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("tree_animated:flip_v")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("tree_animated:position")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("tree_animated:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("tree_animated:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("tree_animated:skew")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+
 [node name="tree" type="CharacterBody2D"]
 z_index = 1
 collision_layer = 4
@@ -97,3 +132,6 @@ shape = SubResource("RectangleShape2D_dyi2f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xwwbt")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_viusy")

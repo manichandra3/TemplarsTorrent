@@ -20,6 +20,7 @@ func _ready():
 	add_to_group("trees")
 	update_animation()
 
+
 func chop_tree(pawn: Node2D):
 	if state != STATE.GROWN or chopping_pawn:
 		return
@@ -54,6 +55,7 @@ func complete_chopping():
 	chopping_task = null
 	start_regrowth()
 
+@rpc("any_peer","call_local")
 func stop_chopping(pawn: Node2D):
 	if chopping_pawn != pawn:
 		return
@@ -84,8 +86,20 @@ func is_grown() -> bool:
 func update_animation():
 	match state:
 		STATE.GROWN:
-			animated_sprite.play("default")
+			update_default.rpc()
 		STATE.CHOPPING:
-			animated_sprite.play("chopping")
+			update_chopping.rpc()
 		STATE.CHOPPED:
-			animated_sprite.play("chopped")
+			update_chopped.rpc()
+			
+@rpc("any_peer","call_local")
+func update_default():
+	animated_sprite.play("default")
+	
+@rpc("any_peer","call_local")
+func update_chopping():
+	animated_sprite.play("chopping")
+	
+@rpc("any_peer","call_local")
+func update_chopped():
+	animated_sprite.play("chopped")

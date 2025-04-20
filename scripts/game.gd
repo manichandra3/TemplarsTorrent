@@ -30,6 +30,8 @@ func _ready():
 		#castle = get_tree().get_first_node_in_group("castle")
 		#if not castle:
 			#push_error("Castle not found! Make sure it's in the 'castle' group")
+	if multiplayer.is_server():
+		spawn_trees()
 			
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -133,4 +135,17 @@ func display_insufficient_resources(resource_name: String):
 
 func _on_cancel_selection_pressed() -> void:
 	deselect_current_unit()
+	
+func spawn_trees():
+	# Example: spawn 3 trees at different locations
+	for i in range(1):
+		var tree = preload("res://scenes/tree.tscn").instantiate()
+		tree.position = Vector2(-1159, -286)
+		add_child(tree)
+		
+		# Assign a unique name for network syncing
+		tree.name = "tree_%s" % str(i)
+
+		# Set ownership to the server (so it can sync)
+		tree.set_multiplayer_authority(multiplayer.get_unique_id())
 	

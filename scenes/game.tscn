@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://c2fx58yowisjd"]
+[gd_scene load_steps=36 format=4 uid="uid://c2fx58yowisjd"]
 
 [ext_resource type="Script" uid="uid://n0cgo87bcrvm" path="res://scripts/game.gd" id="1_1nr38"]
 [ext_resource type="Texture2D" uid="uid://d4hv74kf01de2" path="res://assets/Terrain/Ground/Tilemap_Flat.png" id="1_6uvsd"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://co1s2y4418h17" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Blue.png" id="6_r3vyf"]
 [ext_resource type="Texture2D" uid="uid://c1oahvh2bwo3n" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Destroyed.png" id="7_4750b"]
 [ext_resource type="Texture2D" uid="uid://c4paebmc1unpu" path="res://assets/Resources/Trees/Tree.png" id="8_fov40"]
-[ext_resource type="PackedScene" uid="uid://kpdyy60x23a4" path="res://scenes/tree.tscn" id="13_5dmc4"]
 [ext_resource type="PackedScene" uid="uid://ocgj677aalms" path="res://scenes/gold.tscn" id="22_37s47"]
 [ext_resource type="PackedScene" uid="uid://peqrqph0ufbh" path="res://scenes/torch_goblin.tscn" id="23_bt5mj"]
 [ext_resource type="PackedScene" uid="uid://dcytdxradoou" path="res://scenes/goblin_tower.tscn" id="24_e1j6l"]
@@ -418,18 +417,6 @@ navigation_polygon = SubResource("NavigationPolygon_37s47")
 
 [node name="GoldMine" parent="." instance=ExtResource("22_37s47")]
 script = ExtResource("24_sgl2t")
-
-[node name="tree" parent="." instance=ExtResource("13_5dmc4")]
-position = Vector2(-1159, -286)
-
-[node name="tree2" parent="." instance=ExtResource("13_5dmc4")]
-position = Vector2(-1250, -187)
-
-[node name="tree3" parent="." instance=ExtResource("13_5dmc4")]
-position = Vector2(-1090, -130)
-
-[node name="tree4" parent="." instance=ExtResource("13_5dmc4")]
-position = Vector2(-1263, -594)
 
 [node name="TorchGoblin" parent="." instance=ExtResource("23_bt5mj")]
 position = Vector2(-1109, -740)

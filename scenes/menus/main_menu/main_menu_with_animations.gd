@@ -86,6 +86,15 @@ func peer_disconnected(id):
 		player1[0].queue_free()
 	elif str(id) == str(player2[0].player_id):
 		player2[0].queue_free()
+	if GameManager.Players.size() == 0:
+		clear_game_scene()
+
+func clear_game_scene():
+	var game_node = get_tree().get_root().get_node("game")
+	if game_node:
+		for child in game_node.get_children():
+			child.queue_free()
+
 
 # this get called only from client
 func connected_to_server():

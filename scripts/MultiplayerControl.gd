@@ -34,6 +34,7 @@ func peer_disconnected(id):
 		player1[0].queue_free()
 	elif str(id) == str(player2[0].player_id):
 		player2[0].queue_free()
+	get_tree().root.queue_free()
 		
 # this get called only from client
 func connected_to_server():
