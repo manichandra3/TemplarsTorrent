@@ -6,7 +6,7 @@ enum STATE {
 	CHOPPED
 }
 
-@export var secs_to_grow: float = 50.0
+@export var secs_to_grow: float = 2.0
 @export var chopping_duration: float = 10.0
 
 @onready var animated_sprite: AnimatedSprite2D = $tree_animated
@@ -51,11 +51,18 @@ func _on_chopping_complete(pawn: Node2D):
 func complete_chopping():
 	state = STATE.CHOPPED
 	update_animation()
+	if chopping_pawn:
+		var stats_node = chopping_pawn.get_parent()
+		if stats_node:
+			var rm_node = stats_node.get_node_or_null("ResourceManager")
+			print("adding wood")
+			rm_node.add_wood(10)
+		else:
+			push_error("Stats node not found on pawn %s" % chopping_pawn.name)
 	chopping_pawn = null
 	chopping_task = null
 	start_regrowth()
 
-@rpc("any_peer","call_local")
 func stop_chopping(pawn: Node2D):
 	if chopping_pawn != pawn:
 		return

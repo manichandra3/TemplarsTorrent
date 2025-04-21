@@ -13,7 +13,7 @@ enum AI_STATE {
 @export var detection_radius: float = 200.0  
 @export var max_distance_from_tower: float = 350.0  
 @export var health: float = 100.0  
-@export var attack_damage: float = 10.0  
+@export var attack_damage: float = 1.0  
 @export var attack_cooldown: float = 2.0  
 
 var target: Node2D = null
@@ -76,9 +76,9 @@ func _physics_process(delta):
 		var distance_to_tower = global_position.distance_to(home_tower.global_position)
 		if distance_to_tower > max_distance_from_tower:
 			change_state(AI_STATE.RETURNING)
-
+	
 func handle_idle_state():
-	sprite.play("idle")
+	update_idle.rpc()
 	# 30% chance to ignore nearby enemies for a short time
 	if randf() > 0.7:
 		return
@@ -99,7 +99,7 @@ func handle_chase_state(_delta):
 		var next_position = navigation_agent.get_next_path_position()
 		var direction = (next_position - global_position).normalized()
 		velocity = direction * speed
-		sprite.play("run")
+		update_chasing.rpc()
 		sprite.flip_h = velocity.x < 0
 		move_and_slide()
 
@@ -110,7 +110,7 @@ func handle_attack_state():
 	if global_position.distance_to(target.global_position) > attack_range:
 		change_state(AI_STATE.CHASING)
 		return
-	sprite.play("attack")
+	update_attacking.rpc()
 	if not is_attacking:
 		perform_attack()
 
@@ -127,7 +127,7 @@ func handle_return_state(_delta):
 		var next_position = navigation_agent.get_next_path_position()
 		var direction = (next_position - global_position).normalized()
 		velocity = direction * speed
-		sprite.play("run")
+		update_chasing.rpc()
 		sprite.flip_h = velocity.x < 0
 		move_and_slide()
 
@@ -193,3 +193,13 @@ func take_damage(damage: float):
 func die():
 	print("Goblin died!")
 	queue_free()
+	
+@rpc("any_peer", "call_local")
+func update_idle():
+	sprite.play("idle")
+@rpc("any_peer", "call_local")
+func update_chasing():
+	sprite.play("run")
+@rpc("any_peer", "call_local")
+func update_attacking():
+	sprite.play("attack")

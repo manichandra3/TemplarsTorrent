@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ocgj677aalms"]
+[gd_scene load_steps=8 format=3 uid="uid://ocgj677aalms"]
 
 [ext_resource type="Texture2D" uid="uid://b5kw3otn4le4u" path="res://assets/Resources/Gold Mine/GoldMine_Active.png" id="1_1p357"]
 [ext_resource type="Texture2D" uid="uid://c1s4b0spujb2s" path="res://assets/Resources/Gold Mine/GoldMine_Inactive.png" id="2_v68ff"]
@@ -33,6 +33,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_oou0j"]
 radius = 48.0104
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_yna14"]
+radius = 138.752
+
 [node name="GoldMine" type="CharacterBody2D"]
 
 [node name="GoldMineActive" type="AnimatedSprite2D" parent="."]
@@ -43,3 +46,8 @@ autoplay = "inactive"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_oou0j")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_yna14")

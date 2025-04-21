@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://peqrqph0ufbh"]
+[gd_scene load_steps=42 format=3 uid="uid://peqrqph0ufbh"]
 
 [ext_resource type="Script" uid="uid://durxnhhhphk20" path="res://scripts/torch_goblin.gd" id="1_6ulqy"]
 [ext_resource type="Texture2D" uid="uid://c6sofw7v73fhx" path="res://assets/Factions/Goblins/Troops/Torch/Red/Torch_Red.png" id="1_wuhk7"]
@@ -262,6 +262,116 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_6jeun"]
 radius = 25.1794
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ppf6h"]
+radius = 42.0119
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ppf6h"]
+properties/0/path = NodePath("AnimatedTorchGoblin:animation")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("AnimatedTorchGoblin:frame")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("AnimatedTorchGoblin:speed_scale")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("AnimatedTorchGoblin:centered")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("AnimatedTorchGoblin:offset")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("AnimatedTorchGoblin:flip_h")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("AnimatedTorchGoblin:flip_v")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("NavigationAgent2D:path_desired_distance")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("NavigationAgent2D:target_desired_distance")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("NavigationAgent2D:path_max_distance")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("NavigationAgent2D:navigation_layers")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("NavigationAgent2D:pathfinding_algorithm")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("NavigationAgent2D:path_postprocessing")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath("NavigationAgent2D:path_metadata_flags")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath("NavigationAgent2D:simplify_path")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath("NavigationAgent2D:simplify_epsilon")
+properties/15/spawn = true
+properties/15/replication_mode = 1
+properties/16/path = NodePath("NavigationAgent2D:avoidance_enabled")
+properties/16/spawn = true
+properties/16/replication_mode = 1
+properties/17/path = NodePath("NavigationAgent2D:radius")
+properties/17/spawn = true
+properties/17/replication_mode = 1
+properties/18/path = NodePath("NavigationAgent2D:neighbor_distance")
+properties/18/spawn = true
+properties/18/replication_mode = 1
+properties/19/path = NodePath("NavigationAgent2D:max_neighbors")
+properties/19/spawn = true
+properties/19/replication_mode = 1
+properties/20/path = NodePath("NavigationAgent2D:time_horizon_agents")
+properties/20/spawn = true
+properties/20/replication_mode = 1
+properties/21/path = NodePath("NavigationAgent2D:time_horizon_obstacles")
+properties/21/spawn = true
+properties/21/replication_mode = 1
+properties/22/path = NodePath("NavigationAgent2D:max_speed")
+properties/22/spawn = true
+properties/22/replication_mode = 1
+properties/23/path = NodePath("NavigationAgent2D:avoidance_layers")
+properties/23/spawn = true
+properties/23/replication_mode = 1
+properties/24/path = NodePath("NavigationAgent2D:avoidance_mask")
+properties/24/spawn = true
+properties/24/replication_mode = 1
+properties/25/path = NodePath("NavigationAgent2D:avoidance_priority")
+properties/25/spawn = true
+properties/25/replication_mode = 1
+properties/26/path = NodePath("NavigationAgent2D:debug_enabled")
+properties/26/spawn = true
+properties/26/replication_mode = 1
+properties/27/path = NodePath("NavigationAgent2D:debug_use_custom")
+properties/27/spawn = true
+properties/27/replication_mode = 1
+properties/28/path = NodePath("NavigationAgent2D:debug_path_custom_color")
+properties/28/spawn = true
+properties/28/replication_mode = 1
+properties/29/path = NodePath("NavigationAgent2D:debug_path_custom_point_size")
+properties/29/spawn = true
+properties/29/replication_mode = 1
+properties/30/path = NodePath("NavigationAgent2D:debug_path_custom_line_width")
+properties/30/spawn = true
+properties/30/replication_mode = 1
+properties/31/path = NodePath(".:position")
+properties/31/spawn = true
+properties/31/replication_mode = 2
+properties/32/path = NodePath(".:rotation")
+properties/32/spawn = true
+properties/32/replication_mode = 2
+properties/33/path = NodePath(".:scale")
+properties/33/spawn = true
+properties/33/replication_mode = 2
+properties/34/path = NodePath(".:skew")
+properties/34/spawn = true
+properties/34/replication_mode = 2
+
 [node name="TorchGoblin" type="CharacterBody2D"]
 motion_mode = 1
 wall_min_slide_angle = 0.0
@@ -286,5 +396,13 @@ offset_left = -28.0
 offset_top = 35.0
 offset_right = 28.0
 offset_bottom = 45.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ppf6h")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ppf6h")
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

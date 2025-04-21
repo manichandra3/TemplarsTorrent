@@ -125,7 +125,8 @@ func set_movement_target(movement_target: Vector2):
 		change_state(PAWN_STATE.IDLE)
 	elif target_tree: 
 		print("pp")
-		change_state(PAWN_STATE.CHOPPING)
+		if target_tree.is_grown():
+			change_state(PAWN_STATE.CHOPPING)
 	elif target_tower:
 		print("ff")
 		if target_tower.is_destroyed():

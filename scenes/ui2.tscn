@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dasdr5ehrscod"]
+
+[sub_resource type="GDScript" id="GDScript_yev5y"]
+script/source = "extends CanvasLayer
+"
+
+[node name="UI" type="CanvasLayer"]
+layer = 5
+script = SubResource("GDScript_yev5y")

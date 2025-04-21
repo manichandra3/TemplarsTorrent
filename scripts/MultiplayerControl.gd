@@ -64,14 +64,14 @@ func StartGame():
 	if OS.has_feature("server") or OS.has_feature("headless"):
 		return
 	var scene = load("res://scenes/game.tscn").instantiate()
-	get_tree().root.add_child(scene)
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 	self.hide()
 
 func hostGame() -> void:
 	peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, 2)
 	if error != OK:
-		print("cananot host: " + error)
+		print("cananot host: " + str(error))
 		return
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)

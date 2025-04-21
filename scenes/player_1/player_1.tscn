@@ -42,13 +42,12 @@ position = Vector2(-1435, -420)
 position = Vector2(-1305, -368)
 
 [node name="Archer" parent="." instance=ExtResource("6_xfu11")]
-position = Vector2(-1377, -754)
+position = Vector2(-1656, -401)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("7_1ncba")
 
 [node name="UI" parent="Camera2D" instance=ExtResource("8_kaoto")]
-script = null
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/UI"]
 z_index = 4
@@ -76,11 +75,11 @@ icon = ExtResource("11_3jb52")
 [node name="WoodLabel" type="Label" parent="Camera2D/UI/HBoxContainer"]
 z_index = 4
 layout_mode = 2
-text = "Wood: 0"
+text = " "
 script = ExtResource("12_uas8a")
 
 [node name="GoldLabel" type="Label" parent="Camera2D/UI/HBoxContainer"]
 z_index = 4
 layout_mode = 2
-text = "Gold: 0"
+text = " "
 script = ExtResource("13_d0wdt")
