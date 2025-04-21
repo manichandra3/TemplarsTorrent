@@ -9,3 +9,4 @@ func _ready():
 
 func _on_gold_changed(new_count: int) -> void:
 	text = "Gold: %d" % new_count
+	

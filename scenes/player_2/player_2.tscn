@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cxnv6akvqxekk"]
+[gd_scene load_steps=17 format=3 uid="uid://cxnv6akvqxekk"]
 
 [ext_resource type="PackedScene" uid="uid://c5xkimeckeckq" path="res://scenes/player_2/resource_manager_2.tscn" id="1_gslue"]
 [ext_resource type="Script" uid="uid://dah58fo5bpp03" path="res://scenes/player_2/player_2.gd" id="1_m07df"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dasdr5ehrscod" path="res://scenes/ui2.tscn" id="9_m07df"]
 [ext_resource type="Texture2D" uid="uid://bht3rxvip1fqa" path="res://assets/UI/Ribbons/Ribbon_Red_Connection_Down.png" id="9_x1g0d"]
 [ext_resource type="Texture2D" uid="uid://3finlf06eeer" path="res://assets/UI/Ribbons/Ribbon_Blue_Connection_Down.png" id="10_30hi5"]
+[ext_resource type="Script" uid="uid://bo3dnlfb6h42t" path="res://scripts/ui_2.gd" id="10_x1g0d"]
 [ext_resource type="Texture2D" uid="uid://cp42od6y37emu" path="res://assets/UI/Ribbons/Ribbon_Yellow_Connection_Down.png" id="11_8jj6a"]
 [ext_resource type="Script" uid="uid://cr5s5v531cl3d" path="res://scripts/wood_label2.gd" id="12_gslue"]
 [ext_resource type="Script" uid="uid://y3u41bom1pg7" path="res://scripts/gold_label2.gd" id="13_m07df"]
@@ -53,6 +54,7 @@ position = Vector2(1413, 40)
 script = ExtResource("7_gslue")
 
 [node name="UI" parent="Camera2D" instance=ExtResource("9_m07df")]
+script = ExtResource("10_x1g0d")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Camera2D/UI"]
 z_index = 4
@@ -80,13 +82,11 @@ icon = ExtResource("11_8jj6a")
 [node name="WoodLabel" type="Label" parent="Camera2D/UI/HBoxContainer2"]
 z_index = 4
 layout_mode = 2
-text = "Wood: 0"
 script = ExtResource("12_gslue")
 
 [node name="GoldLabel" type="Label" parent="Camera2D/UI/HBoxContainer2"]
 z_index = 4
 layout_mode = 2
-text = "Gold: 0"
 script = ExtResource("13_m07df")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
