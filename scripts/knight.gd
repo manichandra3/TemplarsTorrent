@@ -177,10 +177,6 @@ func handle_running_state(delta):
 	if velocity.length() > 0:
 		animated_sprite.play("running")
 		animated_sprite.flip_h = velocity.x < 0
-		if global_position.distance_to(previous_position) < 0.11:
-			print("hi")
-			change_state(KNIGHT_STATE.IDLE)
-		previous_position = global_position
 
 	navigation_agent.velocity = velocity
 	move_and_slide()

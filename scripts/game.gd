@@ -6,8 +6,8 @@ signal selection_changed(new_selected)
 
 # Existing variables
 @onready var ui_layer = preload("res://scenes/ui.tscn").instantiate()
-@export var pawn_scene: PackedScene = load("res://scenes/pawn.tscn")
-@export var knight_scene: PackedScene = load("res://scenes/knight.tscn")
+@export var pawn_scene: PackedScene
+@export var knight_scene: PackedScene
 var selected_unit: CharacterBody2D = null
 var castle: StaticBody2D
 

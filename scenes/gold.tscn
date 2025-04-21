@@ -37,7 +37,7 @@ radius = 48.0104
 
 [node name="GoldMineActive" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a23fd")
-animation = &"inactive"
+animation = &"active"
 autoplay = "inactive"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
