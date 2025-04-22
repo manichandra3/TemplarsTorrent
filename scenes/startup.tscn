@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0ayastxgywjf"]
+
+[ext_resource type="Script" uid="uid://bdsmw6ukpn4a7" path="res://scripts/startup.gd" id="1_t87yh"]
+
+[node name="startup" type="Node"]
+script = ExtResource("1_t87yh")
+
+[node name="LobbyPlaceholder" type="Node" parent="."]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 1153.0
+offset_bottom = 653.0
+
+[node name="find_match2" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 63.0
+offset_right = 187.0
+offset_bottom = 110.0
+text = "FIND MATCH"
+
+[connection signal="pressed" from="UI/find_match2" to="." method="_on_find_match_pressed"]

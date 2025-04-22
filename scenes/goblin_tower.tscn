@@ -1,0 +1,105 @@
+[gd_scene load_steps=12 format=3 uid="uid://dcytdxradoou"]
+
+[ext_resource type="Script" uid="uid://cgyuvav1u3c6e" path="res://scripts/goblin_tower.gd" id="1_5rpyk"]
+[ext_resource type="Texture2D" uid="uid://bqne2ahpntcts" path="res://assets/Factions/Goblins/Buildings/Wood_Tower/Wood_Tower_Red.png" id="1_goufs"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5rpyk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1sgx"]
+atlas = ExtResource("1_goufs")
+region = Rect2(0, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yhby"]
+atlas = ExtResource("1_goufs")
+region = Rect2(256, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_so8un"]
+atlas = ExtResource("1_goufs")
+region = Rect2(512, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12p3k"]
+atlas = ExtResource("1_goufs")
+region = Rect2(768, 0, 256, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_axajg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1sgx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yhby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_so8un")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_12p3k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btorx"]
+size = Vector2(84, 53)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rs72k"]
+size = Vector2(80, 141)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5rpyk"]
+properties/0/path = NodePath("AnimatedGoblinTower:animation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("AnimatedGoblinTower:frame")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimatedGoblinTower:speed_scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("AnimatedGoblinTower:centered")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("AnimatedGoblinTower:offset")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("AnimatedGoblinTower:flip_h")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("AnimatedGoblinTower:flip_v")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("AnimatedGoblinTower:position")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("AnimatedGoblinTower:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("AnimatedGoblinTower:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("AnimatedGoblinTower:skew")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+
+[node name="GoblinTower" type="StaticBody2D"]
+z_index = 1
+physics_material_override = SubResource("PhysicsMaterial_5rpyk")
+script = ExtResource("1_5rpyk")
+
+[node name="AnimatedGoblinTower" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_axajg")
+frame_progress = 0.436681
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 43.5)
+shape = SubResource("RectangleShape2D_btorx")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_rs72k")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_5rpyk")

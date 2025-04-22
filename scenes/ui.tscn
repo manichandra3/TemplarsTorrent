@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://caw28mskpm4ty"]
+
+[ext_resource type="Script" uid="uid://bj81tkpn6ks7a" path="res://scripts/ui.gd" id="1_gdt2y"]
+[ext_resource type="PackedScene" uid="uid://b85dy8g1jici5" path="res://scenes/player_1/pawn_1.tscn" id="2_8dubc"]
+[ext_resource type="PackedScene" uid="uid://ddnds58mf3qeh" path="res://scenes/player_1/knight_1.tscn" id="3_p7vwb"]
+
+[node name="UI" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_gdt2y")
+pawn_scene = ExtResource("2_8dubc")
+knight_scene = ExtResource("3_p7vwb")

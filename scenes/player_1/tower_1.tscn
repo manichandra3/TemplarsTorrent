@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=3 uid="uid://cn2fs5dixgdhj"]
+
+[ext_resource type="Texture2D" uid="uid://co1s2y4418h17" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Blue.png" id="1_mdfvi"]
+[ext_resource type="Script" uid="uid://kbsyrpya2yrg" path="res://scripts/tower.gd" id="2_lcvft"]
+[ext_resource type="Script" uid="uid://bxsictfh85k34" path="res://scripts/area_2d.gd" id="3_2pimi"]
+[ext_resource type="Texture2D" uid="uid://ch8wwuwgdayu5" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Construction.png" id="3_jfguu"]
+[ext_resource type="Texture2D" uid="uid://c1oahvh2bwo3n" path="res://assets/Factions/Knights/Buildings/Tower/Tower_Destroyed.png" id="4_85u2j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktxwe"]
+atlas = ExtResource("1_mdfvi")
+region = Rect2(0, 0, 128, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qrbg1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktxwe")
+}],
+"loop": true,
+"name": &"built",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jfguu")
+}],
+"loop": true,
+"name": &"construction",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_85u2j")
+}],
+"loop": true,
+"name": &"destroyed",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jfguu"]
+radius = 34.01
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrbg1"]
+size = Vector2(89, 164.438)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qy3jd"]
+properties/0/path = NodePath("tower_animated:animation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("tower_animated:frame")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("tower_animated:speed_scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("tower_animated:centered")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("tower_animated:offset")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("tower_animated:flip_h")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("tower_animated:flip_v")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("tower_animated:position")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("tower_animated:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("tower_animated:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("tower_animated:skew")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+
+[node name="StaticBody2D" type="StaticBody2D"]
+z_index = 2
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("2_lcvft")
+
+[node name="tower_animated" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(1, -68)
+sprite_frames = SubResource("SpriteFrames_qrbg1")
+animation = &"built"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+shape = SubResource("CircleShape2D_jfguu")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_2pimi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+z_index = 1
+position = Vector2(1, -62)
+shape = SubResource("RectangleShape2D_qrbg1")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qy3jd")

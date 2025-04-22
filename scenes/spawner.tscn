@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4n15wbl6cd42"]
+
+[ext_resource type="Script" uid="uid://c5jrlkuh31gkd" path="res://scripts/spawner.gd" id="1_ac2jw"]
+[ext_resource type="Texture2D" uid="uid://bfaa2xiow4oin" path="res://assets/UI/Buttons/Button_Blue.png" id="2_nsqh3"]
+[ext_resource type="PackedScene" uid="uid://b85dy8g1jici5" path="res://scenes/player_1/pawn_1.tscn" id="2_tx2ig"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lkpwu"]
+size = Vector2(46, 44)
+
+[node name="spawn_pawn" type="Button"]
+script = ExtResource("1_ac2jw")
+pawn_scene = ExtResource("2_tx2ig")
+
+[node name="UI" type="Sprite2D" parent="."]
+texture = ExtResource("2_nsqh3")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_lkpwu")

@@ -1,0 +1,127 @@
+[gd_scene load_steps=17 format=3 uid="uid://cxnv6akvqxekk"]
+
+[ext_resource type="PackedScene" uid="uid://c5xkimeckeckq" path="res://scenes/player_2/resource_manager_2.tscn" id="1_gslue"]
+[ext_resource type="Script" uid="uid://dah58fo5bpp03" path="res://scenes/player_2/player_2.gd" id="1_m07df"]
+[ext_resource type="PackedScene" uid="uid://c85ykr0trap6m" path="res://scenes/player_2/tower_2.tscn" id="2_au6dh"]
+[ext_resource type="PackedScene" uid="uid://uohg6bpi5608" path="res://scenes/player_2/castle_2.tscn" id="3_pglrt"]
+[ext_resource type="PackedScene" uid="uid://5spb174yq86j" path="res://scenes/player_2/archer_2.tscn" id="4_rsi16"]
+[ext_resource type="PackedScene" uid="uid://b2hmmqe8ckdlg" path="res://scenes/player_2/knight_2.tscn" id="5_ersyu"]
+[ext_resource type="PackedScene" uid="uid://b0w3u03fvp6rl" path="res://scenes/player_2/pawn_2.tscn" id="6_pglrt"]
+[ext_resource type="Script" uid="uid://c5cxnw3vf1pwa" path="res://scripts/camera_2d_2.gd" id="8_gslue"]
+[ext_resource type="PackedScene" uid="uid://dasdr5ehrscod" path="res://scenes/ui2.tscn" id="9_m07df"]
+[ext_resource type="Texture2D" uid="uid://0fetbfub0qar" path="res://assets/UI/Buttons/Button_Red.png" id="10_m07df"]
+[ext_resource type="Texture2D" uid="uid://bfaa2xiow4oin" path="res://assets/UI/Buttons/Button_Blue.png" id="11_x1g0d"]
+[ext_resource type="Texture2D" uid="uid://cbfbwactj8f8d" path="res://assets/UI/Buttons/Button_Hover.png" id="12_30hi5"]
+[ext_resource type="Script" uid="uid://cr5s5v531cl3d" path="res://scripts/wood_label2.gd" id="12_gslue"]
+[ext_resource type="Script" uid="uid://y3u41bom1pg7" path="res://scripts/gold_label2.gd" id="13_m07df"]
+
+[sub_resource type="FontFile" id="FontFile_m07df"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/30/0/ascent = 0.0
+cache/0/30/0/descent = 0.0
+cache/0/30/0/underline_position = 0.0
+cache/0/30/0/underline_thickness = 0.0
+cache/0/30/0/scale = 1.0
+cache/0/100/0/ascent = 0.0
+cache/0/100/0/descent = 0.0
+cache/0/100/0/underline_position = 0.0
+cache/0/100/0/underline_thickness = 0.0
+cache/0/100/0/scale = 1.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gslue"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:skew")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[node name="player2" type="Node2D"]
+script = ExtResource("1_m07df")
+
+[node name="ResourceManager2" parent="." instance=ExtResource("1_gslue")]
+
+[node name="tower" parent="." instance=ExtResource("2_au6dh")]
+position = Vector2(1199, 246)
+
+[node name="castle" parent="." instance=ExtResource("3_pglrt")]
+position = Vector2(1629, 129)
+
+[node name="Archer" parent="." instance=ExtResource("4_rsi16")]
+position = Vector2(1324, -401)
+
+[node name="knight" parent="." instance=ExtResource("5_ersyu")]
+position = Vector2(1312, 443)
+
+[node name="pawn" parent="." instance=ExtResource("6_pglrt")]
+position = Vector2(1413, 40)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("8_gslue")
+
+[node name="UI" parent="Camera2D" instance=ExtResource("9_m07df")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/UI"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="cancel" type="Button" parent="Camera2D/UI/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("10_m07df")
+
+[node name="spawn_pawn" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+icon = ExtResource("11_x1g0d")
+
+[node name="spawn_knight" type="Button" parent="Camera2D/UI/HBoxContainer"]
+z_index = 4
+layout_mode = 2
+icon = ExtResource("12_30hi5")
+
+[node name="Panel" type="Panel" parent="Camera2D/UI/HBoxContainer"]
+layout_mode = 2
+
+[node name="wood_label" type="RichTextLabel" parent="Camera2D/UI/HBoxContainer/Panel"]
+layout_mode = 2
+offset_left = -5.0
+offset_top = 41.0
+offset_right = 80.0
+offset_bottom = 76.0
+text = "🟣Wood: 0"
+script = ExtResource("12_gslue")
+
+[node name="gold_label" type="RichTextLabel" parent="Camera2D/UI/HBoxContainer/Panel"]
+layout_mode = 2
+offset_left = 89.0
+offset_top = 41.0
+offset_right = 143.0
+offset_bottom = 76.0
+text = "Gold: 0"
+script = ExtResource("13_m07df")
+
+[node name="result_display" type="RichTextLabel" parent="Camera2D/UI"]
+offset_left = 295.0
+offset_top = 242.0
+offset_right = 876.0
+offset_bottom = 411.0
+theme_override_fonts/normal_font = SubResource("FontFile_m07df")
+theme_override_font_sizes/normal_font_size = 100
+text = "You Loose :("
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gslue")
+
+[connection signal="pressed" from="Camera2D/UI/HBoxContainer/cancel" to="Camera2D/UI" method="_on_cancel_pressed"]
+[connection signal="pressed" from="Camera2D/UI/HBoxContainer/spawn_pawn" to="Camera2D/UI" method="_on_spawn_pawn_pressed"]
+[connection signal="pressed" from="Camera2D/UI/HBoxContainer/spawn_knight" to="Camera2D/UI" method="_on_spawn_knight_pressed"]

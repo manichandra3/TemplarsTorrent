@@ -1,0 +1,409 @@
+[gd_scene load_steps=42 format=3 uid="uid://peqrqph0ufbh"]
+
+[ext_resource type="Script" uid="uid://durxnhhhphk20" path="res://scripts/torch_goblin.gd" id="1_6ulqy"]
+[ext_resource type="Texture2D" uid="uid://c6sofw7v73fhx" path="res://assets/Factions/Goblins/Troops/Torch/Red/Torch_Red.png" id="1_wuhk7"]
+[ext_resource type="Texture2D" uid="uid://df8abhsxjexx" path="res://assets/Factions/Knights/Troops/Dead/Dead.png" id="3_6jeun"]
+[ext_resource type="PackedScene" uid="uid://drvgkns1v81b2" path="res://addons/simple_health_bar/health_bar.tscn" id="4_ppf6h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd4kn"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(0, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hdxf"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(192, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pw1n"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(384, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rfki"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(576, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyeee"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(768, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc3qd"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(960, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxkgq"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5nru"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkhac"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unmf1"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p711l"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lc4o2"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32wy1"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjxmp"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiww5"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgxyp"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tian4"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gllrq"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(512, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwftk"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(640, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etixp"]
+atlas = ExtResource("3_6jeun")
+region = Rect2(768, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ulqy"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jeun"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppf6h"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_re4xf"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntlag"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7y2g"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3ktc"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xg17j"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gtip"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k8ef"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(384, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpfmi"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(576, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1h3u1"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(768, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5uyg"]
+atlas = ExtResource("1_wuhk7")
+region = Rect2(960, 192, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kd4kn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kd4kn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hdxf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4pw1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rfki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyeee")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc3qd")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxkgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5nru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkhac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_unmf1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p711l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lc4o2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32wy1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjxmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qiww5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgxyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tian4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gllrq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwftk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_etixp")
+}],
+"loop": true,
+"name": &"die",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ulqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6jeun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppf6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_re4xf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntlag")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n7y2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3ktc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xg17j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gtip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7k8ef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpfmi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1h3u1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o5uyg")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6jeun"]
+radius = 25.1794
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ppf6h"]
+radius = 42.0119
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ppf6h"]
+properties/0/path = NodePath("AnimatedTorchGoblin:animation")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("AnimatedTorchGoblin:frame")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("AnimatedTorchGoblin:speed_scale")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("AnimatedTorchGoblin:centered")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("AnimatedTorchGoblin:offset")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("AnimatedTorchGoblin:flip_h")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("AnimatedTorchGoblin:flip_v")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("NavigationAgent2D:path_desired_distance")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("NavigationAgent2D:target_desired_distance")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("NavigationAgent2D:path_max_distance")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("NavigationAgent2D:navigation_layers")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("NavigationAgent2D:pathfinding_algorithm")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("NavigationAgent2D:path_postprocessing")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath("NavigationAgent2D:path_metadata_flags")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath("NavigationAgent2D:simplify_path")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath("NavigationAgent2D:simplify_epsilon")
+properties/15/spawn = true
+properties/15/replication_mode = 1
+properties/16/path = NodePath("NavigationAgent2D:avoidance_enabled")
+properties/16/spawn = true
+properties/16/replication_mode = 1
+properties/17/path = NodePath("NavigationAgent2D:radius")
+properties/17/spawn = true
+properties/17/replication_mode = 1
+properties/18/path = NodePath("NavigationAgent2D:neighbor_distance")
+properties/18/spawn = true
+properties/18/replication_mode = 1
+properties/19/path = NodePath("NavigationAgent2D:max_neighbors")
+properties/19/spawn = true
+properties/19/replication_mode = 1
+properties/20/path = NodePath("NavigationAgent2D:time_horizon_agents")
+properties/20/spawn = true
+properties/20/replication_mode = 1
+properties/21/path = NodePath("NavigationAgent2D:time_horizon_obstacles")
+properties/21/spawn = true
+properties/21/replication_mode = 1
+properties/22/path = NodePath("NavigationAgent2D:max_speed")
+properties/22/spawn = true
+properties/22/replication_mode = 1
+properties/23/path = NodePath("NavigationAgent2D:avoidance_layers")
+properties/23/spawn = true
+properties/23/replication_mode = 1
+properties/24/path = NodePath("NavigationAgent2D:avoidance_mask")
+properties/24/spawn = true
+properties/24/replication_mode = 1
+properties/25/path = NodePath("NavigationAgent2D:avoidance_priority")
+properties/25/spawn = true
+properties/25/replication_mode = 1
+properties/26/path = NodePath("NavigationAgent2D:debug_enabled")
+properties/26/spawn = true
+properties/26/replication_mode = 1
+properties/27/path = NodePath("NavigationAgent2D:debug_use_custom")
+properties/27/spawn = true
+properties/27/replication_mode = 1
+properties/28/path = NodePath("NavigationAgent2D:debug_path_custom_color")
+properties/28/spawn = true
+properties/28/replication_mode = 1
+properties/29/path = NodePath("NavigationAgent2D:debug_path_custom_point_size")
+properties/29/spawn = true
+properties/29/replication_mode = 1
+properties/30/path = NodePath("NavigationAgent2D:debug_path_custom_line_width")
+properties/30/spawn = true
+properties/30/replication_mode = 1
+properties/31/path = NodePath(".:position")
+properties/31/spawn = true
+properties/31/replication_mode = 2
+properties/32/path = NodePath(".:rotation")
+properties/32/spawn = true
+properties/32/replication_mode = 2
+properties/33/path = NodePath(".:scale")
+properties/33/spawn = true
+properties/33/replication_mode = 2
+properties/34/path = NodePath(".:skew")
+properties/34/spawn = true
+properties/34/replication_mode = 2
+
+[node name="TorchGoblin" type="CharacterBody2D"]
+z_index = 2
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_6ulqy")
+
+[node name="AnimatedTorchGoblin" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kd4kn")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 14)
+shape = SubResource("CircleShape2D_6jeun")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+radius = 30.0
+avoidance_mask = 7
+
+[node name="HealthBar" parent="." instance=ExtResource("4_ppf6h")]
+offset_left = -28.0
+offset_top = 35.0
+offset_right = 28.0
+offset_bottom = 45.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ppf6h")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ppf6h")
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=3 uid="uid://xewk1ikm8npm"]
+
+[ext_resource type="Texture2D" uid="uid://b5kw3otn4le4u" path="res://assets/Resources/Gold Mine/GoldMine_Active.png" id="1_1p357"]
+[ext_resource type="Texture2D" uid="uid://c1s4b0spujb2s" path="res://assets/Resources/Gold Mine/GoldMine_Inactive.png" id="2_v68ff"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tshw"]
+atlas = ExtResource("1_1p357")
+region = Rect2(0, 0, 192, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfj8g"]
+atlas = ExtResource("2_v68ff")
+region = Rect2(0, 0, 192, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a23fd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tshw")
+}],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfj8g")
+}],
+"loop": true,
+"name": &"inactive",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oou0j"]
+radius = 48.0104
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6su1p"]
+properties/0/path = NodePath("GoldMineActive:animation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("GoldMineActive:frame")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("GoldMineActive:offset")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("GoldMineActive:flip_h")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("GoldMineActive:flip_v")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("GoldMineActive:speed_scale")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("GoldMineActive:centered")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("GoldMineActive:position")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("GoldMineActive:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("GoldMineActive:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("GoldMineActive:skew")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath(".:position")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath(".:rotation")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath(".:scale")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath(".:skew")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+
+[node name="GoldMine" type="CharacterBody2D"]
+
+[node name="GoldMineActive" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a23fd")
+animation = &"active"
+autoplay = "inactive"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_oou0j")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_6su1p")

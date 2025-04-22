@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyhiky2nooox7"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x8wvn"]
+
+[node name="house" type="StaticBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_x8wvn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

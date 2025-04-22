@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://uohg6bpi5608"]
+
+[ext_resource type="Script" uid="uid://bq06lcd1aculm" path="res://scripts/castle.gd" id="1_0ysgy"]
+[ext_resource type="Texture2D" uid="uid://5fxwcwy5b8d" path="res://assets/Factions/Knights/Buildings/Castle/Castle_Purple.png" id="2_l0j0m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qbe4p"]
+size = Vector2(253, 49)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bly62"]
+size = Vector2(250, 160)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_l0j0m"]
+properties/0/path = NodePath("castle:centered")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("castle:offset")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("castle:flip_h")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("castle:flip_v")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("castle:hframes")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("castle:vframes")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("castle:frame")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("castle:frame_coords")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("castle:region_enabled")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("castle:position")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("castle:rotation")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("castle:scale")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("castle:skew")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+
+[node name="castle" type="StaticBody2D"]
+script = ExtResource("1_0ysgy")
+
+[node name="castle" type="Sprite2D" parent="."]
+texture = ExtResource("2_l0j0m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 78)
+shape = SubResource("RectangleShape2D_qbe4p")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1, 18)
+shape = SubResource("RectangleShape2D_bly62")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_l0j0m")

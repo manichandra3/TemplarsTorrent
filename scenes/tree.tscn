@@ -1,0 +1,137 @@
+[gd_scene load_steps=15 format=3 uid="uid://kpdyy60x23a4"]
+
+[ext_resource type="Texture2D" uid="uid://c4paebmc1unpu" path="res://assets/Resources/Trees/Tree.png" id="1_rk26q"]
+[ext_resource type="Script" uid="uid://ci7puf01i4nif" path="res://scripts/tree.gd" id="2_pcn25"]
+[ext_resource type="Script" uid="uid://bxsictfh85k34" path="res://scripts/area_2d.gd" id="2_vw5by"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqac2"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(0, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13iic"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2rld"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq7nq"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkugs"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pmsj"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmlun"]
+atlas = ExtResource("1_rk26q")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3xr4e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqac2")
+}],
+"loop": true,
+"name": &"chopped",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13iic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2rld")
+}],
+"loop": true,
+"name": &"chopping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq7nq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkugs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pmsj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmlun")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dyi2f"]
+size = Vector2(87, 166)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xwwbt"]
+radius = 19.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_viusy"]
+properties/0/path = NodePath("tree_animated:animation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("tree_animated:frame")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("tree_animated:speed_scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("tree_animated:centered")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("tree_animated:offset")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("tree_animated:flip_h")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("tree_animated:flip_v")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("tree_animated:position")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("tree_animated:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("tree_animated:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("tree_animated:skew")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+
+[node name="tree" type="CharacterBody2D"]
+z_index = 1
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("2_pcn25")
+
+[node name="tree_animated" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, -60)
+sprite_frames = SubResource("SpriteFrames_3xr4e")
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_vw5by")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-2, -62)
+shape = SubResource("RectangleShape2D_dyi2f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xwwbt")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_viusy")
