@@ -39,9 +39,9 @@ Built by a team of three developers over the course of a semester.
 - [x] Core gameplay mechanics
 - [x] Goblin AI behavior
 - [x] Resource collection & unit production
-- [ ] Online multiplayer support
+- [x] Online multiplayer support
 - [ ] Polished UI/UX
-- [ ] Map editor and custom match setup
+- [x] Map editor and custom match setup
 
 ## 📦 Installation
 
