@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends "res://scripts/base_unit.gd"
 
 enum KNIGHT_STATE {
 	IDLE,
@@ -7,9 +7,6 @@ enum KNIGHT_STATE {
 	DESTRUCTING
 }
 
-@export var health: float = 300.0
-@export var movement_speed: float = 200.0 
-@export var acceleration: float = 500.0
 @export var attack_damage: float = 20.0
 @export var attack_cooldown: float = 1.0
 @export var entity_type: String = "knight"
@@ -22,7 +19,6 @@ var is_destructing: bool = false
 var destructing_task: SceneTreeTimer = null
 
 var current_state: KNIGHT_STATE = KNIGHT_STATE.IDLE
-var is_selected: bool = false
 var target_enemy: Node2D = null
 var is_attacking: bool = false
 var attack_timer: Timer = null
@@ -33,11 +29,13 @@ var previous_position: Vector2
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $knight_animated
 @onready var health_bar = $HealthBar
-@onready var main = get_node("/root/game")
+
 
 signal state_changed(new_state: KNIGHT_STATE)
 
 func _ready():
+	animated_sprite = $knight_animated
+	health_bar = $HealthBar
 	add_to_group("pawns")
 	navigation_agent.path_desired_distance = 4.0
 	navigation_agent.target_desired_distance = 4.0
@@ -61,15 +59,15 @@ func _ready():
 	target_check_timer.start()
 
 	# Connect signals
-	main.entity_move_requested.connect(_on_entity_move_requested)
-	main.selection_changed.connect(_on_selection_changed)
+	get_tree().get_first_node_in_group("player_controller").entity_move_requested.connect(_on_entity_move_requested)
+	get_tree().get_first_node_in_group("player_controller").selection_changed.connect(_on_selection_changed)
 
 	# Enable input
 	input_pickable = true
 
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		main.change_selected_unit(self)
+		get_tree().get_first_node_in_group("player_controller").change_selected_unit(self)
 		get_viewport().set_input_as_handled()
 
 func _on_entity_move_requested(entity_id: int, target_position: Vector2):
@@ -240,38 +238,6 @@ func change_state(new_state: KNIGHT_STATE):
 	if current_state != new_state:
 		current_state = new_state
 		state_changed.emit(new_state)
-
-func select():
-	is_selected = true
-	animated_sprite.modulate = Color(1, 1, 0)
-
-func deselect():
-	is_selected = false
-	animated_sprite.modulate = Color(1, 1, 1)
-
-func take_damage(damage: float):
-	health -= damage
-	health_bar.update_bar(health)
-	if current_state != KNIGHT_STATE.ATTACKING and current_state != KNIGHT_STATE.RUNNING:
-		for goblin in get_tree().get_nodes_in_group("goblins"):
-			if goblin.target == self:
-				target_enemy = goblin
-				change_state(KNIGHT_STATE.ATTACKING)
-				break
-	if health <= 0:
-		die()
-
-func die():
-	print("Pawn died!")
-	if attack_timer:
-		attack_timer.queue_free()
-	if target_check_timer:
-		target_check_timer.queue_free()
-	queue_free()
-#========================================================================================================================
-#========================================================================================================================
-#========================================================================================================================
-
 
 func handle_destructing_state(delta):
 	print("hello")

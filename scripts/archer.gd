@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends "res://scripts/base_unit.gd"
 
 enum ARCHER_STATE {
 	IDLE,
@@ -7,9 +7,6 @@ enum ARCHER_STATE {
 	COOLDOWN 
 }
 
-@export var health: float = 100.0
-@export var movement_speed: float = 250.0 
-@export var acceleration: float = 500.0
 @export var attack_damage: float = 15.0
 @export var attack_cooldown: float = 0.75
 @export var entity_type: String = "archer"
@@ -21,7 +18,6 @@ enum ARCHER_STATE {
 @export var projectile_offset: Vector2 = Vector2(20, -10)
 
 var current_state: ARCHER_STATE = ARCHER_STATE.IDLE
-var is_selected: bool = false
 var target_enemy: Node2D = null
 var attack_timer: Timer = null
 var target_check_timer: Timer = null  
@@ -30,13 +26,15 @@ var forced_movement: bool = false  # Flag to track if player is forcing movement
 
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $ArcherAnimated
-@onready var main = get_node("/root/game")
+
 @onready var health_bar = $HealthBar
 @onready var projectile_scene = preload("res://scenes/arrow.tscn")
 
 signal state_changed(new_state: ARCHER_STATE)
 
 func _ready():
+	animated_sprite = $ArcherAnimated
+	health_bar = $HealthBar
 	add_to_group("pawns")
 	navigation_agent.path_desired_distance = 4.0
 	navigation_agent.target_desired_distance = 4.0
@@ -60,15 +58,15 @@ func _ready():
 	target_check_timer.start()
 
 	# Connect signals
-	main.entity_move_requested.connect(_on_entity_move_requested)
-	main.selection_changed.connect(_on_selection_changed)
+	get_tree().get_first_node_in_group("player_controller").entity_move_requested.connect(_on_entity_move_requested)
+	get_tree().get_first_node_in_group("player_controller").selection_changed.connect(_on_selection_changed)
 
 	# Enable input
 	input_pickable = true
 
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		main.change_selected_unit(self)
+		get_tree().get_first_node_in_group("player_controller").change_selected_unit(self)
 		get_viewport().set_input_as_handled()
 
 func _on_entity_move_requested(entity_id: int, target_position: Vector2):
@@ -269,35 +267,3 @@ func change_state(new_state: ARCHER_STATE):
 		current_state = new_state
 		state_changed.emit(new_state)
 
-func take_damage(damage: float):
-	health -= damage
-	health_bar.update_bar(health)
-	
-	# If not already attacking, respond to being attacked
-	if current_state != ARCHER_STATE.ATTACKING and current_state != ARCHER_STATE.RUNNING:
-		for goblin in get_tree().get_nodes_in_group("goblins"):
-			if goblin.target == self:
-				target_enemy = goblin
-				change_state(ARCHER_STATE.ATTACKING)
-				break
-				
-	if health <= 0:
-		die()
-
-func die():
-	print("Archer died!")
-	if attack_timer:
-		attack_timer.queue_free()
-	if target_check_timer:
-		target_check_timer.queue_free()
-	queue_free()
-
-func select():
-	is_selected = true
-	print("selected archer")
-	animated_sprite.modulate = Color(1, 1, 0)
-
-func deselect():
-	is_selected = false
-	print("deselected archer")
-	animated_sprite.modulate = Color(1, 1, 1)

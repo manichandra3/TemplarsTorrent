@@ -1,15 +1,15 @@
 extends Button
 
 @export var health: float = 10
-@export var pawn_scene: PackedScene = load("res://scenes/pawn.tscn")
+@export var pawn_scene: PackedScene = preload("res://scenes/player_1/pawn_1.tscn")
 @export var max_units: int = 5
 @export var spawn_offset: Vector2 = Vector2(100, 0)  # Default spawn offset to right of castle
 @export var spawn_variation: float = 20.0  # Random variation in spawn position
-var spawned_units = []
+var spawned_units: Array[Node] = []
 var castle: StaticBody2D
-signal unit_spawned(unit)
+signal unit_spawned(unit: Node)
 
-func _ready():
+func _ready() -> void:
 	add_to_group("spawners")
 	castle = get_tree().get_first_node_in_group("castle")
 	if not castle:
@@ -26,14 +26,14 @@ func _ready():
 	var control = Control.new()
 	control.anchor_bottom = 1.0
 	control.anchor_right = 1.0
-	control.margin_bottom = -20
-	control.margin_right = -150
+	control.offset_bottom = -20
+	control.offset_right = -150
 	control.add_child(button)
 	
 	canvas_layer.add_child(control)
 	add_child(canvas_layer)
 
-func spawn_unit():
+func spawn_unit() -> void:
 	if not pawn_scene:
 		push_error("Pawn scene not assigned!")
 		return
@@ -60,6 +60,6 @@ func spawn_unit():
 	unit_spawned.emit(new_pawn)
 	new_pawn.tree_exited.connect(_on_pawn_exited.bind(new_pawn))
 
-func _on_pawn_exited(pawn: Node):
+func _on_pawn_exited(pawn: Node) -> void:
 	if pawn in spawned_units:
 		spawned_units.erase(pawn)

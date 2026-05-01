@@ -5,9 +5,8 @@ func _ready():
 	pressed.connect(_on_pressed)
 
 func _on_pressed():
-	var game = get_node_or_null("/root/game")
-	if game and game.has_method("change_selected_unit"):
-		game.change_selected_unit(null)
+	if get_tree().get_first_node_in_group("player_controller"):
+		get_tree().get_first_node_in_group("player_controller").change_selected_unit(null)
 		print("Selection canceled")
 	else:
-		push_error("Game node missing or missing deselect method")
+		push_error("PlayerController missing")

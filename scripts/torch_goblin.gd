@@ -22,10 +22,12 @@ var current_state: AI_STATE = AI_STATE.IDLE
 var is_attacking: bool = false
 var attack_timer: Timer = null
 var random_offset: Vector2 = Vector2.ZERO
+var enemies_in_range: Array[Node2D] = []
 
 @onready var navigation_agent = $NavigationAgent2D
 @onready var sprite = $AnimatedTorchGoblin
 @onready var health_bar = $HealthBar
+@onready var vision_area = $VisionArea
 
 func _ready():
 	add_to_group('goblins')
@@ -42,7 +44,22 @@ func _ready():
 	attack_timer.timeout.connect(_on_attack_cooldown_finished)
 	add_child(attack_timer)
 	
+	# Vision area signals
+	if vision_area:
+		vision_area.body_entered.connect(_on_vision_body_entered)
+		vision_area.body_exited.connect(_on_vision_body_exited)
+	
 	find_home_tower()
+
+func _on_vision_body_entered(body: Node2D):
+	if body.is_in_group("knights") or body.is_in_group("pawns"):
+		if not enemies_in_range.has(body):
+			enemies_in_range.append(body)
+
+func _on_vision_body_exited(body: Node2D):
+	if enemies_in_range.has(body):
+		enemies_in_range.erase(body)
+
 
 func find_home_tower():
 	var towers = get_tree().get_nodes_in_group("goblin_towers")
@@ -148,28 +165,32 @@ func look_for_target():
 	var closest_distance = INF
 	var closest_unit = null
 
+	# Clean up invalid enemies first
+	enemies_in_range = enemies_in_range.filter(func(enemy): return is_instance_valid(enemy))
+
 	# Check knights first (higher priority)
-	for knight in get_tree().get_nodes_in_group("knights"):
-		if not is_instance_valid(knight):
-			continue
-		var distance = global_position.distance_to(knight.global_position)
-		var distance_from_tower = knight.global_position.distance_to(home_tower.global_position)
-		if distance < detection_radius and distance < closest_distance and distance_from_tower <= max_distance_from_tower:
-			closest_distance = distance
-			closest_unit = knight
+	for enemy in enemies_in_range:
+		if enemy.is_in_group("knights"):
+			var distance = global_position.distance_to(enemy.global_position)
+			var distance_from_tower = enemy.global_position.distance_to(home_tower.global_position)
+			if distance < closest_distance and distance_from_tower <= max_distance_from_tower:
+				closest_distance = distance
+				closest_unit = enemy
+
 	# If no knights found, check pawns
 	if closest_unit == null:
-		for pawn in get_tree().get_nodes_in_group("pawns"):
-			if not is_instance_valid(pawn):
-				continue
-			var distance = global_position.distance_to(pawn.global_position)
-			var distance_from_tower = pawn.global_position.distance_to(home_tower.global_position)
-			if distance < detection_radius and distance < closest_distance and distance_from_tower <= max_distance_from_tower:
-				closest_distance = distance
-				closest_unit = pawn
+		closest_distance = INF
+		for enemy in enemies_in_range:
+			if enemy.is_in_group("pawns"):
+				var distance = global_position.distance_to(enemy.global_position)
+				var distance_from_tower = enemy.global_position.distance_to(home_tower.global_position)
+				if distance < closest_distance and distance_from_tower <= max_distance_from_tower:
+					closest_distance = distance
+					closest_unit = enemy
+
 	# 20% chance to "miss" spotting a nearby enemy
-		if closest_unit and randf() > 0.2:
-			target = closest_unit
+	if closest_unit and randf() > 0.2:
+		target = closest_unit
 		change_state(AI_STATE.CHASING)
 
 func _on_attack_cooldown_finished():

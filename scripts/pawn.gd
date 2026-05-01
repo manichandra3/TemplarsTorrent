@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends "res://scripts/base_unit.gd"
 
 enum PAWN_STATE {
 	IDLE,
@@ -7,15 +7,11 @@ enum PAWN_STATE {
 	CONSTRUCTING
 }
 
-@export var health: float = 20.0
-@export var movement_speed: float = 200.0 
-@export var acceleration: float = 500.0
 @export var chopping_duration: float = 10.0
 @export var constructing_duration: float = 10.0 
 @export var entity_type: String = "pawn"
 
 var current_state: PAWN_STATE = PAWN_STATE.IDLE
-var is_selected: bool = false
 var target_tree: Node2D = null
 var target_tower: Node2D = null
 var is_chopping: bool = false
@@ -27,11 +23,13 @@ var previous_position: Vector2
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var animated_sprite: AnimatedSprite2D = $pawn_animated
 @onready var health_bar = $HealthBar
-@onready var main = get_node("/root/game")
+
 
 signal state_changed(new_state: PAWN_STATE)
 
 func _ready():
+	animated_sprite = $pawn_animated
+	health_bar = $HealthBar
 	add_to_group("pawns")
 
 	# Navigation agent fine-tuning
@@ -43,15 +41,15 @@ func _ready():
 	health_bar.init_bar(health)
 
 	# Connect signals
-	main.entity_move_requested.connect(_on_entity_move_requested)
-	main.selection_changed.connect(_on_selection_changed)
+	get_tree().get_first_node_in_group("player_controller").entity_move_requested.connect(_on_entity_move_requested)
+	get_tree().get_first_node_in_group("player_controller").selection_changed.connect(_on_selection_changed)
 	
 	# Enable input processing for this collider
 	input_pickable = true
 
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		main.change_selected_unit(self)
+		get_tree().get_first_node_in_group("player_controller").change_selected_unit(self)
 		get_viewport().set_input_as_handled()
 
 func _on_entity_move_requested(entity_id: int, target_position: Vector2):
@@ -215,28 +213,6 @@ func change_state(new_state: PAWN_STATE):
 	if current_state != new_state:
 		current_state = new_state
 		state_changed.emit(new_state)
-func select():
-	print("pawn selected")
-	is_selected = true
-	animated_sprite.self_modulate = Color(1, 1, 0, 1)  # Yellow
-
-func deselect():
-	print("Pawn deselected")
-	is_selected = false
-	animated_sprite.self_modulate = Color(1, 1, 1, 1)  # Normal white
-	#animated_sprite.modulate = Color(1, 1, 1)
-
-func take_damage(damage: float):
-	health -= damage
-	health_bar.update_bar(health)
-	print("Pawn took ", damage, "damage! Health left:", health)
-
-	if health <= 0:
-		deselect()
-		die()
-func die():
-	print("Pawn has died!")
-	queue_free()  # Remove the pawn from the game
 func stop_movement():
 	move_and_slide()
 	velocity = Vector2.ZERO
